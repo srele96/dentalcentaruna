@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <title>SmileCentar | Modern Dental Clinic</title>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Swiper CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        />
+
+        <!-- ================================================================
+             DESIGN TOKENS — the single source of truth.
+             Layer 1 (primitives) = raw values, named after what they ARE.
+             Layer 2 (semantic)   = roles, named after what they DO.
+             Nothing below this block hardcodes a colour, radius or gutter.
+             To re-skin the site, edit Layer 1 only.
+             ================================================================ -->
+        <style>
+            :root {
+                /* ---- Layer 1: primitives ------------------------------- */
+
+                /* Brand ramp — wine / burgundy. Space-separated RGB channels
+                   so Tailwind can inject <alpha-value> for opacity modifiers. */
+                --wine-50: 250 240 243;
+                --wine-400: 168 48 72;
+                --wine-500: 142 32 53; /* base */
+                --wine-600: 107 24 40; /* hover */
+                --wine-700: 82 18 31;
+
+                /* Neutral ramp — slate */
+                --neutral-0: 255 255 255;
+                --neutral-50: 248 250 252;
+                --neutral-200: 226 232 240;
+                --neutral-300: 203 213 225;
+                --neutral-500: 100 116 139;
+                --neutral-600: 71 85 105;
+                --neutral-900: 15 23 42;
+
+                /* ---- Layer 2: semantic colour roles -------------------- */
+                --color-brand: var(--wine-500);
+                --color-brand-hover: var(--wine-600);
+                --color-brand-soft: var(--wine-50);
+                --color-on-brand: var(--neutral-0);
+
+                --color-surface: var(--neutral-0);
+                --color-surface-alt: var(--neutral-50);
+
+                --color-ink: var(--neutral-900); /* headings, strong text  */
+                --color-ink-muted: var(--neutral-600); /* body copy       */
+                --color-ink-subtle: var(--neutral-500); /* labels, meta   */
+
+                --color-line: var(--neutral-200);
+                --color-line-strong: var(--neutral-300);
+
+                --color-scrim: var(--neutral-900); /* drawer overlay      */
+
+                /* ---- Layer 2: spatial rhythm --------------------------- */
+                --safe-b: env(safe-area-inset-bottom, 0px);
+
+                --gutter: 1.5rem; /* side padding of the content column   */
+                --edge: 1.5rem; /* horizontal inset of fixed chrome      */
+                --edge-y: max(1.25rem, var(--safe-b)); /* vertical inset  */
+                --bar-y: 1.25rem; /* top-bar padding — keeps the navbar
+                                     and the drawer header on one line   */
+                --radius-card: 1rem;
+
+                /* ---- Layer 2: effects --------------------------------- */
+                --glow-size: 900px;
+                --glow-strength: 0.04;
+            }
+
+            @media (min-width: 768px) {
+                :root {
+                    --gutter: 2.5rem;
+                    --edge: 2.5rem;
+                    --edge-y: max(2.5rem, var(--safe-b));
+                    --bar-y: 1.5rem;
+                    --radius-card: 1.5rem;
+                }
+            }
+
+            @media (min-width: 1024px) {
+                :root {
+                    --gutter: 5rem;
+                    --edge: 4rem;
+                }
+            }
+
+            /* ---- Re-skin example -------------------------------------
+               Swap the whole site by overriding primitives only:
+
+               :root {
+                   --wine-500: 12 74 110;
+                   --wine-600: 7 51 77;
+                   --wine-50:  240 249 255;
+               }
+            ------------------------------------------------------------ */
+        </style>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            // Reads a semantic token and leaves room for Tailwind's opacity
+            // modifier, so `bg-brand/20` and `shadow-brand/20` both work.
+            const token = (name) => `rgb(var(${name}) / <alpha-value>)`;
+
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                            heading: ["Poppins", "sans-serif"],
+                        },
+
+                        colors: {
+                            brand: {
+                                DEFAULT: token("--color-brand"),
+                                hover: token("--color-brand-hover"),
+                                soft: token("--color-brand-soft"),
+                            },
+                            "on-brand": token("--color-on-brand"),
+                            surface: {
+                                DEFAULT: token("--color-surface"),
+                                alt: token("--color-surface-alt"),
+                            },
+                            ink: {
+                                DEFAULT: token("--color-ink"),
+                                muted: token("--color-ink-muted"),
+                                subtle: token("--color-ink-subtle"),
+                            },
+                            line: {
+                                DEFAULT: token("--color-line"),
+                                strong: token("--color-line-strong"),
+                            },
+                            scrim: token("--color-scrim"),
+                        },
+
+                        // Responsive values live in the CSS vars, so these
+                        // need no breakpoint prefixes at the call site.
+                        spacing: {
+                            gutter: "var(--gutter)",
+                            edge: "var(--edge)",
+                            "edge-y": "var(--edge-y)",
+                            "bar-y": "var(--bar-y)",
+                        },
+
+                        borderRadius: {
+                            card: "var(--radius-card)",
+                        },
+
+                        boxShadow: {
+                            cta: "0 4px 14px rgb(var(--color-brand) / 0.25)",
+                            "cta-lg":
+                                "0 6px 20px rgb(var(--color-brand) / 0.35)",
+                            card: "0 20px 40px rgb(var(--color-ink) / 0.08)",
+                            drawer: "-10px 0 30px rgb(var(--color-ink) / 0.06)",
+                        },
+
+                        // `duration-250` / `duration-400` were used in the
+                        // original but aren't Tailwind defaults, so they were
+                        // silently doing nothing. Registered here.
+                        transitionDuration: {
+                            250: "250ms",
+                            400: "400ms",
+                        },
+
+                        transitionTimingFunction: {
+                            drawer: "cubic-bezier(0.16, 1, 0.3, 1)",
+                        },
+                    },
+                },
+            };
+        </script>
+
+        <!-- Effects that are too verbose as arbitrary utilities.
+             All values read from the token layer. -->
+        <style type="text/tailwindcss">
+            @layer utilities {
+                .bg-glow::before {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: var(--glow-size);
+                    height: var(--glow-size);
+                    transform: translate(-50%, -50%);
+                    background: radial-gradient(
+                        circle,
+                        rgb(var(--color-brand) / var(--glow-strength)) 0%,
+                        transparent 70%
+                    );
+                    pointer-events: none;
+                }
+
+                .nav-link::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 100%;
+                    bottom: 0;
+                    height: 2px;
+                    background-color: rgb(var(--color-brand));
+                    transition: right 250ms ease;
+                }
+                .nav-link:hover::after,
+                .nav-link.active::after {
+                    right: 0;
+                }
+                .nav-link.active {
+                    color: rgb(var(--color-ink));
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        </style>
+    </head>
+
+    <body class="font-sans bg-surface text-ink overflow-hidden">
+        <!-- Swiper Container -->
+        <div class="swiper w-full h-screen">
+            <div class="swiper-wrapper">
+                <!-- Slide 1: Welcome -->
+                <div
+                    class="swiper-slide flex items-center justify-center bg-surface even:bg-surface-alt relative overflow-hidden bg-glow"
+                    data-label="Welcome"
+                >
+                    <div
+                        class="slide-inner flex flex-col md:flex-row w-full h-full max-w-7xl mx-auto items-center justify-center md:justify-between px-gutter pt-24 pb-28 md:py-0 gap-6 md:gap-16 lg:gap-20"
+                    >
+                        <div
+                            class="slide-content flex-1 text-center md:text-left z-10 w-full"
+                        >
+                            <span
+                                class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3 md:mb-4"
+                                >01 — Welcome</span
+                            >
+                            <h1
+                                class="font-heading text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-6 font-extrabold tracking-tight leading-tight text-ink"
+                            >
+                                A Brighter,<br />Healthier Smile
+                            </h1>
+                            <p
+                                class="text-sm md:text-lg text-ink-muted leading-relaxed mb-6 md:mb-9 max-w-[46ch] mx-auto md:mx-0"
+                            >
+                                Experience world-class dental care in a modern,
+                                comfortable, and stress-free environment. Your
+                                perfect smile starts right here.
+                            </p>
+                            <a
+                                href="#"
+                                class="inline-block bg-brand text-on-brand px-6 py-3 md:px-7 md:py-3.5 rounded-full text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-cta hover:bg-brand-hover hover:-translate-y-0.5 hover:shadow-cta-lg"
+                                onclick="
+                                    swiper.slideTo(4);
+                                    return false;
+                                "
+                                >Book Appointment</a
+                            >
+                        </div>
+                        <div
+                            class="flex-1 flex justify-center items-center z-10 w-full"
+                        >
+                            <div
+                                class="w-full h-[28vh] md:h-[55vh] rounded-card bg-cover bg-center shadow-card relative"
+                                style="
+                                    background-image: url(&quot;https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&amp;fit=crop&amp;w=800&amp;q=80&quot;);
+                                "
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Services -->
+                <div
+                    class="swiper-slide flex items-center justify-center bg-surface even:bg-surface-alt relative overflow-hidden bg-glow"
+                    data-label="Services"
+                >
+                    <div
+                        class="slide-inner flex flex-col md:flex-row-reverse w-full h-full max-w-7xl mx-auto items-center justify-center md:justify-between px-gutter pt-24 pb-28 md:py-0 gap-6 md:gap-16 lg:gap-20"
+                    >
+                        <div
+                            class="slide-content flex-1 text-center md:text-left z-10 w-full"
+                        >
+                            <span
+                                class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3 md:mb-4"
+                                >02 — Services</span
+                            >
+                            <h1
+                                class="font-heading text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-6 font-extrabold tracking-tight leading-tight text-ink"
+                            >
+                                Comprehensive<br />Dental Care
+                            </h1>
+                            <p
+                                class="text-sm md:text-lg text-ink-muted leading-relaxed mb-6 md:mb-9 max-w-[46ch] mx-auto md:mx-0"
+                            >
+                                From routine check-ups and professional
+                                whitening to advanced implants and orthodontics,
+                                we provide complete solutions for your oral
+                                health.
+                            </p>
+                            <a
+                                href="#"
+                                class="inline-block bg-brand text-on-brand px-6 py-3 md:px-7 md:py-3.5 rounded-full text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-cta hover:bg-brand-hover hover:-translate-y-0.5 hover:shadow-cta-lg"
+                                onclick="
+                                    swiper.slideTo(2);
+                                    return false;
+                                "
+                                >Explore Services</a
+                            >
+                        </div>
+                        <div
+                            class="flex-1 flex justify-center items-center z-10 w-full"
+                        >
+                            <div
+                                class="w-full h-[28vh] md:h-[55vh] rounded-card bg-cover bg-center shadow-card relative"
+                                style="
+                                    background-image: url(&quot;https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&amp;fit=crop&amp;w=800&amp;q=80&quot;);
+                                "
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Clinic -->
+                <div
+                    class="swiper-slide flex items-center justify-center bg-surface even:bg-surface-alt relative overflow-hidden bg-glow"
+                    data-label="Our Clinic"
+                >
+                    <div
+                        class="slide-inner flex flex-col md:flex-row w-full h-full max-w-7xl mx-auto items-center justify-center md:justify-between px-gutter pt-24 pb-28 md:py-0 gap-6 md:gap-16 lg:gap-20"
+                    >
+                        <div
+                            class="slide-content flex-1 text-center md:text-left z-10 w-full"
+                        >
+                            <span
+                                class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3 md:mb-4"
+                                >03 — Our Clinic</span
+                            >
+                            <h1
+                                class="font-heading text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-6 font-extrabold tracking-tight leading-tight text-ink"
+                            >
+                                State-Of-The-Art<br />Facilities
+                            </h1>
+                            <p
+                                class="text-sm md:text-lg text-ink-muted leading-relaxed mb-6 md:mb-9 max-w-[46ch] mx-auto md:mx-0"
+                            >
+                                Our white, pristine office is equipped with the
+                                latest dental technology to ensure your
+                                treatments are fast, painless, and highly
+                                effective.
+                            </p>
+                        </div>
+                        <div
+                            class="flex-1 flex justify-center items-center z-10 w-full"
+                        >
+                            <div
+                                class="w-full h-[28vh] md:h-[55vh] rounded-card bg-cover bg-center shadow-card relative"
+                                style="
+                                    background-image: url(&quot;https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&amp;fit=crop&amp;w=800&amp;q=80&quot;);
+                                "
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Testimonials -->
+                <div
+                    class="swiper-slide flex items-center justify-center bg-surface even:bg-surface-alt relative overflow-hidden bg-glow"
+                    data-label="Testimonials"
+                >
+                    <div
+                        class="slide-inner flex flex-col md:flex-row-reverse w-full h-full max-w-7xl mx-auto items-center justify-center md:justify-between px-gutter pt-24 pb-28 md:py-0 gap-6 md:gap-16 lg:gap-20"
+                    >
+                        <div
+                            class="slide-content flex-1 text-center md:text-left z-10 w-full"
+                        >
+                            <span
+                                class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3 md:mb-4"
+                                >04 — Happy Patients</span
+                            >
+                            <h1
+                                class="font-heading text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-6 font-extrabold tracking-tight leading-tight text-ink"
+                            >
+                                Results That<br />Speak Volumes
+                            </h1>
+                            <p
+                                class="text-sm md:text-lg text-ink-muted leading-relaxed mb-3 md:mb-4 max-w-[46ch] mx-auto md:mx-0"
+                            >
+                                "The team at SmileCentar made me feel so
+                                comfortable. The whitening procedure was totally
+                                painless, and my teeth look amazing!"
+                            </p>
+                            <p
+                                class="text-sm md:text-base font-semibold text-ink"
+                            >
+                                — Sarah Jenkins
+                            </p>
+                        </div>
+                        <div
+                            class="flex-1 flex justify-center items-center z-10 w-full"
+                        >
+                            <div
+                                class="w-full h-[28vh] md:h-[55vh] rounded-card bg-cover bg-center shadow-card relative"
+                                style="
+                                    background-image: url(&quot;https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&amp;fit=crop&amp;w=800&amp;q=80&quot;);
+                                "
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Contact -->
+                <div
+                    class="swiper-slide flex items-center justify-center bg-surface even:bg-surface-alt relative overflow-hidden bg-glow"
+                    data-label="Contact"
+                >
+                    <div
+                        class="slide-inner flex flex-col md:flex-row w-full h-full max-w-7xl mx-auto items-center justify-center md:justify-between px-gutter pt-24 pb-28 md:py-0 gap-6 md:gap-16 lg:gap-20"
+                    >
+                        <div
+                            class="slide-content flex-1 text-center md:text-left z-10 w-full"
+                        >
+                            <span
+                                class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3 md:mb-4"
+                                >05 — Contact Us</span
+                            >
+                            <h1
+                                class="font-heading text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-6 font-extrabold tracking-tight leading-tight text-ink"
+                            >
+                                Ready For<br />Your Visit?
+                            </h1>
+                            <p
+                                class="text-sm md:text-lg text-ink-muted leading-relaxed mb-6 md:mb-9 max-w-[46ch] mx-auto md:mx-0"
+                            >
+                                123 Bright Avenue, Smile City, NY 10001<br />
+                                Call us: (555) 123-4567<br />
+                                Email: hello@smilecentar.com
+                            </p>
+                            <a
+                                href="#"
+                                class="inline-block bg-brand text-on-brand px-6 py-3 md:px-7 md:py-3.5 rounded-full text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-cta hover:bg-brand-hover hover:-translate-y-0.5 hover:shadow-cta-lg"
+                                >Schedule Now</a
+                            >
+                        </div>
+                        <div
+                            class="flex-1 flex justify-center items-center z-10 w-full"
+                        >
+                            <div
+                                class="w-full h-[28vh] md:h-[55vh] rounded-card bg-cover bg-center shadow-card relative"
+                                style="
+                                    background-image: url(&quot;https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&amp;fit=crop&amp;w=800&amp;q=80&quot;);
+                                "
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Navbar -->
+        <nav
+            class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-edge py-bar-y bg-gradient-to-b from-surface/95 to-transparent pointer-events-none"
+        >
+            <div
+                class="font-heading text-xl font-extrabold tracking-tight text-ink flex items-center gap-2 pointer-events-auto"
+            >
+                <span class="w-2.5 h-2.5 rounded-full bg-brand"></span
+                >SmileCentar
+            </div>
+
+            <ul
+                class="hidden md:flex gap-9 list-none pointer-events-auto"
+                id="navbarLinks"
+            ></ul>
+
+            <!-- Stylish Hamburger Menu (Borderless) -->
+            <button
+                class="md:hidden flex w-11 h-11 bg-transparent items-center justify-center transition-all duration-300 group pointer-events-auto"
+                id="navbarToggle"
+                aria-label="Open menu"
+            >
+                <span class="flex flex-col gap-1.5 w-[24px]">
+                    <span
+                        class="block h-[2px] bg-ink transition-all duration-300 rounded group-hover:bg-brand w-full"
+                    ></span>
+                    <span
+                        class="block h-[2px] bg-ink transition-all duration-300 rounded group-hover:bg-brand w-[65%] ml-auto group-hover:w-full"
+                    ></span>
+                    <span
+                        class="block h-[2px] bg-ink transition-all duration-300 rounded group-hover:bg-brand w-full"
+                    ></span>
+                </span>
+            </button>
+        </nav>
+
+        <!-- Side Rail Navigation -->
+        <nav
+            class="fixed top-1/2 right-3 md:right-edge -translate-y-1/2 z-40 flex flex-col items-end transition-opacity duration-300"
+            id="navRail"
+        ></nav>
+
+        <!-- Bottom counter + arrows -->
+        <div
+            class="fixed bottom-edge-y left-edge z-40 flex items-center gap-4 md:gap-6 text-ink transition-opacity duration-300"
+            id="navFooter"
+        >
+            <div class="flex gap-2 md:gap-3">
+                <button
+                    class="arrow-btn prev-btn w-10 h-10 md:w-11 md:h-11 rounded-full border border-line bg-surface text-ink flex items-center justify-center text-lg transition-all duration-200 shadow-sm hover:bg-brand hover:text-on-brand hover:border-brand hover:shadow-md hover:shadow-brand/20 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-surface disabled:text-ink disabled:border-line disabled:shadow-none"
+                    aria-label="Previous section"
+                >
+                    ↑
+                </button>
+                <button
+                    class="arrow-btn next-btn w-10 h-10 md:w-11 md:h-11 rounded-full border border-line bg-surface text-ink flex items-center justify-center text-lg transition-all duration-200 shadow-sm hover:bg-brand hover:text-on-brand hover:border-brand hover:shadow-md hover:shadow-brand/20 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-surface disabled:text-ink disabled:border-line disabled:shadow-none"
+                    aria-label="Next section"
+                >
+                    ↓
+                </button>
+            </div>
+
+            <div
+                class="font-medium text-sm md:text-base tracking-wide text-ink-muted tabular-nums"
+            >
+                <span
+                    class="text-xl md:text-2xl font-extrabold text-ink"
+                    id="currentSlide"
+                    >01</span
+                >
+                / <span id="totalSlides">05</span>
+            </div>
+        </div>
+
+        <!-- Slide-out drawer (mobile nav) -->
+        <div
+            class="fixed inset-0 z-[250] bg-scrim/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-400"
+            id="drawerOverlay"
+        ></div>
+
+        <nav
+            class="fixed top-0 right-0 bottom-0 w-[min(400px,85vw)] z-[260] bg-surface border-l border-line translate-x-full transition-transform duration-500 ease-drawer flex flex-col px-6 md:px-10 pt-bar-y pb-edge-y shadow-drawer"
+            id="drawer"
+        >
+            <div class="flex items-center justify-between mb-8 md:mb-12 h-11">
+                <div
+                    class="font-heading text-xl font-extrabold text-ink flex items-center gap-2"
+                >
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand"></span
+                    >SmileCentar
+                </div>
+
+                <!-- Stylish Custom Close X (Borderless, matching hamburger) -->
+                <button
+                    class="flex md:hidden w-11 h-11 bg-transparent items-center justify-center transition-all duration-300 group"
+                    id="drawerClose"
+                    aria-label="Close menu"
+                >
+                    <span
+                        class="relative w-[24px] h-[24px] transform transition-transform duration-300 group-hover:rotate-90"
+                    >
+                        <span
+                            class="absolute top-1/2 left-0 w-full h-[2px] bg-ink transition-colors duration-300 rounded group-hover:bg-brand -translate-y-1/2 rotate-45"
+                        ></span>
+                        <span
+                            class="absolute top-1/2 left-0 w-full h-[2px] bg-ink transition-colors duration-300 rounded group-hover:bg-brand -translate-y-1/2 -rotate-45"
+                        ></span>
+                    </span>
+                </button>
+            </div>
+
+            <ul class="list-none flex flex-col" id="drawerList"></ul>
+
+            <div
+                class="mt-auto pt-6 text-xs md:text-sm text-ink-subtle font-medium"
+            >
+                Scroll or use ↑ ↓ to move between sections
+            </div>
+        </nav>
+
+        <div
+            class="hidden md:block fixed bottom-edge-y right-edge text-xs font-semibold text-ink-subtle text-right pointer-events-none opacity-60 z-50"
+        >
+            Use ↑ ↓ or scroll
+        </div>
+
+        <!-- Swiper JS -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            let swiper;
+
+            function initializeNavigation() {
+                const totalSlides = swiper.slides.length;
+                document.getElementById("totalSlides").textContent = String(
+                    totalSlides,
+                ).padStart(2, "0");
+
+                const rail = document.getElementById("navRail");
+                const navbarLinks = document.getElementById("navbarLinks");
+                const drawerList = document.getElementById("drawerList");
+
+                swiper.slides.forEach((slideEl, index) => {
+                    const label = slideEl.dataset.label || `Slide ${index + 1}`;
+
+                    // Side rail item (circles)
+                    const item = document.createElement("button");
+                    item.className =
+                        "rail-item group flex items-center gap-3 cursor-pointer bg-transparent border-none py-3";
+                    item.setAttribute("aria-label", `Go to ${label}`);
+
+                    const labelSpan = document.createElement("span");
+                    labelSpan.className =
+                        "rail-label hidden md:block text-xs font-bold tracking-widest uppercase text-ink-subtle transition-all duration-300 translate-x-2.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 group-[.active]:opacity-100 group-[.active]:translate-x-0 group-[.active]:text-brand";
+                    labelSpan.textContent = label;
+
+                    const tick = document.createElement("span");
+                    tick.className =
+                        "rail-tick w-2 h-2 md:w-2.5 md:h-2.5 rounded-full border-2 border-line-strong bg-surface transition-all duration-300 flex-shrink-0 group-hover:border-ink group-hover:scale-125 group-[.active]:bg-brand group-[.active]:border-brand";
+
+                    item.appendChild(labelSpan);
+                    item.appendChild(tick);
+                    item.addEventListener("click", () => swiper.slideTo(index));
+                    rail.appendChild(item);
+
+                    // Desktop navbar link
+                    const li = document.createElement("li");
+                    const navBtn = document.createElement("button");
+                    navBtn.className =
+                        "nav-link relative bg-transparent border-none font-sans text-sm font-semibold tracking-wide text-ink-muted cursor-pointer py-1.5 transition-colors duration-250 hover:text-ink";
+                    navBtn.textContent = label;
+                    navBtn.addEventListener("click", () =>
+                        swiper.slideTo(index),
+                    );
+                    li.appendChild(navBtn);
+                    navbarLinks.appendChild(li);
+
+                    // Mobile drawer item
+                    const drawerLi = document.createElement("li");
+                    const drawerItem = document.createElement("button");
+                    drawerItem.className =
+                        "drawer-item group flex items-baseline gap-4 md:gap-5 w-full bg-transparent border-t border-line py-5 md:py-6 cursor-pointer text-left last:border-b";
+                    drawerItem.setAttribute("aria-label", `Go to ${label}`);
+
+                    const num = document.createElement("span");
+                    num.className =
+                        "drawer-num text-xs md:text-sm font-semibold text-ink-subtle tabular-nums flex-shrink-0 group-[.active]:text-brand";
+                    num.textContent = String(index + 1).padStart(2, "0");
+
+                    const name = document.createElement("span");
+                    name.className =
+                        "drawer-name font-heading text-xl md:text-3xl font-bold tracking-tight text-ink-subtle transition-all duration-250 group-hover:text-ink group-hover:translate-x-1.5 group-[.active]:text-brand";
+                    name.textContent = label;
+
+                    drawerItem.appendChild(num);
+                    drawerItem.appendChild(name);
+                    drawerItem.addEventListener("click", () => {
+                        swiper.slideTo(index);
+                        closeDrawer();
+                    });
+                    drawerLi.appendChild(drawerItem);
+                    drawerList.appendChild(drawerLi);
+                });
+
+                document
+                    .getElementById("navbarToggle")
+                    .addEventListener("click", openDrawer);
+
+                updateNavigation();
+            }
+
+            function updateNavigation() {
+                const currentIndex = swiper.activeIndex;
+                const totalSlides = swiper.slides.length;
+
+                document.getElementById("currentSlide").textContent = String(
+                    currentIndex + 1,
+                ).padStart(2, "0");
+
+                document
+                    .querySelectorAll(".rail-item")
+                    .forEach((item, index) => {
+                        item.classList.toggle("active", index === currentIndex);
+                    });
+
+                document.querySelectorAll(".nav-link").forEach((btn, index) => {
+                    btn.classList.toggle("active", index === currentIndex);
+                });
+
+                document
+                    .querySelectorAll(".drawer-item")
+                    .forEach((item, index) => {
+                        item.classList.toggle("active", index === currentIndex);
+                    });
+
+                // Utilizing HTML disabled attribute seamlessly integrates with Tailwind disabled variants
+                document.querySelector(".prev-btn").disabled =
+                    currentIndex === 0;
+                document.querySelector(".next-btn").disabled =
+                    currentIndex === totalSlides - 1;
+            }
+
+            // Modifying Tailwind utility classes via JS
+            function openDrawer() {
+                document
+                    .getElementById("drawerOverlay")
+                    .classList.remove("opacity-0", "pointer-events-none");
+                document
+                    .getElementById("drawerOverlay")
+                    .classList.add("opacity-100", "pointer-events-auto");
+                document
+                    .getElementById("drawer")
+                    .classList.remove("translate-x-full");
+                document
+                    .getElementById("drawer")
+                    .classList.add("translate-x-0");
+                document
+                    .getElementById("navbarToggle")
+                    .classList.add("opacity-0", "pointer-events-none");
+                document
+                    .getElementById("navRail")
+                    .classList.add("opacity-0", "pointer-events-none");
+                document
+                    .getElementById("navFooter")
+                    .classList.add("opacity-0", "pointer-events-none");
+            }
+
+            function closeDrawer() {
+                document
+                    .getElementById("drawerOverlay")
+                    .classList.add("opacity-0", "pointer-events-none");
+                document
+                    .getElementById("drawerOverlay")
+                    .classList.remove("opacity-100", "pointer-events-auto");
+                document
+                    .getElementById("drawer")
+                    .classList.add("translate-x-full");
+                document
+                    .getElementById("drawer")
+                    .classList.remove("translate-x-0");
+                document
+                    .getElementById("navbarToggle")
+                    .classList.remove("opacity-0", "pointer-events-none");
+                document
+                    .getElementById("navRail")
+                    .classList.remove("opacity-0", "pointer-events-none");
+                document
+                    .getElementById("navFooter")
+                    .classList.remove("opacity-0", "pointer-events-none");
+            }
+
+            swiper = new Swiper(".swiper", {
+                direction: "vertical",
+                slidesPerView: 1,
+                mousewheel: true,
+                keyboard: {
+                    enabled: true,
+                    onlyInViewport: true,
+                },
+                speed: 800,
+                on: {
+                    slideChange: updateNavigation,
+                },
+            });
+
+            initializeNavigation();
+
+            document
+                .getElementById("drawerClose")
+                .addEventListener("click", closeDrawer);
+            document
+                .getElementById("drawerOverlay")
+                .addEventListener("click", closeDrawer);
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeDrawer();
+            });
+
+            document
+                .querySelector(".prev-btn")
+                .addEventListener("click", () => {
+                    if (swiper.activeIndex > 0) swiper.slidePrev();
+                });
+            document
+                .querySelector(".next-btn")
+                .addEventListener("click", () => {
+                    if (swiper.activeIndex < swiper.slides.length - 1)
+                        swiper.slideNext();
+                });
+        </script>
+    </body>
+</html>
