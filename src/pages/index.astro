@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/hero-bg.jpeg';
 import Layout from '../layouts/Layout.astro';
 import UnaDentalCentarLogo from '../assets/una-dental-centar-logo.svg';
 
@@ -7,6 +9,7 @@ const sections = [
   { id: 'services', label: 'Services' },
   { id: 'about', label: 'About' },
   { id: 'gallery', label: 'Gallery' },
+  { id: 'testimonials', label: 'Testimonials' },
   { id: 'contact', label: 'Contact' },
 ];
 ---
@@ -104,4 +107,217 @@ const sections = [
       </ul>
     </nav>
   </nav-drawer>
+
+  <div
+    class="fixed right-5 md:right-8 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-3"
+    id="sectionDots"
+  >
+    {sections.map((s, index) => (
+      <button
+        class="section-dot w-2.5 h-2.5 rounded-full bg-ink/25 transition-all duration-250 data-active:bg-brand data-active:scale-125"
+        data-target={s.id}
+        aria-label={`Go to ${s.label}`}
+      ></button>
+    ))}
+  </div>
+
+  <main>
+    <div class="swiper section-swiper h-screen w-full">
+      <div class="swiper-wrapper">
+        <section
+          id="hero"
+          class="swiper-slide relative w-full h-full flex items-center overflow-hidden"
+        >
+          <Image
+            src={heroImage}
+            alt="Una Dental Centar treatment room"
+            class="absolute inset-0 w-full h-full object-cover"
+            widths={[640, 1024, 1600, 2000]}
+            sizes="100vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+
+          <div class="absolute inset-0 bg-linear-to-r from-ink/70 via-ink/40 to-ink/10"></div>
+
+          <div class="relative z-10 w-full max-w-7xl mx-auto px-gutter h-full flex items-center">
+            <div class="max-w-[46ch]">
+              <span class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3 md:mb-4">
+                Una Dental Centar
+              </span>
+
+              <h1 class="font-heading text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-on-brand mb-4 md:mb-6">
+                Dental Care,
+                <br />
+                Done Beautifully
+              </h1>
+
+              <p class="text-sm md:text-lg text-on-brand/85 leading-relaxed mb-6 md:mb-9">
+                Modern treatment in a space designed to put you at ease -
+                advanced equipment, careful hands, and a calm, welcoming clinic.
+              </p>
+
+              <a
+                href="#contact"
+                data-target="contact"
+                class="inline-block bg-brand text-on-brand px-6 py-3 md:px-7 md:py-3.5 rounded-full text-sm md:text-base font-semibold tracking-wide transition-all duration-300 shadow-cta hover:bg-brand-hover hover:-translate-y-0.5 hover:shadow-cta-lg"
+              >
+                Book Appointment
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="services"
+          class="swiper-slide relative w-full h-full flex items-center bg-surface"
+        >
+          <div class="w-full max-w-7xl mx-auto px-gutter">
+            <span class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3">
+              Services
+            </span>
+            <h2 class="font-heading text-2xl md:text-4xl font-extrabold tracking-tight leading-tight text-ink mb-4 max-w-[46ch]">
+              Everything Your Smile Needs
+            </h2>
+            <p class="text-sm md:text-lg text-ink-muted leading-relaxed max-w-[60ch]">
+              General checkups, cosmetic dentistry, orthodontics, and surgical
+              care — all under one roof.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="about"
+          class="swiper-slide relative w-full h-full flex items-center bg-surface"
+        >
+          <div class="w-full max-w-7xl mx-auto px-gutter">
+            <span class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3">
+              About
+            </span>
+            <h2 class="font-heading text-2xl md:text-4xl font-extrabold tracking-tight leading-tight text-ink mb-4 max-w-[46ch]">
+              Years of Careful, Modern Practice
+            </h2>
+            <p class="text-sm md:text-lg text-ink-muted leading-relaxed max-w-[60ch]">
+              Our team combines up-to-date equipment with a calm, patient-first
+              approach to every visit.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="gallery"
+          class="swiper-slide relative w-full h-full flex items-center bg-surface"
+        >
+          <div class="w-full max-w-7xl mx-auto px-gutter">
+            <span class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3">
+              Gallery
+            </span>
+            <h2 class="font-heading text-2xl md:text-4xl font-extrabold tracking-tight leading-tight text-ink mb-4 max-w-[46ch]">
+              A Look Inside Our Clinic
+            </h2>
+            <p class="text-sm md:text-lg text-ink-muted leading-relaxed max-w-[60ch]">
+              Photos of the treatment rooms, equipment, and reception area.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="testimonials"
+          class="swiper-slide relative w-full h-full flex items-center bg-surface"
+        >
+          <div class="w-full max-w-7xl mx-auto px-gutter">
+            <span class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3">
+              Testimonials
+            </span>
+            <h2 class="font-heading text-2xl md:text-4xl font-extrabold tracking-tight leading-tight text-ink mb-4 max-w-[46ch]">
+              What Our Patients Say
+            </h2>
+            <p class="text-sm md:text-lg text-ink-muted leading-relaxed max-w-[60ch]">
+              "Calm, professional, and genuinely painless — the best dental
+              visit I've had." — a patient review goes here.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="contact"
+          class="swiper-slide relative w-full h-full flex items-center bg-surface"
+        >
+          <div class="w-full max-w-7xl mx-auto px-gutter">
+            <span class="block text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-brand mb-3">
+              Contact
+            </span>
+            <h2 class="font-heading text-2xl md:text-4xl font-extrabold tracking-tight leading-tight text-ink mb-4 max-w-[46ch]">
+              Book Your Appointment
+            </h2>
+            <p class="text-sm md:text-lg text-ink-muted leading-relaxed max-w-[60ch]">
+              Reach out by phone, email, or the form below to schedule your
+              visit.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
 </Layout>
+
+<script>
+  import Swiper from 'swiper';
+  import { Mousewheel, Keyboard, A11y } from 'swiper/modules';
+
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+
+  function initSectionSwiper() {
+    const el = document.querySelector<HTMLElement>('.section-swiper');
+    if (!el || (el as any).swiper) return;
+
+    const slides = Array.from(el.querySelectorAll('.swiper-slide'));
+    const ids = slides.map((s) => s.id);
+
+    const swiper = new Swiper('.section-swiper', {
+      modules: [Mousewheel, Keyboard, A11y],
+      direction: 'vertical',
+      speed: 700,
+      mousewheel: { forceToAxis: true, sensitivity: 1 },
+      keyboard: { enabled: true },
+      a11y: { enabled: true },
+    });
+
+    const dots = Array.from(
+      document.querySelectorAll<HTMLElement>('.section-dot'),
+    );
+    const navLinks = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-target]'),
+    );
+
+    function setActive(index: number) {
+      const id = ids[index];
+      dots.forEach((d) => {
+        d.toggleAttribute('data-active', d.dataset.target === id);
+      });
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.dataset.target === id);
+      });
+    }
+
+    setActive(swiper.activeIndex);
+    swiper.on('slideChange', () => setActive(swiper.activeIndex));
+
+    // Intercept every nav link / dot / CTA with a data-target and route it
+    // through the swiper instead of a native anchor jump.
+    document.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>(
+        '[data-target]',
+      );
+      if (!target) return;
+      const idx = ids.indexOf(target.dataset.target ?? '');
+      if (idx === -1) return;
+      e.preventDefault();
+      swiper.slideTo(idx);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initSectionSwiper);
+  initSectionSwiper();
+</script>
