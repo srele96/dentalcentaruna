@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ridgeway Lido — 15 stacked cards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --deep: #0e4c6e;
+        --wash: #f4f0e6;
+        --sun: #ffc93c;
+        --coral: #ff6b4a;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      /* The tilted cards render wider than their layout box, which adds
+     horizontal scroll range. `clip` (not `hidden`) kills it without
+     creating a scroll container — `hidden` here would break sticky. */
+      html {
+        overflow-x: clip;
+        scroll-behavior: smooth;
+      }
+      /* Zero-height markers sitting in normal flow, one before each section.
+     They never stick, so their rect always reflects their real document
+     position and plain href="#id" links scroll correctly in BOTH
+     directions — which they don't when the target is a stuck section. */
+      .anchor {
+        display: block;
+        height: 0;
+        scroll-margin-top: 0;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      body {
+        overflow-x: clip;
+        font-family: Archivo, system-ui, sans-serif;
+        background: var(--deep);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---------- sticky stack ---------- */
+      /* --own / --next / view-timeline-name are assigned by the script below,
+     so this scales to any number of sections without more CSS. */
+      .sec {
+        position: sticky;
+        top: min(0px, calc(100svh - var(--h, 100svh)));
+        min-height: 100svh;
+      }
+
+      .card {
+        position: relative;
+        min-height: 100svh;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--fg, var(--deep));
+        /* rounded top edge makes the receding card read as a separate
+       object even when its colour is close to the page background */
+        border-radius: 20px 20px 0 0;
+        transform-origin: 50% calc(max(0px, var(--h, 100svh) - 100svh) + 50svh);
+        box-shadow: 0 -12px 24px rgb(14 76 110 / 0.3);
+        will-change: transform, opacity;
+      }
+
+      /* 6-colour cycle */
+      .sec:nth-child(6n + 1) .card {
+        --bg: var(--wash);
+      }
+      .sec:first-child .card {
+        border-radius: 0;
+      }
+      .sec:nth-child(6n + 2) .card {
+        --bg: #7fd1d8;
+      }
+      .sec:nth-child(6n + 3) .card {
+        --bg: var(--sun);
+      }
+      .sec:nth-child(6n + 4) .card {
+        --bg: #2b7fa8;
+        --fg: var(--wash);
+      }
+      .sec:nth-child(6n + 5) .card {
+        --bg: #e9e2d0;
+      }
+      .sec:nth-child(6n + 6) .card {
+        --bg: var(--deep);
+        --fg: var(--wash);
+      }
+
+      /* ---------- parallax stripes ---------- */
+      .bg {
+        position: absolute;
+        inset: 0 -30%;
+        pointer-events: none;
+        opacity: 0.45;
+        background-image: repeating-linear-gradient(
+          -12deg,
+          transparent 0 34px,
+          color-mix(in srgb, currentColor 14%, transparent) 34px 41px,
+          transparent 41px 76px
+        );
+      }
+
+      .blob {
+        position: absolute;
+        width: min(60vw, 400px);
+        aspect-ratio: 1 / 0.82;
+        right: -14vw;
+        top: 20%;
+        background: var(--coral);
+        border-radius: 58% 42% 46% 54% / 48% 56% 44% 52%;
+        opacity: 0.88;
+      }
+      .blob.alt {
+        left: -18vw;
+        right: auto;
+        top: 60%;
+        background: var(--deep);
+        width: min(50vw, 310px);
+      }
+
+      .shade {
+        position: absolute;
+        inset: 0;
+        background: var(--deep);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* ---------- content ---------- */
+      .content {
+        position: relative;
+        max-width: 40rem;
+        padding: clamp(4rem, 11svh, 7rem) clamp(1.5rem, 6vw, 4rem) 5rem;
+      }
+      h1,
+      h2 {
+        font-weight: 880;
+        font-stretch: 112%;
+        line-height: 0.92;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+      }
+      h1 {
+        font-size: clamp(3rem, 13.5vw, 7rem);
+      }
+      h2 {
+        font-size: clamp(2.2rem, 9vw, 4.4rem);
+      }
+      h3 {
+        font-size: 1.05rem;
+        font-weight: 800;
+        font-stretch: 112%;
+        margin-top: 1.7rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 3px solid var(--coral);
+        display: inline-block;
+      }
+      p {
+        font-size: 1.05rem;
+        margin-top: 0.75rem;
+        max-width: 33rem;
+        opacity: 0.82;
+      }
+      .lead {
+        font-size: 1.22rem;
+        font-weight: 500;
+        opacity: 1;
+        margin-top: 1.3rem;
+      }
+      .hint {
+        font-weight: 700;
+        color: var(--coral);
+        margin-top: 2.8rem;
+        opacity: 1;
+      }
+
+      ol,
+      ul {
+        padding-left: 1.3rem;
+        margin-top: 1rem;
+      }
+      li {
+        margin-top: 0.6rem;
+        font-size: 1.05rem;
+        opacity: 0.82;
+      }
+      li::marker {
+        color: var(--coral);
+        font-weight: 800;
+      }
+
+      .rows {
+        margin-top: 1.5rem;
+        border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+        max-width: 30rem;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.7rem 0;
+        border-bottom: 1px solid
+          color-mix(in srgb, currentColor 25%, transparent);
+        font-weight: 600;
+      }
+      .row span:last-child {
+        font-variant-numeric: tabular-nums;
+        opacity: 0.7;
+      }
+
+      .btn {
+        display: inline-block;
+        margin-top: 2.2rem;
+        padding: 1rem 1.8rem;
+        border-radius: 4px;
+        background: var(--sun);
+        color: var(--deep);
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .btn:focus-visible {
+        outline: 3px solid var(--coral);
+        outline-offset: 3px;
+      }
+
+      /* ---------- scroll-driven effects ---------- */
+      @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+          .card {
+            animation-name: land, recede;
+            animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1), linear;
+            animation-fill-mode: both, both;
+            animation-timeline: var(--own), var(--next, none);
+            animation-range:
+              entry 0% entry 92%,
+              entry 0% entry 100%;
+          }
+          /* first card never lands, last card never recedes */
+          .sec:first-child .card {
+            animation-name: recede;
+            animation-timing-function: linear;
+            animation-timeline: var(--next, none);
+            animation-range: entry 0% entry 100%;
+          }
+          .sec:last-child .card {
+            animation-name: land;
+            animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+            animation-timeline: var(--own);
+            animation-range: entry 0% entry 92%;
+          }
+          .sec:last-child .shade {
+            animation: none;
+          }
+
+          .shade {
+            animation: dim linear both;
+            animation-timeline: var(--next, none);
+            animation-range: entry 0% entry 100%;
+          }
+          .bg {
+            animation: slide linear both;
+            animation-timeline: var(--own);
+            animation-range: cover 0% cover 100%;
+          }
+          .blob {
+            animation: float linear both;
+            animation-timeline: var(--own);
+            animation-range: cover 0% cover 100%;
+          }
+          .content {
+            animation: rise linear both;
+            animation-timeline: var(--own);
+            animation-range: entry 30% entry 95%;
+            will-change: transform, opacity;
+          }
+        }
+      }
+
+      @keyframes land {
+        from {
+          transform: perspective(1400px) rotateX(11deg) translateY(3svh);
+        }
+        to {
+          transform: perspective(1400px) rotateX(0deg) translateY(0);
+        }
+      }
+      /* discrete visibility drops covered cards out of paint + composite.
+     Opacity fades to 0 first, so the flip lands on an already-invisible
+     card — otherwise it snaps in the shrink gap and the corner radii. */
+      @keyframes recede {
+        0% {
+          scale: 1;
+          opacity: 1;
+          visibility: visible;
+        }
+        82% {
+          opacity: 1;
+        }
+        99% {
+          scale: 0.93;
+          opacity: 0;
+          visibility: visible;
+        }
+        100% {
+          scale: 0.93;
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+      @keyframes dim {
+        to {
+          opacity: 0.45;
+        }
+      }
+      @keyframes slide {
+        from {
+          translate: -8% 0;
+        }
+        to {
+          translate: 8% 0;
+        }
+      }
+      @keyframes float {
+        from {
+          translate: 0 14%;
+          rotate: -6deg;
+        }
+        to {
+          translate: 0 -14%;
+          rotate: 6deg;
+        }
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          translate: -18px 0;
+        }
+        to {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+
+      /* ---------- menu ---------- */
+      .menu-btn {
+        position: fixed;
+        z-index: 30;
+        top: clamp(0.9rem, 2.5vw, 1.6rem);
+        right: clamp(0.9rem, 2.5vw, 1.6rem);
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-content: center;
+        gap: 5px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--deep);
+        box-shadow: 0 4px 16px rgb(0 0 0 / 0.28);
+        cursor: pointer;
+      }
+      .menu-btn span {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: var(--wash);
+        transition:
+          transform 0.28s ease,
+          opacity 0.2s ease;
+      }
+      .menu-btn:focus-visible {
+        outline: 3px solid var(--coral);
+        outline-offset: 3px;
+      }
+      .menu-btn[aria-expanded='true'] {
+        background: var(--coral);
+      }
+      .menu-btn[aria-expanded='true'] span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .menu-btn[aria-expanded='true'] span:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-btn[aria-expanded='true'] span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      .scrim {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        background: rgb(4 22 33 / 0.55);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s ease,
+          visibility 0.3s;
+      }
+      .scrim.on {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .panel {
+        position: fixed;
+        z-index: 25;
+        top: 0;
+        right: 0;
+        width: min(88vw, 380px);
+        height: 100svh;
+        background: var(--deep);
+        color: var(--wash);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 6.5rem clamp(1.4rem, 5vw, 2.2rem) 2.5rem;
+        translate: 100% 0;
+        transition: translate 0.38s cubic-bezier(0.3, 0.8, 0.3, 1);
+        box-shadow: -18px 0 46px rgb(0 0 0 / 0.35);
+      }
+      .panel.on {
+        translate: 0 0;
+      }
+
+      .panel h2 {
+        font-size: 0.8rem;
+        font-weight: 800;
+        font-stretch: 112%;
+        letter-spacing: 0.04em;
+        opacity: 0.55;
+        margin-bottom: 0.9rem;
+      }
+      .panel ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        counter-reset: n;
+      }
+      .panel li {
+        margin: 0;
+      }
+      .panel a {
+        counter-increment: n;
+        text-decoration: none;
+        width: 100%;
+        display: flex;
+        align-items: baseline;
+        gap: 0.8rem;
+        appearance: none;
+        border: 0;
+        background: none;
+        padding: 0.72rem 0;
+        border-bottom: 1px solid rgb(244 240 230 / 0.14);
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1.02rem;
+        font-weight: 600;
+        transition:
+          color 0.2s ease,
+          padding-left 0.2s ease;
+      }
+      .panel a::before {
+        content: counter(n, decimal-leading-zero);
+        font-size: 0.72rem;
+        font-weight: 800;
+        opacity: 0.45;
+        font-variant-numeric: tabular-nums;
+      }
+      .panel a:hover {
+        padding-left: 0.4rem;
+      }
+      .panel a[aria-current='true'] {
+        color: var(--sun);
+      }
+      .panel a[aria-current='true']::before {
+        opacity: 1;
+        color: var(--coral);
+      }
+      .panel a:focus-visible {
+        outline: 2px solid var(--coral);
+        outline-offset: 2px;
+      }
+
+      @media (min-width: 900px) {
+        .panel {
+          padding-top: 7.5rem;
+        }
+        .panel a {
+          font-size: 1.08rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .panel,
+        .scrim,
+        .menu-btn span,
+        .panel a {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stack">
+      <span class="anchor" id="fifty-metres-of-cold"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="blob"></div>
+          <div class="content">
+            <h1>Fifty metres of cold, clean water</h1>
+            <p class="lead">
+              Ridgeway Lido has been open to swimmers since 1934. Unheated,
+              outdoors, and open every day of the year.
+            </p>
+            <p class="hint">Scroll to explore</p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="swim-before-work"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>Swim before work</h2>
+            <p class="lead">
+              Lanes open at 6am, and the water is usually glassy until about
+              half past seven.
+            </p>
+            <p>
+              Three roped lanes run the full length: slow, medium and fast. The
+              rest of the pool stays open for anyone who'd rather just float.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="the-water-month-by"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>The water, month by month</h2>
+            <p class="lead">
+              No heating, so the pool follows the weather. This card is long on
+              purpose — it scrolls fully before the next one covers it.
+            </p>
+            <h3>January to March</h3>
+            <p>
+              Four to eight degrees. Swims are short and loud. The sauna hut
+              runs all morning and there's always someone in it telling you it's
+              character-building.
+            </p>
+            <h3>April to June</h3>
+            <p>
+              Eleven to seventeen degrees. The nicest stretch of the year: long
+              light, warming water, and mornings quiet enough to have a lane to
+              yourself.
+            </p>
+            <h3>July to September</h3>
+            <p>
+              Eighteen to twenty-two degrees. Busy. Come early or come late, and
+              bring something to sit on for the lawn.
+            </p>
+            <h3>October to December</h3>
+            <p>
+              Back down through the teens into single figures. Steam sits on the
+              surface at dawn, which is worth the alarm on its own.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="what-it-costs"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="blob alt"></div>
+          <div class="content">
+            <h2>What it costs</h2>
+            <div class="rows">
+              <div class="row"><span>Single swim</span><span>£6.50</span></div>
+              <div class="row"><span>Ten-swim card</span><span>£55</span></div>
+              <div class="row">
+                <span>Annual membership</span><span>£340</span>
+              </div>
+              <div class="row"><span>Under 16s</span><span>Free</span></div>
+            </div>
+            <p>
+              Membership includes the sauna and the changing village. Towels are
+              £3 to hire if you forget yours, which you will.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="opening-hours"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>Opening hours</h2>
+            <div class="rows">
+              <div class="row">
+                <span>Monday to Friday</span><span>06:00 – 21:00</span>
+              </div>
+              <div class="row">
+                <span>Saturday</span><span>07:00 – 20:00</span>
+              </div>
+              <div class="row">
+                <span>Sunday</span><span>07:00 – 18:00</span>
+              </div>
+              <div class="row">
+                <span>Christmas Day</span><span>08:00 – 11:00</span>
+              </div>
+            </div>
+            <p>
+              Last entry is an hour before closing. The pool clears ten minutes
+              early so the lifeguards can do their sweep.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="your-first-cold-swim"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="blob"></div>
+          <div class="content">
+            <h2>Your first cold swim</h2>
+            <p class="lead">
+              The shock is real but short. Everything below is what the
+              lifeguards tell newcomers at the steps.
+            </p>
+            <h3>Go in slowly</h3>
+            <p>
+              Walk down the steps rather than jumping. Give your breathing
+              thirty seconds to settle before you start swimming.
+            </p>
+            <h3>Breathe out, not in</h3>
+            <p>
+              The gasp reflex makes you inhale sharply. Long slow exhales are
+              the fastest way to override it.
+            </p>
+            <h3>Stay where you can stand</h3>
+            <p>
+              For your first few visits, keep to the shallow end and swim across
+              rather than along.
+            </p>
+            <h3>Get out earlier than you want to</h3>
+            <p>
+              You keep cooling for twenty minutes after you leave the water. Two
+              minutes is a perfectly good first swim in winter.
+            </p>
+            <h3>Warm up slowly</h3>
+            <p>
+              Dry clothes and a hot drink, not a hot shower. Heating your skin
+              too fast makes you feel worse, not better.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="the-sauna-hut"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>The sauna hut</h2>
+            <p class="lead">
+              A wood-fired cabin for twelve people, at the deep end.
+            </p>
+            <p>
+              Lit at 6am and kept going until close. Free with membership, £4
+              otherwise. Bring a towel to sit on — it's a rule, not a
+              suggestion.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="lane-etiquette"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="blob alt"></div>
+          <div class="content">
+            <h2>Lane etiquette</h2>
+            <ul>
+              <li>
+                Pick your lane by pace, not ambition. Move down if you're being
+                overtaken repeatedly.
+              </li>
+              <li>Swim anticlockwise, keeping to the right of the rope.</li>
+              <li>Overtake at the wall, not mid-length.</li>
+              <li>Stop in the corner so the wall stays clear for turns.</li>
+              <li>
+                If someone taps your foot, let them past at the next wall.
+              </li>
+            </ul>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="lessons"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>Lessons</h2>
+            <p class="lead">
+              Small groups, four to a coach, in the shallow lanes on weekday
+              evenings.
+            </p>
+            <div class="rows">
+              <div class="row">
+                <span>Adult beginners</span><span>Tue 18:30</span>
+              </div>
+              <div class="row">
+                <span>Stroke improvement</span><span>Wed 19:00</span>
+              </div>
+              <div class="row">
+                <span>Open-water prep</span><span>Thu 18:00</span>
+              </div>
+              <div class="row">
+                <span>Children, 6 to 11</span><span>Sat 09:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="the-1934-building"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>The 1934 building</h2>
+            <p class="lead">
+              Concrete, curved, and Grade II listed since 1998.
+            </p>
+            <p>
+              The changing village on the north side is original, down to the
+              terrazzo floor. The filtration plant underneath it is not — that
+              was replaced in 2019 after a two-year fundraising campaign by the
+              members.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="events-through-the-year"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="blob"></div>
+          <div class="content">
+            <h2>Events through the year</h2>
+            <h3>New Year's Day dip</h3>
+            <p>
+              Eleven in the morning, about four hundred people, and a queue for
+              the sauna that lasts until lunchtime.
+            </p>
+            <h3>The Long Swim, June</h3>
+            <p>
+              Five kilometres in relay teams of four, run overnight under
+              floodlights. Entry opens in March and fills in a week.
+            </p>
+            <h3>Midsummer late night</h3>
+            <p>
+              The pool stays open until midnight on the longest day, with the
+              underwater lights on.
+            </p>
+            <h3>Halloween splash</h3>
+            <p>
+              Costumes in the water, which is harder than it sounds. Judged from
+              the balcony.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="getting-here"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>Getting here</h2>
+            <p class="lead">
+              Ridgeway Lane, five minutes' walk from Ridgeway station.
+            </p>
+            <p>
+              Buses 12 and 44 stop at the top of the lane. Twenty parking spaces
+              on site, free for two hours, and they're gone by eight on a summer
+              Saturday.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="the-caf"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="blob alt"></div>
+          <div class="content">
+            <h2>The café</h2>
+            <p class="lead">
+              Porridge, toasties, and the strongest tea in the county.
+            </p>
+            <p>
+              Open from 6.30am. Wet swimmers welcome on the terrace, towels
+              required on the indoor chairs.
+            </p>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="volunteering"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>Volunteering</h2>
+            <p class="lead">
+              The lido is run by a members' trust, and about sixty people keep
+              it going.
+            </p>
+            <ul>
+              <li>Morning gate shifts, two hours, once a fortnight.</li>
+              <li>Sauna stoking, which mostly means carrying logs.</li>
+              <li>Poolside painting weekends each April.</li>
+              <li>Helping at lessons, if you hold a teaching qualification.</li>
+            </ul>
+          </div>
+          <div class="shade"></div>
+        </div>
+      </section>
+
+      <span class="anchor" id="first-time-here"></span>
+      <section class="sec">
+        <div class="card">
+          <div class="bg"></div>
+          <div class="content">
+            <h2>First time here?</h2>
+            <p class="lead">
+              Book a free induction. Someone will walk you through the
+              cold-water basics and stay in the water with you.
+            </p>
+            <a class="btn" href="#">Book an induction</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      aria-expanded="false"
+      aria-controls="panel"
+      aria-label="Open menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
+    <div class="scrim" id="scrim" hidden></div>
+    <aside class="panel" id="panel" aria-label="Sections">
+      <h2>Jump to</h2>
+      <ol id="panelList"></ol>
+    </aside>
+
+    <script>
+      const stack = document.querySelector('.stack');
+      const secs = [...stack.querySelectorAll('.sec')];
+      const names = secs.map((_, i) => `--s${i + 1}`);
+
+      // one scope for all the named timelines, so siblings can reference each other
+      stack.style.setProperty('timeline-scope', names.join(', '));
+
+      secs.forEach((s, i) => {
+        s.style.setProperty('view-timeline-name', names[i]);
+        s.style.setProperty('--own', names[i]);
+        if (names[i + 1]) s.style.setProperty('--next', names[i + 1]);
+      });
+
+      // batched, and skips updates where the height didn't actually change
+      const ro = new ResizeObserver((entries) => {
+        requestAnimationFrame(() => {
+          for (const e of entries) {
+            const h = e.target.offsetHeight;
+            if (e.target._h === h) continue;
+            e.target._h = h;
+            e.target.style.setProperty('--h', h + 'px');
+          }
+        });
+      });
+      secs.forEach((s) => ro.observe(s));
+
+      // ---- slide-in menu: labels come from each card's own heading ----
+      const menuBtn = document.getElementById('menuBtn');
+      const panel = document.getElementById('panel');
+      const scrim = document.getElementById('scrim');
+      const list = document.getElementById('panelList');
+
+      // Real links now — the .anchor markers make href="#id" work in both
+      // directions, so no scroll maths here. Back/forward and shareable
+      // URLs work too.
+      const anchors = [...document.querySelectorAll('.anchor')];
+
+      const links = secs.map((s, i) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#' + anchors[i].id;
+        a.textContent = s.querySelector('h1, h2').textContent.trim();
+        a.addEventListener('click', () => setOpen(false));
+        li.append(a);
+        list.append(li);
+        return a;
+      });
+
+      function setOpen(open) {
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        panel.classList.toggle('on', open);
+        scrim.classList.toggle('on', open);
+        scrim.hidden = !open;
+        if (open) panel.querySelector('a').focus();
+      }
+
+      menuBtn.addEventListener('click', () =>
+        setOpen(menuBtn.getAttribute('aria-expanded') !== 'true'),
+      );
+      scrim.addEventListener('click', () => setOpen(false));
+      document.addEventListener('keydown', (e) => {
+        if (
+          e.key === 'Escape' &&
+          menuBtn.getAttribute('aria-expanded') === 'true'
+        ) {
+          setOpen(false);
+          menuBtn.focus();
+        }
+      });
+
+      // highlight whichever section is crossing the middle of the viewport
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            const i = secs.indexOf(e.target);
+            links.forEach((a, j) =>
+              a.setAttribute('aria-current', j === i ? 'true' : 'false'),
+            );
+          }
+        },
+        { rootMargin: '-50% 0px -50% 0px' },
+      );
+      secs.forEach((s) => io.observe(s));
+    </script>
+  </body>
+</html>

@@ -356,7 +356,7 @@ const ui = {
               class={`${ui.container} h-full flex flex-col pt-24 pb-6 md:pt-28 md:pb-10`}
             >
               <div class="flex-1 flex items-center">
-                <div class="max-w-[38rem]">
+                <div class="max-w-152">
                   <h1
                     id="hero-title"
                     class="font-heading font-extrabold tracking-tight text-on-brand text-balance text-[clamp(2.75rem,8vw,6rem)] leading-[0.92] mb-5 md:mb-7"
@@ -533,7 +533,7 @@ const ui = {
                 </p>
               </div>
 
-              <ul class="flex gap-3 md:gap-4 list-none overflow-x-auto snap-x snap-mandatory -mx-gutter px-gutter scroll-px-gutter pb-2 [scrollbar-width:none] md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-4 md:grid-rows-2 md:overflow-visible md:h-[min(52vh,520px)]">
+              <ul class="flex gap-3 md:gap-4 list-none overflow-x-auto snap-x snap-mandatory -mx-gutter px-gutter scroll-px-gutter pb-2 scrollbar-none md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-4 md:grid-rows-2 md:overflow-visible md:h-[min(52vh,520px)]">
                 {gallery.map((item) => (
                   <li
                     class={`relative shrink-0 w-[72vw] sm:w-[44vw] aspect-4/5 md:w-auto md:aspect-auto snap-start overflow-hidden rounded-2xl bg-brand/10 ${item.span ?? ''}`}
