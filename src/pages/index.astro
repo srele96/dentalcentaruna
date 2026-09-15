@@ -1,169 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import heroImage from '../assets/hero-bg.jpeg';
 import Layout from '../layouts/Layout.astro';
 import UnaDentalCentarLogo from '../assets/una-dental-centar-logo.svg';
-
-type Tone = 'light' | 'dark';
-
-// `tone` tells the fixed top bar and the side rail whether they sit on a
-// light or dark slide, so they can flip colours and stay readable.
-const sections: { id: string; label: string; tone: Tone }[] = [
-  { id: 'hero', label: 'Home', tone: 'dark' },
-  { id: 'services', label: 'Treatments', tone: 'light' },
-  { id: 'about', label: 'About', tone: 'light' },
-  { id: 'gallery', label: 'Clinic', tone: 'light' },
-  { id: 'testimonials', label: 'Reviews', tone: 'dark' },
-  { id: 'contact', label: 'Contact', tone: 'light' },
-];
-const toneOf = (id: string) =>
-  sections.find((s) => s.id === id)?.tone ?? 'light';
-
-// TODO: replace with the clinic's real details
-const clinic = {
-  phone: '+381 11 000 0000',
-  phoneHref: 'tel:+381110000000',
-  email: 'info@unadentalcentar.rs',
-  street: 'Street name 12',
-  city: 'Postcode, City',
-  mapHref: 'https://maps.google.com/?q=Una+Dental+Centar',
-  reviewsHref: 'https://maps.google.com/?q=Una+Dental+Centar',
-  hours: [
-    { days: 'Mon–Fri', time: '9:00–20:00' },
-    { days: 'Sat', time: '9:00–14:00' },
-    { days: 'Sun', time: 'Closed' },
-  ],
-  hoursShort: 'Mon–Fri 9–20 · Sat 9–14',
-};
-
-// TODO: confirm these are true for the clinic before going live
-const reassurances = [
-  'Same-week appointments',
-  'Anxious patients welcome',
-  'Pay in instalments',
-];
-
-const services = [
-  {
-    name: 'Checkups & hygiene',
-    desc: 'Exams, digital X-rays, scaling and polishing.',
-  },
-  {
-    name: 'Fillings & root canals',
-    desc: 'Tooth-coloured fillings and root canal care that saves the tooth.',
-  },
-  {
-    name: 'Whitening',
-    desc: 'In-clinic and take-home whitening, matched to your shade.',
-  },
-  {
-    name: 'Veneers & crowns',
-    desc: 'Ceramic restorations shaped to suit your face.',
-  },
-  {
-    name: 'Orthodontics',
-    desc: 'Braces and clear aligners for teens and adults.',
-  },
-  {
-    name: 'Implants & surgery',
-    desc: 'Implants, extractions and wisdom teeth, done gently.',
-  },
-];
-
-const steps = [
-  {
-    title: 'Talk it through',
-    desc: 'Tell us what bothers you, what you want and what worries you.',
-  },
-  {
-    title: 'Examine and plan',
-    desc: 'A full exam and X-rays, then a written plan with prices and timing.',
-  },
-  {
-    title: 'Treat at your pace',
-    desc: 'Numbing as standard, and a break whenever you raise your hand.',
-  },
-  {
-    title: 'Follow up',
-    desc: 'A check-in after treatment and a reminder when your next visit is due.',
-  },
-];
-
-// Items without `src` render as tinted placeholders — drop real photos in.
-const gallery: {
-  src?: ImageMetadata;
-  alt: string;
-  caption: string;
-  span?: string;
-}[] = [
-  {
-    src: heroImage,
-    alt: 'Treatment room with a modern dental chair',
-    caption: 'Treatment room',
-    span: 'md:col-span-2 md:row-span-2',
-  },
-  {
-    alt: 'Reception and waiting area',
-    caption: 'Reception',
-    span: 'md:col-span-2',
-  },
-  { alt: 'Sterilisation room', caption: 'Sterilisation' },
-  { alt: 'Digital X-ray and 3D imaging equipment', caption: 'Digital imaging' },
-];
-
-// TODO: sample reviews — replace with real ones (with permission)
-const featured = {
-  quote:
-    "I avoided the dentist for six years because I was scared. Here they explained every step, stopped whenever I raised my hand, and I didn't even feel the injection.",
-  name: 'Marija P.',
-  treatment: 'root canal and fillings',
-};
-const reviews = [
-  {
-    quote:
-      'Every price was in the treatment plan before we started. No surprises on the bill.',
-    name: 'Nikola S.',
-    treatment: 'implant',
-  },
-  {
-    quote: 'My son actually asks when his next checkup is. That says it all.',
-    name: 'Jelena M.',
-    treatment: 'family checkups',
-  },
-];
-
-const year = new Date().getFullYear();
-
-const ui = {
-  container:
-    'relative w-full max-w-7xl mx-auto px-gutter sm:pr-20 2xl:pr-gutter',
-  slide: 'swiper-slide relative w-full h-full overflow-hidden',
-  h2: 'font-heading text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.05] text-balance',
-  lead: 'text-sm md:text-lg leading-relaxed max-w-[46ch]',
-  btnPrimary:
-    'inline-flex items-center justify-center rounded-full bg-brand text-on-brand px-6 py-3 md:px-7 md:py-3.5 text-sm md:text-base font-semibold tracking-wide shadow-cta transition-all duration-300 hover:bg-brand-hover hover:-translate-y-0.5 hover:shadow-cta-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand',
-  link: 'rounded-sm font-semibold underline decoration-2 underline-offset-4 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand',
-};
 ---
 
 <Layout title="Home">
-  <div id="page" data-tone="dark" class="contents">
+  <div id="page" class="contents">
     <nav-drawer class="contents group/drawer">
-      <!-- Top bar: colours follow the active slide via [data-tone] on #page -->
       <nav
         aria-label="Main"
         class="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-edge py-bar-y pointer-events-none [--bar-fg:var(--color-ink)] in-data-[tone=dark]:[--bar-fg:var(--color-on-brand)]"
       >
-        <div
-          aria-hidden="true"
-          class="absolute inset-x-0 top-0 h-[160%] -z-10 bg-linear-to-b from-surface/95 via-surface/70 to-transparent transition-opacity duration-500 in-data-[tone=dark]:opacity-0"
-        ></div>
-        <div
-          aria-hidden="true"
-          class="absolute inset-x-0 top-0 h-[160%] -z-10 bg-linear-to-b from-ink/60 to-transparent opacity-0 transition-opacity duration-500 in-data-[tone=dark]:opacity-100"
-        ></div>
-
         <a
           href="#hero"
           data-target="hero"
@@ -175,25 +23,21 @@ const ui = {
 
         <div class="hidden md:flex items-center gap-9 pointer-events-auto">
           <ul class="flex gap-8 list-none" id="navbarLinks">
-            {sections
-              .filter((s) => s.id !== 'hero')
-              .map((s) => (
-                <li>
-                  <a
-                    href={`#${s.id}`}
-                    class="nav-link group/link relative block py-1.5 font-sans text-sm font-semibold tracking-wide text-(--bar-fg)/70 transition-colors duration-300 hover:text-(--bar-fg) data-active:text-(--bar-fg) rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-                    data-action="close"
-                    data-target={s.id}
-                    data-nav
-                  >
-                    {s.label}
-                    <span
-                      aria-hidden="true"
-                      class="absolute inset-x-0 -bottom-0.5 h-0.5 rounded-full bg-brand origin-left scale-x-0 transition-transform duration-300 group-data-active/link:scale-x-100"
-                    ></span>
-                  </a>
-                </li>
-              ))}
+            <li>
+              <a
+                href="#hero"
+                class="nav-link group/link relative block py-1.5 font-sans text-sm font-semibold tracking-wide text-(--bar-fg)/70 transition-colors duration-300 hover:text-(--bar-fg) data-active:text-(--bar-fg) rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+                data-action="close"
+                data-target="hero"
+                data-nav
+              >
+                Home
+                <span
+                  aria-hidden="true"
+                  class="absolute inset-x-0 -bottom-0.5 h-0.5 rounded-full bg-brand origin-left scale-x-0 transition-transform duration-300 group-data-active/link:scale-x-100"
+                ></span>
+              </a>
+            </li>
           </ul>
 
           <a
@@ -252,39 +96,38 @@ const ui = {
         </div>
 
         <ul class="list-none flex flex-col" id="drawerList">
-          {sections.map((s, index) => (
-            <li class="border-t border-line py-4 md:py-6 last:border-b">
-              <a
-                href={`#${s.id}`}
-                class="drawer-item group flex items-baseline gap-4 md:gap-5 w-full cursor-pointer text-left"
-                data-target={s.id}
-                data-action="close"
-                data-nav
-              >
-                <span class="drawer-num text-xs md:text-sm font-semibold text-ink-subtle tabular-nums shrink-0 group-[.active]:text-brand">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span class="drawer-name font-heading text-xl md:text-3xl font-bold tracking-tight text-ink-subtle transition-all duration-250 group-hover:text-ink group-hover:translate-x-1.5 group-[.active]:text-brand">
-                  {s.label}
-                </span>
-              </a>
-            </li>
-          ))}
+          <li class="border-t border-line py-4 md:py-6 last:border-b">
+            <a
+              href="#hero"
+              class="drawer-item group flex items-baseline gap-4 md:gap-5 w-full cursor-pointer text-left"
+              data-target="hero"
+              data-action="close"
+              data-nav
+            >
+              <span class="drawer-num text-xs md:text-sm font-semibold text-ink-subtle tabular-nums shrink-0 group-[.active]:text-brand">
+                01
+              </span>
+              <span class="drawer-name font-heading text-xl md:text-3xl font-bold tracking-tight text-ink-subtle transition-all duration-250 group-hover:text-ink group-hover:translate-x-1.5 group-[.active]:text-brand">
+                Home
+              </span>
+            </a>
+          </li>
         </ul>
 
         <div class="mt-auto pt-10 flex flex-col gap-3">
+          <!-- TODO: replace with the clinic's real phone and hours -->
           <a
-            href={clinic.phoneHref}
+            href="tel:+381110000000"
             class="w-fit font-heading text-2xl font-bold tracking-tight text-ink tabular-nums transition-colors hover:text-brand"
           >
-            {clinic.phone}
+            +381 11 000 0000
           </a>
-          <p class="text-sm text-ink-muted">{clinic.hoursShort}</p>
+          <p class="text-sm text-ink-muted">Mon–Fri 9–20 · Sat 9–14</p>
           <a
             href="#contact"
             data-target="contact"
             data-action="close"
-            class={`${ui.btnPrimary} mt-3`}
+            class="inline-flex items-center justify-center rounded-full bg-brand text-on-brand px-6 py-3 md:px-7 md:py-3.5 text-sm md:text-base font-semibold tracking-wide shadow-cta transition-all duration-300 hover:bg-brand-hover hover:-translate-y-0.5 hover:shadow-cta-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand mt-3"
           >
             Book an appointment
           </a>
@@ -292,553 +135,92 @@ const ui = {
       </nav>
     </nav-drawer>
 
-    <!-- Side rail: hover to reveal all labels, active section is the long bar -->
-    <nav
-      id="sectionRail"
-      aria-label="Page sections"
-      class="group/rail fixed right-3 md:right-6 top-1/2 -translate-y-1/2 z-40 hidden sm:block [--rail:var(--color-ink)] in-data-[tone=dark]:[--rail:var(--color-on-brand)]"
-    >
-      <ol class="flex flex-col items-end list-none">
-        {sections.map((s) => (
-          <li>
-            <button
-              type="button"
-              class="rail-item group/item flex h-8 items-center justify-end gap-3 pl-4 pr-1 cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-              data-target={s.id}
-              data-nav
-            >
-              <span class="text-xs font-semibold tracking-wide whitespace-nowrap text-(--rail)/75 opacity-0 translate-x-1 transition-all duration-300 group-hover/rail:opacity-100 group-hover/rail:translate-x-0 group-focus-within/rail:opacity-100 group-focus-within/rail:translate-x-0 group-hover/item:text-(--rail) group-data-active/item:text-brand">
-                {s.label}
-              </span>
-              <span
-                aria-hidden="true"
-                class="block h-0.5 w-3 rounded-full bg-(--rail)/35 transition-all duration-300 ease-drawer group-hover/item:w-5 group-hover/item:bg-(--rail)/80 group-data-active/item:w-8 group-data-active/item:bg-brand"
-              ></span>
-            </button>
-          </li>
-        ))}
-      </ol>
-    </nav>
-
     <main>
-      <div class="swiper section-swiper h-dvh w-full">
-        <div class="swiper-wrapper">
-          <!-- HERO -->
-          <section
-            id="hero"
-            data-slide-tone={toneOf('hero')}
-            aria-labelledby="hero-title"
-            class={`${ui.slide} bg-ink`}
-          >
-            <Image
-              src={heroImage}
-              alt="Treatment room at Una Dental Centar"
-              class="absolute inset-0 w-full h-full object-cover"
-              widths={[640, 1024, 1600, 2000]}
-              sizes="100vw"
-              loading="eager"
-              fetchpriority="high"
-            />
-            <div
-              aria-hidden="true"
-              class="absolute inset-0 bg-linear-to-r from-ink/80 via-ink/45 to-ink/10"
-            ></div>
-            <div
-              aria-hidden="true"
-              class="absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-ink/70 to-transparent"
-            ></div>
-            <div
-              aria-hidden="true"
-              class="absolute inset-y-0 right-0 hidden sm:block w-40 bg-linear-to-l from-ink/40 to-transparent"
-            ></div>
+      <!-- HERO -->
+      <section
+        id="hero"
+        aria-labelledby="hero-title"
+        class="relative w-full h-dvh overflow-hidden bg-ink"
+      >
+        <Image
+          src={heroImage}
+          alt="Treatment room at Una Dental Centar"
+          class="absolute inset-0 w-full h-full object-cover"
+          widths={[640, 1024, 1600, 2000]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 bg-linear-to-r from-ink/80 via-ink/45 to-ink/10"
+        ></div>
+        <div
+          aria-hidden="true"
+          class="absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-ink/70 to-transparent"
+        ></div>
+        <div
+          aria-hidden="true"
+          class="absolute inset-y-0 right-0 hidden sm:block w-40 bg-linear-to-l from-ink/40 to-transparent"
+        ></div>
 
-            <div
-              class={`${ui.container} h-full flex flex-col pt-24 pb-6 md:pt-28 md:pb-10`}
-            >
-              <div class="flex-1 flex items-center">
-                <div class="max-w-152">
-                  <h1
-                    id="hero-title"
-                    class="font-heading font-extrabold tracking-tight text-on-brand text-balance text-[clamp(2.75rem,8vw,6rem)] leading-[0.92] mb-5 md:mb-7"
-                  >
-                    Dentistry without the dread.
-                  </h1>
-                  <p class="text-base md:text-xl text-on-brand/85 leading-relaxed max-w-[40ch] mb-7 md:mb-10">
-                    Careful hands, clear explanations and modern equipment, so
-                    every visit feels calm, unhurried and under your control.
-                  </p>
-                  <div class="flex flex-wrap items-center gap-x-7 gap-y-4">
-                    <a
-                      href="#contact"
-                      data-target="contact"
-                      class={ui.btnPrimary}
-                    >
-                      Book an appointment
-                    </a>
-                    <a
-                      href="#services"
-                      data-target="services"
-                      class={`${ui.link} text-sm md:text-base text-on-brand decoration-on-brand/40 hover:decoration-on-brand`}
-                    >
-                      Explore treatments
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex items-end justify-between gap-6 border-t border-on-brand/20 pt-4 md:pt-6 [@media(max-height:560px)]:hidden">
-                <ul class="grid grid-cols-3 gap-4 md:flex md:gap-12 list-none text-xs md:text-sm font-medium leading-snug text-on-brand/85">
-                  {reassurances.map((r) => (
-                    <li>{r}</li>
-                  ))}
-                </ul>
-                <button
-                  type="button"
-                  data-target="services"
-                  aria-label="Next section: Treatments"
-                  class="hidden sm:flex shrink-0 w-11 h-11 items-center justify-center rounded-full border border-on-brand/30 text-on-brand transition-colors duration-300 hover:bg-on-brand hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 5v14M6 13l6 6 6-6" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </section>
-
-          <!-- SERVICES -->
-          <section
-            id="services"
-            data-slide-tone={toneOf('services')}
-            aria-labelledby="services-title"
-            class={`${ui.slide} bg-surface`}
-          >
-            <div
-              class={`${ui.container} h-full flex flex-col justify-center pt-20 pb-8 md:pt-28 md:pb-14`}
-            >
-              <div class="grid md:grid-cols-12 gap-7 md:gap-12 items-start">
-                <header class="md:col-span-5 lg:col-span-4">
-                  <h2
-                    id="services-title"
-                    class={`${ui.h2} text-ink mb-4 md:mb-5`}
-                  >
-                    Everything from a checkup to a new smile.
-                  </h2>
-                  <p class={`${ui.lead} text-ink-muted md:mb-8`}>
-                    One clinic for the whole family. General dentists and
-                    specialists work side by side, so you're never sent across
-                    town for a second opinion.
-                  </p>
-                  <a
-                    href="#contact"
-                    data-target="contact"
-                    class={`${ui.link} hidden md:inline-block text-base text-ink decoration-brand hover:text-brand`}
-                  >
-                    Ask about a treatment
-                  </a>
-                </header>
-
-                <ul class="md:col-span-7 lg:col-span-8 grid grid-cols-2 lg:grid-cols-3 gap-x-5 md:gap-x-8 list-none border-t border-line">
-                  {services.map((s) => (
-                    <li class="border-b border-line py-4 md:py-6">
-                      <h3 class="font-heading text-base md:text-xl font-bold tracking-tight text-ink leading-snug mb-1 md:mb-2">
-                        {s.name}
-                      </h3>
-                      <p class="hidden sm:block text-sm text-ink-muted leading-relaxed [@media(max-height:640px)]:hidden">
-                        {s.desc}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <!-- ABOUT -->
-          <section
-            id="about"
-            data-slide-tone={toneOf('about')}
-            aria-labelledby="about-title"
-            class={`${ui.slide} bg-surface`}
-          >
-            <div aria-hidden="true" class="absolute inset-0 bg-brand/5"></div>
-            <div
-              class={`${ui.container} h-full flex flex-col justify-center pt-20 pb-8 md:pt-28 md:pb-14`}
-            >
-              <div class="grid md:grid-cols-12 gap-4 md:gap-12 md:items-end mb-8 md:mb-16">
-                <h2
-                  id="about-title"
-                  class={`${ui.h2} text-ink md:col-span-7 max-w-[16ch]`}
-                >
-                  We explain first. Then we treat.
-                </h2>
-                <p class={`${ui.lead} text-ink-muted md:col-span-5`}>
-                  Una is a small team of dentists and hygienists who take their
-                  time. You'll always know what's happening, why, and what it
-                  costs, before we pick up a single instrument.
-                </p>
-              </div>
-
-              <h3 class="text-sm font-semibold text-ink mb-5 md:mb-8">
-                How a visit works
-              </h3>
-              <ol class="relative grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-6 md:gap-x-10 list-none">
-                <div
-                  aria-hidden="true"
-                  class="hidden md:block absolute top-4 left-4 right-4 h-px bg-line"
-                ></div>
-                {steps.map((step, i) => (
-                  <li class="relative">
-                    <span class="relative flex w-8 h-8 items-center justify-center rounded-full bg-brand text-on-brand text-sm font-bold tabular-nums mb-3 md:mb-5">
-                      {i + 1}
-                    </span>
-                    <h4 class="font-heading text-base md:text-xl font-bold tracking-tight text-ink mb-1 md:mb-2">
-                      {step.title}
-                    </h4>
-                    <p class="text-sm text-ink-muted leading-relaxed max-w-[30ch]">
-                      {step.desc}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </section>
-
-          <!-- GALLERY -->
-          <section
-            id="gallery"
-            data-slide-tone={toneOf('gallery')}
-            aria-labelledby="gallery-title"
-            class={`${ui.slide} bg-surface`}
-          >
-            <div
-              class={`${ui.container} h-full flex flex-col justify-center pt-20 pb-8 md:pt-28 md:pb-14`}
-            >
-              <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 md:gap-10 mb-6 md:mb-10">
-                <h2 id="gallery-title" class={`${ui.h2} text-ink max-w-[16ch]`}>
-                  See the clinic before you visit.
-                </h2>
-                <p class={`${ui.lead} text-ink-muted md:max-w-[38ch]`}>
-                  Bright treatment rooms, a quiet waiting area, and a
-                  sterilisation room you're welcome to look into.
-                </p>
-              </div>
-
-              <ul class="flex gap-3 md:gap-4 list-none overflow-x-auto snap-x snap-mandatory -mx-gutter px-gutter scroll-px-gutter pb-2 scrollbar-none md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-4 md:grid-rows-2 md:overflow-visible md:h-[min(52vh,520px)]">
-                {gallery.map((item) => (
-                  <li
-                    class={`relative shrink-0 w-[72vw] sm:w-[44vw] aspect-4/5 md:w-auto md:aspect-auto snap-start overflow-hidden rounded-2xl bg-brand/10 ${item.span ?? ''}`}
-                  >
-                    {item.src ? (
-                      <Image
-                        src={item.src}
-                        alt={item.alt}
-                        widths={[480, 800, 1200]}
-                        sizes="(min-width: 768px) 50vw, 72vw"
-                        class="absolute inset-0 w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div
-                        role="img"
-                        aria-label={item.alt}
-                        class="absolute inset-0 bg-linear-to-br from-brand/25 via-brand/10 to-transparent"
-                      ></div>
-                    )}
-                    <span class="absolute left-3 bottom-3 md:left-4 md:bottom-4 rounded-full bg-surface/90 backdrop-blur-sm px-3 py-1.5 text-xs md:text-sm font-semibold text-ink">
-                      {item.caption}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-
-          <!-- TESTIMONIALS -->
-          <section
-            id="testimonials"
-            data-slide-tone={toneOf('testimonials')}
-            aria-labelledby="testimonials-title"
-            class={`${ui.slide} bg-ink`}
-          >
-            <div
-              class={`${ui.container} h-full flex flex-col justify-center pt-20 pb-8 md:pt-28 md:pb-14`}
-            >
-              <h2
-                id="testimonials-title"
-                class="text-sm md:text-base font-semibold text-on-brand/60 mb-6 md:mb-10"
+        <div class="relative w-full max-w-7xl mx-auto px-gutter sm:pr-20 2xl:pr-gutter h-full flex flex-col pt-24 pb-6 md:pt-28 md:pb-10">
+          <div class="flex-1 flex items-center">
+            <div class="max-w-152">
+              <h1
+                id="hero-title"
+                class="font-heading font-extrabold tracking-tight text-on-brand text-balance text-[clamp(2.75rem,8vw,6rem)] leading-[0.92] mb-5 md:mb-7"
               >
-                What patients say after their visit
-              </h2>
-
-              <div class="grid md:grid-cols-12 gap-8 md:gap-14 md:items-end">
-                <figure class="md:col-span-7">
-                  <span
-                    aria-hidden="true"
-                    class="block font-heading text-6xl md:text-8xl leading-none text-brand h-9 md:h-14"
-                  >
-                    “
-                  </span>
-                  <blockquote class="font-heading text-xl sm:text-2xl md:text-4xl font-bold tracking-tight leading-snug md:leading-[1.15] text-on-brand text-pretty">
-                    <p>{featured.quote}</p>
-                  </blockquote>
-                  <figcaption class="mt-5 md:mt-8 text-sm text-on-brand/65">
-                    <span class="font-semibold text-on-brand">
-                      {featured.name}
-                    </span>
-                    , {featured.treatment}
-                  </figcaption>
-                </figure>
-
-                <div class="md:col-span-5 flex flex-col">
-                  {reviews.map((r, i) => (
-                    <figure
-                      class={`border-t border-on-brand/15 py-5 md:py-7 ${i > 0 ? 'hidden sm:block' : ''}`}
-                    >
-                      <blockquote class="text-sm md:text-base text-on-brand/85 leading-relaxed">
-                        <p>“{r.quote}”</p>
-                      </blockquote>
-                      <figcaption class="mt-3 text-xs md:text-sm text-on-brand/60">
-                        <span class="font-semibold text-on-brand/90">
-                          {r.name}
-                        </span>
-                        , {r.treatment}
-                      </figcaption>
-                    </figure>
-                  ))}
-                  <!-- TODO: real rating and review count -->
-                  <div class="border-t border-on-brand/15 pt-5 flex flex-wrap items-center justify-between gap-3">
-                    <p class="text-sm text-on-brand/85">
-                      <span class="font-heading text-2xl font-extrabold text-on-brand mr-2">
-                        4.9
-                      </span>
-                      average from 180+ Google reviews
-                    </p>
-                    <a
-                      href={clinic.reviewsHref}
-                      target="_blank"
-                      rel="noopener"
-                      class={`${ui.link} text-sm text-on-brand decoration-brand hover:text-brand`}
-                    >
-                      Read the reviews
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- CONTACT -->
-          <section
-            id="contact"
-            data-slide-tone={toneOf('contact')}
-            aria-labelledby="contact-title"
-            class={`${ui.slide} bg-surface`}
-          >
-            <div
-              class={`${ui.container} h-full flex flex-col justify-center pt-20 pb-14 md:pt-28 md:pb-20`}
-            >
-              <div class="grid md:grid-cols-12 gap-8 md:gap-14 md:items-end">
-                <div class="md:col-span-7">
-                  <h2
-                    id="contact-title"
-                    class={`${ui.h2} text-ink mb-4 md:mb-5 max-w-[14ch]`}
-                  >
-                    Let's find a time that suits you.
-                  </h2>
-                  <p class={`${ui.lead} text-ink-muted mb-6 md:mb-10`}>
-                    Call during opening hours and we'll book you in while you're
-                    on the line. Prefer writing? Email a few times that work and
-                    we'll confirm the same day.
-                  </p>
-                  <a
-                    href={clinic.phoneHref}
-                    class="block w-fit font-heading text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-ink tabular-nums transition-colors duration-300 hover:text-brand rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-                  >
-                    {clinic.phone}
-                  </a>
-                  <a
-                    href={`mailto:${clinic.email}`}
-                    class={`${ui.link} inline-block mt-3 md:mt-5 text-sm md:text-base text-ink decoration-brand hover:text-brand`}
-                  >
-                    {clinic.email}
-                  </a>
-                </div>
-
-                <dl class="md:col-span-5 grid grid-cols-2 md:grid-cols-1 gap-x-6 gap-y-5 md:gap-y-0 md:border-t md:border-line text-sm md:text-base">
-                  <div class="md:border-b md:border-line md:py-5">
-                    <dt class="font-semibold text-ink mb-1">Address</dt>
-                    <dd class="text-ink-muted leading-relaxed">
-                      {clinic.street}
-                      <br />
-                      {clinic.city}
-                      <br />
-                      <a
-                        href={clinic.mapHref}
-                        target="_blank"
-                        rel="noopener"
-                        class={`${ui.link} text-ink decoration-brand hover:text-brand`}
-                      >
-                        Get directions
-                      </a>
-                    </dd>
-                  </div>
-                  <div class="md:border-b md:border-line md:py-5">
-                    <dt class="font-semibold text-ink mb-1">Opening hours</dt>
-                    <dd class="grid grid-cols-[auto_auto] justify-start gap-x-4 gap-y-0.5 text-ink-muted tabular-nums">
-                      {clinic.hours.map((h) => (
-                        <Fragment>
-                          <span>{h.days}</span>
-                          <span>{h.time}</span>
-                        </Fragment>
-                      ))}
-                    </dd>
-                  </div>
-                  <div class="col-span-2 md:col-span-1 md:py-5">
-                    <dt class="font-semibold text-ink mb-1">In pain?</dt>
-                    <dd class="text-ink-muted leading-relaxed">
-                      Call us. We keep time free every day for dental
-                      emergencies.
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-
-            <footer class="absolute inset-x-0 bottom-0 border-t border-line [@media(max-height:640px)]:hidden">
-              <div
-                class={`${ui.container} flex items-center justify-between gap-4 py-4 text-xs text-ink-subtle`}
-              >
-                <p>© {year} Una Dental Centar</p>
+                Dentistry without the dread.
+              </h1>
+              <p class="text-base md:text-xl text-on-brand/85 leading-relaxed max-w-[40ch] mb-7 md:mb-10">
+                Careful hands, clear explanations and modern equipment, so every
+                visit feels calm, unhurried and under your control.
+              </p>
+              <div class="flex flex-wrap items-center gap-x-7 gap-y-4">
                 <a
-                  href="#hero"
-                  data-target="hero"
-                  class="font-semibold transition-colors hover:text-ink"
+                  href="#contact"
+                  class="inline-flex items-center justify-center rounded-full bg-brand text-on-brand px-6 py-3 md:px-7 md:py-3.5 text-sm md:text-base font-semibold tracking-wide shadow-cta transition-all duration-300 hover:bg-brand-hover hover:-translate-y-0.5 hover:shadow-cta-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
                 >
-                  Back to top
+                  Book an appointment
+                </a>
+                <a
+                  href="#services"
+                  class="rounded-sm font-semibold underline decoration-2 underline-offset-4 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand text-sm md:text-base text-on-brand decoration-on-brand/40 hover:decoration-on-brand"
+                >
+                  Explore treatments
                 </a>
               </div>
-            </footer>
-          </section>
+            </div>
+          </div>
+
+          <div class="flex items-end justify-between gap-6 border-t border-on-brand/20 pt-4 md:pt-6 [@media(max-height:560px)]:hidden">
+            <ul class="grid grid-cols-3 gap-4 md:flex md:gap-12 list-none text-xs md:text-sm font-medium leading-snug text-on-brand/85">
+              <li>Same-week appointments</li>
+              <li>Anxious patients welcome</li>
+              <li>Pay in instalments</li>
+            </ul>
+            <a
+              href="#services"
+              aria-label="Next section: Treatments"
+              class="hidden sm:flex shrink-0 w-11 h-11 items-center justify-center rounded-full border border-on-brand/30 text-on-brand transition-colors duration-300 hover:bg-on-brand hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 5v14M6 13l6 6 6-6" />
+              </svg>
+            </a>
+          </div>
         </div>
-      </div>
+      </section>
     </main>
   </div>
 </Layout>
-
-<script>
-  import Swiper from 'swiper';
-  import { Mousewheel, Keyboard, A11y } from 'swiper/modules';
-
-  import 'swiper/css';
-
-  function initSectionSwiper() {
-    const el = document.querySelector<HTMLElement>('.section-swiper');
-    if (!el || (el as any).swiper) return;
-
-    const root = document.getElementById('page');
-    const slides = Array.from(
-      el.querySelectorAll<HTMLElement>('.swiper-slide'),
-    );
-    const ids = slides.map((s) => s.id);
-    const navItems = Array.from(
-      document.querySelectorAll<HTMLElement>('[data-nav]'),
-    );
-    const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-    const hashIndex = ids.indexOf(
-      decodeURIComponent(window.location.hash.slice(1)),
-    );
-
-    const swiper = new Swiper(el, {
-      modules: [Mousewheel, Keyboard, A11y],
-      direction: 'vertical',
-      initialSlide: Math.max(hashIndex, 0),
-      speed: reduceMotion ? 0 : 700,
-      mousewheel: { forceToAxis: true, sensitivity: 1, thresholdDelta: 10 },
-      keyboard: { enabled: true, onlyInViewport: true },
-      a11y: { enabled: true, slideRole: 'region' },
-    });
-
-    function setActive(index: number, updateUrl = true) {
-      const slide = slides[index];
-      if (!slide) return;
-
-      // Top bar + side rail read this to switch between light/dark styling.
-      if (root) root.dataset.tone = slide.dataset.slideTone ?? 'light';
-
-      navItems.forEach((item) => {
-        const isActive = item.dataset.target === slide.id;
-        item.classList.toggle('active', isActive);
-        item.toggleAttribute('data-active', isActive);
-        if (isActive) item.setAttribute('aria-current', 'true');
-        else item.removeAttribute('aria-current');
-      });
-
-      // Keep the URL shareable (#services etc.) without adding history entries.
-      if (updateUrl) {
-        const url =
-          index === 0
-            ? window.location.pathname + window.location.search
-            : `#${slide.id}`;
-        history.replaceState(history.state, '', url);
-      }
-    }
-
-    setActive(swiper.activeIndex, false);
-    swiper.on('slideChange', () => setActive(swiper.activeIndex));
-
-    const controller = new AbortController();
-    const { signal } = controller;
-
-    // Route every link/button with data-target through the swiper
-    // instead of a native anchor jump.
-    document.addEventListener(
-      'click',
-      (e) => {
-        const target = (e.target as HTMLElement).closest<HTMLElement>(
-          '[data-target]',
-        );
-        if (!target) return;
-        const idx = ids.indexOf(target.dataset.target ?? '');
-        if (idx === -1) return;
-        e.preventDefault();
-        swiper.slideTo(idx);
-      },
-      { signal },
-    );
-
-    // Anchor jumps and focus can scroll the overflow-hidden container and
-    // offset the slides; pin it back to the top.
-    el.addEventListener(
-      'scroll',
-      () => {
-        el.scrollTop = 0;
-        el.scrollLeft = 0;
-      },
-      { signal },
-    );
-
-    // Clean up before Astro view transitions swap the page.
-    document.addEventListener(
-      'astro:before-swap',
-      () => {
-        controller.abort();
-        swiper.destroy(true, true);
-      },
-      { once: true },
-    );
-  }
-
-  document.addEventListener('astro:page-load', initSectionSwiper);
-  initSectionSwiper();
-</script>
