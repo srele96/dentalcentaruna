@@ -1043,9 +1043,9 @@ const SERVICES = [
   { key: 'haircut', amount: 1000, currency: 'RSD', wide: false },
   { key: 'styling', amount: 1000, currency: 'RSD', wide: false },
   { key: 'color', amount: 2200, currency: 'RSD', wide: false },
-  { key: 'balayage', amount: 3500, currency: 'RSD', wide: false },
-  { key: 'bondRepair', amount: 1000, currency: 'RSD', wide: false },
-  { key: 'mensGrooming', amount: 400, currency: 'RSD', wide: true },
+  { key: 'balayage', amount: 6000, currency: 'RSD', wide: false },
+  { key: 'bondRepair', amount: 2000, currency: 'RSD', wide: false },
+  { key: 'mensGrooming', amount: 900, currency: 'RSD', wide: true },
 ] as const satisfies ReadonlyArray<{
   key: keyof Messages['services']['items'];
   amount: number;
