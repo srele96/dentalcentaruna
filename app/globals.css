@@ -1,38 +1,50 @@
 @import 'tailwindcss';
 
-/* The custom theme colors */
 @theme {
-  --color-ink: #18140f;
-  --color-paper: #f6f0e4;
-  --color-gold: #b08a3e;
-  --color-wine: #5c1626;
-  --color-taupe: #a0907c;
+  /* Brand */
+  --color-brand: #8e2035;
+  --color-brand-hover: #6b1828;
+  --color-brand-soft: #faf0f3;
+  --color-on-brand: #ffffff;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8fafc;
+
+  /* Text */
+  --color-ink: #0f172a;
+  --color-ink-muted: #475569;
+  --color-ink-subtle: #64748b;
+
+  /* Borders */
+  --color-line: #e2e8f0;
+  --color-line-strong: #cbd5e1;
 
   --font-display: var(--app-font-display);
   --font-script: var(--app-font-script);
 }
 
-/* ── The <style> block from the HTML page ── */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-paper);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
 }
 
 .hairline {
   background: linear-gradient(
     90deg,
     transparent,
-    var(--color-gold),
+    var(--color-brand),
     transparent
   );
   height: 1px;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-gold);
+  outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
 

@@ -18,7 +18,7 @@ export function LanguageSwitcher({ locale }: Props) {
   }
 
   function activeOrNot(_l: Locale) {
-    return isCurrent(_l) ? 'bg-ink text-paper' : 'text-ink/60 hover:text-ink';
+    return isCurrent(_l) ? 'bg-ink text-surface' : 'text-ink/60 hover:text-ink';
   }
 
   return (

@@ -29,10 +29,10 @@
           extend: {
             colors: {
               ink: '#18140F',
-              paper: '#F6F0E4',
-              gold: '#B08A3E',
-              wine: '#5C1626',
-              taupe: '#A0907C',
+              surface: '#F6F0E4',
+              brand: '#B08A3E',
+              brand: '#5C1626',
+              ink-subtle: '#A0907C',
             },
             fontFamily: {
               display: ['"Fraunces"', 'serif'],
@@ -90,13 +90,13 @@
   <body class="font-body text-ink antialiased">
     <!-- ===== NAV ===== -->
     <header
-      class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-paper/80 border-b border-ink/10"
+      class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-surface/80 border-b border-ink/10"
     >
       <div
         class="max-w-6xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between"
       >
         <a href="#top" class="font-display text-lg tracking-tight"
-          >Signature <span class="text-gold">Salon</span></a
+          >Signature <span class="text-brand">Salon</span></a
         >
         <nav
           class="hidden md:flex items-center gap-8 text-sm tracking-wide text-ink/70"
@@ -112,19 +112,22 @@
         </nav>
         <a
           href="#book"
-          class="text-sm px-4 py-2 rounded-full bg-ink text-paper hover:bg-wine transition-colors"
+          class="text-sm px-4 py-2 rounded-full bg-ink text-surface hover:bg-brand transition-colors"
           >Book a chair</a
         >
       </div>
     </header>
 
     <!-- ===== HERO ===== -->
-    <section id="top" class="relative overflow-hidden bg-ink text-paper grain">
+    <section
+      id="top"
+      class="relative overflow-hidden bg-ink text-surface grain"
+    >
       <div
         class="max-w-6xl mx-auto px-6 md:px-10 pt-40 pb-28 md:pt-52 md:pb-36 relative"
       >
         <p
-          class="text-gold/90 text-xs md:text-sm tracking-[0.3em] uppercase mb-6"
+          class="text-brand/90 text-xs md:text-sm tracking-[0.3em] uppercase mb-6"
         >
           Batajnica, Belgrade — by appointment
         </p>
@@ -133,7 +136,7 @@
           class="font-display font-light text-[13vw] md:text-[6.5vw] leading-[0.95] max-w-4xl"
         >
           A cut that carries<br class="hidden md:block" />
-          your <em class="italic text-gold not-italic-fallback">signature</em>.
+          your <em class="italic text-brand not-italic-fallback">signature</em>.
         </h1>
 
         <div class="mt-10 flex items-center gap-6">
@@ -153,7 +156,7 @@
               stroke-linecap="round"
             />
           </svg>
-          <p class="text-paper/60 text-sm max-w-[14rem]">
+          <p class="text-surface/60 text-sm max-w-[14rem]">
             Every appointment ends the same way — with a finish that's
             unmistakably yours.
           </p>
@@ -162,12 +165,12 @@
         <div class="mt-14 flex flex-wrap gap-4">
           <a
             href="#book"
-            class="px-6 py-3 rounded-full bg-gold text-ink text-sm font-medium hover:bg-paper transition-colors"
+            class="px-6 py-3 rounded-full bg-brand text-ink text-sm font-medium hover:bg-surface transition-colors"
             >Book a chair</a
           >
           <a
             href="#services"
-            class="px-6 py-3 rounded-full border border-paper/30 text-sm hover:border-gold hover:text-gold transition-colors"
+            class="px-6 py-3 rounded-full border border-surface/30 text-sm hover:border-brand hover:text-brand transition-colors"
             >See services</a
           >
         </div>
@@ -182,7 +185,7 @@
     >
       <div class="reveal flex items-end justify-between mb-14 flex-wrap gap-4">
         <h2 class="font-display text-4xl md:text-5xl font-light">Services</h2>
-        <p class="text-taupe text-sm max-w-xs">
+        <p class="text-ink-subtle text-sm max-w-xs">
           Priced per consultation — every head of hair is a different brief.
         </p>
       </div>
@@ -193,11 +196,11 @@
         >
           <div>
             <h3 class="font-display text-xl">Cut &amp; Finish</h3>
-            <p class="text-taupe text-sm mt-1">
+            <p class="text-ink-subtle text-sm mt-1">
               Consultation, wash, precision cut, blow-dry styling.
             </p>
           </div>
-          <span class="text-gold text-sm whitespace-nowrap ml-6"
+          <span class="text-brand text-sm whitespace-nowrap ml-6"
             >from 2.500 din</span
           >
         </div>
@@ -206,11 +209,11 @@
         >
           <div>
             <h3 class="font-display text-xl">Color &amp; Balayage</h3>
-            <p class="text-taupe text-sm mt-1">
+            <p class="text-ink-subtle text-sm mt-1">
               Full color, root touch-up, or hand-painted balayage.
             </p>
           </div>
-          <span class="text-gold text-sm whitespace-nowrap ml-6"
+          <span class="text-brand text-sm whitespace-nowrap ml-6"
             >from 5.000 din</span
           >
         </div>
@@ -219,11 +222,11 @@
         >
           <div>
             <h3 class="font-display text-xl">Keratin Treatment</h3>
-            <p class="text-taupe text-sm mt-1">
+            <p class="text-ink-subtle text-sm mt-1">
               Smoothing treatment for frizz-free, glass-finish hair.
             </p>
           </div>
-          <span class="text-gold text-sm whitespace-nowrap ml-6"
+          <span class="text-brand text-sm whitespace-nowrap ml-6"
             >from 8.000 din</span
           >
         </div>
@@ -232,11 +235,11 @@
         >
           <div>
             <h3 class="font-display text-xl">Bridal &amp; Occasion</h3>
-            <p class="text-taupe text-sm mt-1">
+            <p class="text-ink-subtle text-sm mt-1">
               Trial included. Styling that holds through the whole night.
             </p>
           </div>
-          <span class="text-gold text-sm whitespace-nowrap ml-6"
+          <span class="text-brand text-sm whitespace-nowrap ml-6"
             >from 6.500 din</span
           >
         </div>
@@ -245,11 +248,11 @@
         >
           <div>
             <h3 class="font-display text-xl">Men's Grooming</h3>
-            <p class="text-taupe text-sm mt-1">
+            <p class="text-ink-subtle text-sm mt-1">
               Cut, beard shape, and hot towel finish.
             </p>
           </div>
-          <span class="text-gold text-sm whitespace-nowrap ml-6"
+          <span class="text-brand text-sm whitespace-nowrap ml-6"
             >from 1.800 din</span
           >
         </div>
@@ -257,12 +260,12 @@
     </section>
 
     <!-- ===== WORK / GALLERY ===== -->
-    <section id="work" class="bg-wine text-paper py-24 md:py-32">
+    <section id="work" class="bg-brand text-surface py-24 md:py-32">
       <div class="max-w-6xl mx-auto px-6 md:px-10">
         <h2 class="reveal font-display text-4xl md:text-5xl font-light mb-3">
           Recent work
         </h2>
-        <p class="reveal text-paper/60 text-sm mb-14 max-w-md">
+        <p class="reveal text-surface/60 text-sm mb-14 max-w-md">
           A handful of finishes from the chair this season.
         </p>
 
@@ -270,22 +273,28 @@
           <div
             class="reveal aspect-[3/4] rounded-lg bg-gradient-to-br from-[#7a3346] to-[#3d0f1b] flex items-end p-4"
           >
-            <span class="font-script text-2xl text-gold/90">balayage</span>
+            <span class="font-script text-2xl text-brand/90">balayage</span>
           </div>
           <div
             class="reveal aspect-[3/4] rounded-lg bg-gradient-to-br from-[#8a5a2c] to-[#3d2410] flex items-end p-4 mt-6 md:mt-10"
           >
-            <span class="font-script text-2xl text-paper/90">bridal updo</span>
+            <span class="font-script text-2xl text-surface/90"
+              >bridal updo</span
+            >
           </div>
           <div
             class="reveal aspect-[3/4] rounded-lg bg-gradient-to-br from-[#4d2e35] to-[#1e1013] flex items-end p-4"
           >
-            <span class="font-script text-2xl text-gold/90">textured crop</span>
+            <span class="font-script text-2xl text-brand/90"
+              >textured crop</span
+            >
           </div>
           <div
             class="reveal aspect-[3/4] rounded-lg bg-gradient-to-br from-[#6d4a2e] to-[#2b1c10] flex items-end p-4 mt-6 md:mt-10"
           >
-            <span class="font-script text-2xl text-paper/90">copper gloss</span>
+            <span class="font-script text-2xl text-surface/90"
+              >copper gloss</span
+            >
           </div>
         </div>
       </div>
@@ -304,10 +313,10 @@
           <div
             class="aspect-square rounded-full bg-ink/8 mb-5 flex items-center justify-center"
           >
-            <span class="font-script text-3xl text-gold">M</span>
+            <span class="font-script text-3xl text-brand">M</span>
           </div>
           <h3 class="font-display text-lg">Milica</h3>
-          <p class="text-taupe text-sm">
+          <p class="text-ink-subtle text-sm">
             Color &amp; balayage specialist, 11 years behind the chair.
           </p>
         </div>
@@ -315,10 +324,10 @@
           <div
             class="aspect-square rounded-full bg-ink/8 mb-5 flex items-center justify-center"
           >
-            <span class="font-script text-3xl text-gold">D</span>
+            <span class="font-script text-3xl text-brand">D</span>
           </div>
           <h3 class="font-display text-lg">Dušan</h3>
-          <p class="text-taupe text-sm">
+          <p class="text-ink-subtle text-sm">
             Precision cuts and men's grooming, trained in Milan.
           </p>
         </div>
@@ -326,10 +335,10 @@
           <div
             class="aspect-square rounded-full bg-ink/8 mb-5 flex items-center justify-center"
           >
-            <span class="font-script text-3xl text-gold">A</span>
+            <span class="font-script text-3xl text-brand">A</span>
           </div>
           <h3 class="font-display text-lg">Ana</h3>
-          <p class="text-taupe text-sm">
+          <p class="text-ink-subtle text-sm">
             Bridal styling and keratin treatments.
           </p>
         </div>
@@ -337,7 +346,10 @@
     </section>
 
     <!-- ===== BOOK / CTA ===== -->
-    <section id="book" class="bg-ink text-paper relative overflow-hidden grain">
+    <section
+      id="book"
+      class="bg-ink text-surface relative overflow-hidden grain"
+    >
       <div
         class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32 grid md:grid-cols-2 gap-14 items-center relative"
       >
@@ -345,21 +357,21 @@
           <h2
             class="font-display text-4xl md:text-5xl font-light leading-tight mb-6"
           >
-            Reserve your <span class="text-gold">chair</span>.
+            Reserve your <span class="text-brand">chair</span>.
           </h2>
-          <p class="text-paper/60 text-sm max-w-sm mb-8">
+          <p class="text-surface/60 text-sm max-w-sm mb-8">
             Tell us what you're after and when suits you — we'll confirm within
             the day.
           </p>
           <div class="flex flex-wrap gap-4">
             <a
               href="tel:+381600000000"
-              class="px-6 py-3 rounded-full bg-gold text-ink text-sm font-medium hover:bg-paper transition-colors"
+              class="px-6 py-3 rounded-full bg-brand text-ink text-sm font-medium hover:bg-surface transition-colors"
               >Call +381 60 000 000</a
             >
             <a
               href="https://instagram.com"
-              class="px-6 py-3 rounded-full border border-paper/30 text-sm hover:border-gold hover:text-gold transition-colors"
+              class="px-6 py-3 rounded-full border border-surface/30 text-sm hover:border-brand hover:text-brand transition-colors"
               >@signaturesalon.batajnica</a
             >
           </div>
@@ -369,26 +381,26 @@
           <div>
             <label
               for="name"
-              class="block text-xs tracking-wide uppercase text-paper/50 mb-2"
+              class="block text-xs tracking-wide uppercase text-surface/50 mb-2"
               >Name</label
             >
             <input
               id="name"
               type="text"
               required
-              class="w-full bg-transparent border-b border-paper/25 py-2 focus:border-gold outline-none transition-colors placeholder:text-paper/30"
+              class="w-full bg-transparent border-b border-surface/25 py-2 focus:border-brand outline-none transition-colors placeholder:text-surface/30"
               placeholder="Your name"
             />
           </div>
           <div>
             <label
               for="service"
-              class="block text-xs tracking-wide uppercase text-paper/50 mb-2"
+              class="block text-xs tracking-wide uppercase text-surface/50 mb-2"
               >Service</label
             >
             <select
               id="service"
-              class="w-full bg-transparent border-b border-paper/25 py-2 focus:border-gold outline-none transition-colors text-paper [&>option]:text-ink"
+              class="w-full bg-transparent border-b border-surface/25 py-2 focus:border-brand outline-none transition-colors text-surface [&>option]:text-ink"
             >
               <option>Cut &amp; Finish</option>
               <option>Color &amp; Balayage</option>
@@ -400,24 +412,24 @@
           <div>
             <label
               for="date"
-              class="block text-xs tracking-wide uppercase text-paper/50 mb-2"
+              class="block text-xs tracking-wide uppercase text-surface/50 mb-2"
               >Preferred date</label
             >
             <input
               id="date"
               type="date"
-              class="w-full bg-transparent border-b border-paper/25 py-2 focus:border-gold outline-none transition-colors text-paper"
+              class="w-full bg-transparent border-b border-surface/25 py-2 focus:border-brand outline-none transition-colors text-surface"
             />
           </div>
           <button
             type="submit"
-            class="w-full mt-4 px-6 py-3 rounded-full bg-gold text-ink text-sm font-medium hover:bg-paper transition-colors"
+            class="w-full mt-4 px-6 py-3 rounded-full bg-brand text-ink text-sm font-medium hover:bg-surface transition-colors"
           >
             Request booking
           </button>
           <p
             id="book-note"
-            class="text-xs text-paper/40 pt-1"
+            class="text-xs text-surface/40 pt-1"
             aria-live="polite"
           ></p>
         </form>
@@ -431,19 +443,21 @@
     >
       <div>
         <h3 class="font-display text-lg mb-3">Signature Salon</h3>
-        <p class="text-taupe">Cara Dušana 214<br />Batajnica, Belgrade</p>
+        <p class="text-ink-subtle">Cara Dušana 214<br />Batajnica, Belgrade</p>
       </div>
       <div>
         <h3 class="font-display text-lg mb-3">Hours</h3>
-        <p class="text-taupe">Tue–Sat, 09:00–20:00<br />Closed Sun–Mon</p>
+        <p class="text-ink-subtle">Tue–Sat, 09:00–20:00<br />Closed Sun–Mon</p>
       </div>
       <div>
         <h3 class="font-display text-lg mb-3">Contact</h3>
-        <p class="text-taupe">+381 60 000 000<br />hello@signaturesalon.rs</p>
+        <p class="text-ink-subtle">
+          +381 60 000 000<br />hello@signaturesalon.rs
+        </p>
       </div>
     </footer>
     <div class="hairline max-w-6xl mx-auto"></div>
-    <p class="text-center text-xs text-taupe py-6">
+    <p class="text-center text-xs text-ink-subtle py-6">
       &copy; 2026 Signature Salon. All rights reserved.
     </p>
 

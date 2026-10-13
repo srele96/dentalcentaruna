@@ -61,7 +61,7 @@ export function Home({ translations: t, locale, url }: Props) {
         />
 
         {/* ===== NAV ===== */}
-        <header className="fixed top-0 inset-x-0 z-50 bg-paper border-b border-ink/10">
+        <header className="fixed top-0 inset-x-0 z-50 bg-surface border-b border-ink/10">
           <div
             className={[
               'max-w-6xl',
@@ -79,7 +79,7 @@ export function Home({ translations: t, locale, url }: Props) {
               className="font-display text-lg tracking-tight"
             >
               {translate(t, 'header.brand')}{' '}
-              <span className="text-gold">
+              <span className="text-brand">
                 {translate(t, 'header.brandAccent')}
               </span>
             </a>
@@ -118,8 +118,8 @@ export function Home({ translations: t, locale, url }: Props) {
                   'py-2',
                   'rounded-full',
                   'bg-ink',
-                  'text-paper',
-                  'hover:bg-wine',
+                  'text-surface',
+                  'hover:bg-brand',
                   'transition-colors',
                 ].join(' ')}
               >
@@ -180,7 +180,7 @@ export function Home({ translations: t, locale, url }: Props) {
               'transition-[grid-template-rows,padding]',
               'duration-300',
               'ease-in-out',
-              'bg-paper',
+              'bg-surface',
               'border-t',
               'border-ink/10',
               isMenuOpen ? 'grid-rows-[1fr] py-4' : 'grid-rows-[0fr] py-0',
@@ -217,8 +217,8 @@ export function Home({ translations: t, locale, url }: Props) {
                   'py-3',
                   'rounded-full',
                   'bg-ink',
-                  'text-paper',
-                  'hover:bg-wine',
+                  'text-surface',
+                  'hover:bg-brand',
                   'transition-colors',
                 ].join(' ')}
               >
@@ -232,7 +232,7 @@ export function Home({ translations: t, locale, url }: Props) {
           {/* ===== HERO ===== */}
           <section
             id={SECTION_ID.top}
-            className="relative isolate overflow-hidden bg-ink text-paper"
+            className="relative isolate overflow-hidden bg-ink text-surface"
           >
             <Image
               src={exteriorGlassWall}
@@ -279,7 +279,7 @@ export function Home({ translations: t, locale, url }: Props) {
             >
               <p
                 className={[
-                  'text-gold/90',
+                  'text-brand-soft/90',
                   'text-xs',
                   'md:text-sm',
                   'tracking-[0.3em]',
@@ -303,7 +303,7 @@ export function Home({ translations: t, locale, url }: Props) {
                 {`${t.hero.headingPrefix} `}
                 <br className="hidden md:block" />
                 {`${t.hero.headingYour} `}
-                <em className="italic text-gold not-italic-fallback">
+                <em className="italic text-brand-soft not-italic-fallback">
                   {t.hero.headingSignature}
                 </em>
                 .
@@ -313,13 +313,13 @@ export function Home({ translations: t, locale, url }: Props) {
                 <svg
                   id="sig-svg"
                   viewBox="0 0 420 90"
-                  className="w-56 md:w-72 h-auto"
+                  className="w-56 md:w-72 h-auto text-brand-soft"
                   fill="none"
                   aria-hidden="true"
                 >
                   <motion.path
                     d="M10 60 C 40 10, 70 10, 85 55 C 95 80, 60 85, 55 60 C 50 30, 90 20, 120 45 C 140 62, 150 30, 175 30 C 210 30, 190 70, 220 65 C 250 60, 240 20, 270 25 C 300 30, 285 65, 310 60 C 335 55, 330 20, 355 30 C 375 38, 370 55, 400 45"
-                    stroke="#B08A3E"
+                    stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
                     strokeDasharray={1400}
@@ -333,7 +333,7 @@ export function Home({ translations: t, locale, url }: Props) {
                     }}
                   />
                 </svg>
-                <p className="text-paper/60 text-sm max-w-56">
+                <p className="text-surface/60 text-sm max-w-56">
                   {t.hero.sigCaption}
                 </p>
               </div>
@@ -345,11 +345,13 @@ export function Home({ translations: t, locale, url }: Props) {
                     'px-6',
                     'py-3',
                     'rounded-full',
-                    'bg-gold',
-                    'text-ink',
+                    'border',
+                    'border-transparent',
+                    'bg-brand',
+                    'text-on-brand',
                     'text-sm',
                     'font-medium',
-                    'hover:bg-paper',
+                    'hover:bg-brand-hover',
                     'transition-colors',
                   ].join(' ')}
                 >
@@ -362,10 +364,10 @@ export function Home({ translations: t, locale, url }: Props) {
                     'py-3',
                     'rounded-full',
                     'border',
-                    'border-paper/30',
+                    'border-surface/30',
                     'text-sm',
-                    'hover:border-gold',
-                    'hover:text-gold',
+                    'hover:border-brand-soft',
+                    'hover:text-brand-soft',
                     'transition-colors',
                   ].join(' ')}
                 >
@@ -419,9 +421,11 @@ export function Home({ translations: t, locale, url }: Props) {
                   >
                     <div>
                       <h3 className="font-display text-xl">{item.name}</h3>
-                      <p className="text-taupe text-sm mt-1">{item.detail}</p>
+                      <p className="text-ink-subtle text-sm mt-1">
+                        {item.detail}
+                      </p>
                     </div>
-                    <span className="text-gold text-sm whitespace-nowrap ml-6">
+                    <span className="text-brand text-sm whitespace-nowrap ml-6">
                       {translate(t, 'services.price', {
                         amount: formatPrice(service.amount, service.currency),
                       })}
@@ -435,7 +439,7 @@ export function Home({ translations: t, locale, url }: Props) {
           {/* ===== WORK / GALLERY ===== */}
           <section
             id={SECTION_ID.work}
-            className="bg-wine text-paper py-24 md:py-32"
+            className="bg-brand text-surface py-24 md:py-32"
           >
             <div className="max-w-6xl mx-auto px-6 md:px-10">
               <motion.h2
@@ -446,7 +450,7 @@ export function Home({ translations: t, locale, url }: Props) {
               </motion.h2>
               <motion.p
                 {...reveal}
-                className="text-paper/60 text-sm mb-14 max-w-md"
+                className="text-surface/60 text-sm mb-14 max-w-md"
               >
                 {t.work.subheading}
               </motion.p>
@@ -470,9 +474,9 @@ export function Home({ translations: t, locale, url }: Props) {
                       'overflow-hidden',
                       'flex',
                       'flex-col',
-                      'bg-paper/3',
+                      'bg-on-brand/5',
                       'ring-1',
-                      'ring-paper/10',
+                      'ring-on-brand/10',
                     ].join(' ')}
                   >
                     <div className="relative aspect-3/4">
@@ -492,7 +496,7 @@ export function Home({ translations: t, locale, url }: Props) {
                           'text-sm',
                           'md:text-base',
                           'tracking-wide',
-                          'text-paper/80',
+                          'text-surface/80',
                         ].join(' ')}
                       >
                         {t.work.items[item.key]}
@@ -526,7 +530,7 @@ export function Home({ translations: t, locale, url }: Props) {
                     className={[
                       'aspect-square',
                       'rounded-full',
-                      'bg-ink/8',
+                      'bg-surface-alt',
                       'mb-5',
                       'overflow-hidden',
                       'flex',
@@ -543,7 +547,7 @@ export function Home({ translations: t, locale, url }: Props) {
                     />
                   </div>
                   <h3 className="font-display text-lg">{stylist.name}</h3>
-                  <p className="text-taupe text-sm">
+                  <p className="text-ink-subtle text-sm">
                     {translate(t, stylist.key)}
                   </p>
                 </motion.div>
@@ -554,7 +558,7 @@ export function Home({ translations: t, locale, url }: Props) {
           {/* ===== ABOUT / INTERIOR ===== */}
           <section
             id={SECTION_ID.about}
-            className="bg-wine text-paper py-24 md:py-32"
+            className="bg-brand text-surface py-24 md:py-32"
           >
             <div className="max-w-6xl mx-auto px-6 md:px-10">
               <div className="grid md:grid-cols-2 gap-14 md:gap-10 items-center">
@@ -565,7 +569,7 @@ export function Home({ translations: t, locale, url }: Props) {
                   <div
                     className={[
                       'space-y-5',
-                      'text-paper/70',
+                      'text-surface/70',
                       'text-base',
                       'md:text-lg',
                       'leading-relaxed',
@@ -646,7 +650,7 @@ export function Home({ translations: t, locale, url }: Props) {
                   <h3 className="font-display text-lg mb-3">
                     {t.location.nearbyHeading}
                   </h3>
-                  <ul className="text-taupe text-sm space-y-1.5">
+                  <ul className="text-ink-subtle text-sm space-y-1.5">
                     {t.location.nearby.map((place, i) => (
                       <li key={i}>{place}</li>
                     ))}
@@ -660,11 +664,11 @@ export function Home({ translations: t, locale, url }: Props) {
                   <a
                     href="https://www.planplus.rs/beograd/stajaliste/maksima-brankovica/3076"
                     rel="noopener noreferrer"
-                    className="text-gold text-sm hover:underline"
+                    className="text-brand text-sm hover:underline"
                   >
                     {t.location.busStopName}
                   </a>
-                  <ul className="mt-3 text-taupe text-sm space-y-1.5">
+                  <ul className="mt-3 text-ink-subtle text-sm space-y-1.5">
                     {t.location.busLines.map((line) => (
                       <li key={line.number} className="flex gap-3">
                         <span className="text-ink font-medium shrink-0 w-12">
@@ -709,7 +713,7 @@ export function Home({ translations: t, locale, url }: Props) {
                     'items-center',
                     'gap-2',
                     'text-sm',
-                    'text-gold',
+                    'text-brand',
                     'hover:underline',
                   ].join(' ')}
                 >
@@ -746,15 +750,16 @@ export function Home({ translations: t, locale, url }: Props) {
           {/* ===== BOOK / CTA ===== */}
           <section
             id={SECTION_ID.book}
-            className="bg-ink text-paper relative overflow-hidden grain"
+            className="bg-ink text-surface relative overflow-hidden grain"
           >
             <div className="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32 relative">
               <motion.div {...reveal} className="text-center mb-14">
                 <h2 className="font-display text-4xl md:text-5xl font-light leading-tight mb-6">
                   {t.book.headingPrefix}
-                  <span className="text-gold">{t.book.headingChair}</span>.
+                  <span className="text-brand-soft">{t.book.headingChair}</span>
+                  .
                 </h2>
-                <p className="text-paper/60 text-sm max-w-sm mx-auto">
+                <p className="text-surface/60 text-sm max-w-sm mx-auto">
                   {t.book.subheading}
                 </p>
               </motion.div>
@@ -768,13 +773,13 @@ export function Home({ translations: t, locale, url }: Props) {
                   'mb-10',
                   'text-center',
                   'border',
-                  'border-gold/30',
+                  'border-brand/50',
                   'rounded-2xl',
                   'p-10',
-                  'bg-gold/5',
+                  'bg-brand/15',
                 ].join(' ')}
               >
-                <p className="text-gold/90 text-xs tracking-[0.3em] uppercase mb-4">
+                <p className="text-brand-soft/90 text-xs tracking-[0.3em] uppercase mb-4">
                   {t.book.fastestWay}
                 </p>
                 <a
@@ -784,8 +789,8 @@ export function Home({ translations: t, locale, url }: Props) {
                     'text-4xl',
                     'md:text-5xl',
                     'font-light',
-                    'text-paper',
-                    'hover:text-gold',
+                    'text-surface',
+                    'hover:text-surface/70',
                     'transition-colors',
                     'block',
                     'mb-4',
@@ -793,7 +798,7 @@ export function Home({ translations: t, locale, url }: Props) {
                 >
                   063 742 7750
                 </a>
-                <p className="text-paper/50 text-sm mb-6">
+                <p className="text-surface/50 text-sm mb-6">
                   {t.book.phoneHours}
                 </p>
                 <a
@@ -806,11 +811,11 @@ export function Home({ translations: t, locale, url }: Props) {
                     'px-8',
                     'py-3',
                     'rounded-full',
-                    'bg-gold',
-                    'text-ink',
+                    'bg-brand',
+                    'text-on-brand',
                     'text-sm',
                     'font-medium',
-                    'hover:bg-paper',
+                    'hover:bg-brand-hover',
                     'transition-colors',
                   ].join(' ')}
                 >
@@ -822,12 +827,12 @@ export function Home({ translations: t, locale, url }: Props) {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                 <motion.div
                   {...reveal}
-                  className="bg-paper/5 border border-paper/15 rounded-2xl p-6 md:p-8 flex flex-col"
+                  className="bg-surface/5 border border-surface/15 rounded-2xl p-6 md:p-8 flex flex-col"
                 >
                   <h3 className="font-display text-xl md:text-2xl mb-3">
                     {t.book.whatsappHeading}
                   </h3>
-                  <p className="text-paper/60 text-sm mb-6">
+                  <p className="text-surface/60 text-sm mb-6">
                     {t.book.whatsappBody}
                   </p>
                   <a
@@ -858,12 +863,12 @@ export function Home({ translations: t, locale, url }: Props) {
 
                 <motion.div
                   {...reveal}
-                  className="bg-paper/5 border border-paper/15 rounded-2xl p-6 md:p-8 flex flex-col"
+                  className="bg-surface/5 border border-surface/15 rounded-2xl p-6 md:p-8 flex flex-col"
                 >
                   <h3 className="font-display text-xl md:text-2xl mb-3">
                     {t.book.instagramHeading}
                   </h3>
-                  <p className="text-paper/60 text-sm mb-6">
+                  <p className="text-surface/60 text-sm mb-6">
                     {t.book.instagramBody}
                   </p>
                   <a
@@ -884,7 +889,7 @@ export function Home({ translations: t, locale, url }: Props) {
                       'from-[#feda75]',
                       'via-[#d62976]',
                       'to-[#4f5bd5]',
-                      'text-paper',
+                      'text-surface',
                       'text-sm',
                       'font-medium',
                       'hover:opacity-90',
@@ -898,9 +903,9 @@ export function Home({ translations: t, locale, url }: Props) {
                 <motion.div
                   {...reveal}
                   className={[
-                    'bg-paper/5',
+                    'bg-surface/5',
                     'border',
-                    'border-paper/15',
+                    'border-surface/15',
                     'rounded-2xl',
                     'p-6',
                     'md:p-8',
@@ -913,7 +918,7 @@ export function Home({ translations: t, locale, url }: Props) {
                   <h3 className="font-display text-xl md:text-2xl mb-3">
                     {t.book.review.heading}
                   </h3>
-                  <p className="text-paper/60 text-sm mb-6">
+                  <p className="text-surface/60 text-sm mb-6">
                     {t.book.review.body}
                   </p>
                   <a
@@ -930,12 +935,12 @@ export function Home({ translations: t, locale, url }: Props) {
                       'px-6',
                       'py-3',
                       'rounded-full',
-                      'bg-gold',
-                      'text-ink',
+                      'bg-brand',
+                      'text-on-brand',
                       'text-sm',
                       'font-medium',
-                      'hover:opacity-90',
-                      'transition-opacity',
+                      'hover:bg-brand-hover',
+                      'transition-colors',
                     ].join(' ')}
                   >
                     {t.book.review.cta}
@@ -955,7 +960,7 @@ export function Home({ translations: t, locale, url }: Props) {
             <h3 className="font-display text-lg mb-3">
               {t.footer.addressHeading}
             </h3>
-            <p className="text-taupe">
+            <p className="text-ink-subtle">
               Majora Zorana Radosavljevića 205
               <br />
               Beograd 11273
@@ -965,7 +970,7 @@ export function Home({ translations: t, locale, url }: Props) {
             <h3 className="font-display text-lg mb-3">
               {t.footer.hoursHeading}
             </h3>
-            <p className="text-taupe">
+            <p className="text-ink-subtle">
               {t.footer.hoursLine}
               <br />
               {t.footer.closedSunday}
@@ -976,29 +981,29 @@ export function Home({ translations: t, locale, url }: Props) {
             <h3 className="font-display text-lg mb-3">
               {t.footer.contactHeading}
             </h3>
-            <p className="text-taupe mb-2">
+            <p className="text-ink-subtle mb-2">
               <a
                 href={`tel:${MOBILE_PHONE_INTL}`}
-                className="hover:text-gold transition-colors"
+                className="hover:text-brand transition-colors"
               >
                 063 742 7750
               </a>
             </p>
             <nav
-              className="flex items-center gap-4 text-taupe"
+              className="flex items-center gap-4 text-ink-subtle"
               aria-label={t.footer.contactHeading}
             >
               <a
                 href={`https://wa.me/${MOBILE_PHONE}`}
                 rel="noopener noreferrer"
-                className="hover:text-gold transition-colors"
+                className="hover:text-brand transition-colors"
               >
                 WhatsApp
               </a>
               <a
                 href={INSTAGRAM_URL}
                 rel="noopener noreferrer"
-                className="hover:text-gold transition-colors"
+                className="hover:text-brand transition-colors"
               >
                 Instagram
               </a>
@@ -1006,7 +1011,7 @@ export function Home({ translations: t, locale, url }: Props) {
           </div>
         </footer>
         <div className="hairline max-w-6xl mx-auto" />
-        <p className="text-center text-xs text-taupe py-6">
+        <p className="text-center text-xs text-ink-subtle py-6">
           {t.footer.copyright}
         </p>
       </div>
@@ -1125,7 +1130,7 @@ function FaqAccordionItem({
           aria-controls={panelId}
           className="group w-full flex items-center justify-between gap-4 text-left cursor-pointer"
         >
-          <span className="transition-colors group-hover:text-gold">
+          <span className="transition-colors group-hover:text-brand">
             {item.question}
           </span>
           <span
@@ -1134,7 +1139,7 @@ function FaqAccordionItem({
               'inline-flex',
               'items-center',
               'justify-center',
-              'text-gold',
+              'text-brand',
               'transition-transform',
               'duration-300',
               'group-hover:scale-110',
@@ -1160,7 +1165,7 @@ function FaqAccordionItem({
           isOpen ? 'grid-rows-[1fr] mt-3' : 'grid-rows-[0fr]',
         ].join(' ')}
       >
-        <p className="min-h-0 text-taupe text-sm leading-relaxed">
+        <p className="min-h-0 text-ink-subtle text-sm leading-relaxed">
           {item.answer}
         </p>
       </div>
@@ -1185,7 +1190,7 @@ function SectionHeading({
       <h2 className="font-display text-4xl md:text-5xl font-light">
         {heading}
       </h2>
-      <p className="text-taupe text-sm max-w-xs">{subheading}</p>
+      <p className="text-ink-subtle text-sm max-w-xs">{subheading}</p>
     </motion.div>
   );
 }
