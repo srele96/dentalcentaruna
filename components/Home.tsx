@@ -30,6 +30,7 @@ import workWavyHairSideProfile from '@/assets/work-wavy-hair-side-profile.webp';
 import workShortLayeredWavesBack from '@/assets/work-short-layered-waves-back.webp';
 import workFormalBun from '@/assets/work-formal-bun.webp';
 import exteriorGlassWall from '@/assets/exterior-glass-wall.webp';
+import UnaDentalCentarLogo from '@/components/UnaDentalCentarLogo';
 
 interface Props {
   translations: Messages;
@@ -40,7 +41,7 @@ interface Props {
 export function Home({ translations: t, locale, url }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { reveal, dashInitial } = MOTION_CONFIG;
+  const { reveal } = MOTION_CONFIG;
 
   return (
     // https://motion.dev/docs/react-motion-config
@@ -78,10 +79,7 @@ export function Home({ translations: t, locale, url }: Props) {
               href={`#${SECTION_ID.top}`}
               className="font-display text-lg tracking-tight"
             >
-              {translate(t, 'header.brand')}{' '}
-              <span className="text-brand">
-                {translate(t, 'header.brandAccent')}
-              </span>
+              <UnaDentalCentarLogo className="h-11 w-auto" />
             </a>
 
             <nav
@@ -310,29 +308,7 @@ export function Home({ translations: t, locale, url }: Props) {
               </h1>
 
               <div className="mt-10 flex items-center gap-6">
-                <svg
-                  id="sig-svg"
-                  viewBox="0 0 420 90"
-                  className="w-56 md:w-72 h-auto text-brand-soft"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <motion.path
-                    d="M10 60 C 40 10, 70 10, 85 55 C 95 80, 60 85, 55 60 C 50 30, 90 20, 120 45 C 140 62, 150 30, 175 30 C 210 30, 190 70, 220 65 C 250 60, 240 20, 270 25 C 300 30, 285 65, 310 60 C 335 55, 330 20, 355 30 C 375 38, 370 55, 400 45"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeDasharray={1400}
-                    strokeDashoffset={1400}
-                    initial={{ strokeDashoffset: dashInitial }}
-                    animate={{ strokeDashoffset: 0 }}
-                    transition={{
-                      duration: 2.2,
-                      delay: 0.3,
-                      ease: [0.65, 0, 0.35, 1],
-                    }}
-                  />
-                </svg>
+                <UnaDentalCentarLogo />
                 <p className="text-surface/60 text-sm max-w-56">
                   {t.hero.sigCaption}
                 </p>
