@@ -1,5 +1,6 @@
 import { ogLocaleFor, hrefFor, type Locale, type Messages } from '@/messages';
 import type { Metadata } from 'next';
+import { BUSINESS_NAME } from '@/lib/constant';
 
 interface CreateOpenGraphMetadataOptions {
   locale: Locale;
@@ -16,7 +17,7 @@ function createOpenGraphMetadata({
     title: t.metadata.title,
     description: t.metadata.description,
     url: hrefFor(locale),
-    siteName: 'Signature Salon',
+    siteName: BUSINESS_NAME,
     images: [
       {
         url: OG_IMAGE,
@@ -32,13 +33,13 @@ function createOpenGraphMetadata({
   return metadata;
 }
 
-interface createTwitterMetadataOptions {
+interface CreateTwitterMetadataOptions {
   translations: Messages;
 }
 
 function createTwitterMetadata({
   translations: t,
-}: createTwitterMetadataOptions): Metadata['twitter'] {
+}: CreateTwitterMetadataOptions): Metadata['twitter'] {
   const metadata: Metadata['twitter'] = {
     card: 'summary_large_image',
     title: t.metadata.title,

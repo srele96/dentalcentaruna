@@ -29,6 +29,7 @@ import {
   OPENING_HOURS,
 } from '@/lib/constant';
 import { createStructuredData } from '@/lib/create-structured-data';
+import { getOpeningHoursLines } from '@/lib/opening-hours';
 
 import clinicTreatmentRoom from '@/assets/clinic-treatment-room.webp';
 import clinicLogoWall from '@/assets/clinic-logo-wall.webp';
@@ -1062,22 +1063,6 @@ const SERVICES = [
   key: keyof Messages['services']['items'];
   wide: boolean;
 }>;
-
-function formatHours({ opens, closes }: { opens: string; closes: string }) {
-  return `${opens} - ${closes}`;
-}
-
-function getOpeningHoursLines(t: Messages): string[] {
-  return [
-    translate(t, 'hours.weekdays', {
-      hours: formatHours(OPENING_HOURS.weekdays),
-    }),
-    translate(t, 'hours.saturday', {
-      hours: formatHours(OPENING_HOURS.saturday),
-    }),
-    t.hours.sunday,
-  ];
-}
 
 const WHY_US = [
   'individual',
