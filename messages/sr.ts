@@ -28,8 +28,6 @@ const messages: Messages = {
     sunday: 'Nedelja: ne radimo',
   },
   header: {
-    brand: 'Signature',
-    brandAccent: 'Salon',
     nav: {
       services: 'Usluge',
       whyUs: 'Zašto mi',
@@ -204,21 +202,6 @@ const messages: Messages = {
           'pacijenta."',
       },
     },
-  },
-  about: {
-    heading: 'Izgrađeno detalj po detalj',
-    paragraph1:
-      'Signature je frizerski salon u Batajnici, otvoren sa jednom idejom - ' +
-      'termin treba da deluje osmišljeno, a ne užurbano. Zato ne primamo više ' +
-      'ljudi nego što stignemo da odradimo kako treba, i niko ne odlazi sa ' +
-      'frizurom koja je završena na brzinu.',
-    paragraph2:
-      'Svaka poseta počinje razgovorom, a ne šablonom. Bilo da je u pitanju ' +
-      'precizno feniranje ili kompletna korekcija boje, ista pažnja se ' +
-      'posvećuje najmanjim detaljima kao i najvećim promenama.',
-    wallImageAlt: 'Natpis na zidu i ulaz u Signature Salon',
-    floralsWideAlt: 'Cvetni aranžman na ulazu u Signature Salon',
-    floralsCloseAlt: 'Detalj cvetnog aranžmana u Signature Salon',
   },
   book: {
     heading: 'Zakažite svoj termin',

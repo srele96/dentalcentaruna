@@ -27,8 +27,6 @@ const messages: Messages = {
     sunday: 'Sunday: closed',
   },
   header: {
-    brand: 'Signature',
-    brandAccent: 'Salon',
     nav: {
       services: 'Services',
       whyUs: 'Why us',
@@ -206,21 +204,6 @@ const messages: Messages = {
           'patient\'s needs."',
       },
     },
-  },
-  about: {
-    heading: 'Built one detail at a time',
-    paragraph1:
-      'Signature is a hair salon in Batajnica, opened with one idea: an ' +
-      'appointment should feel considered, not rushed. We take on only as much ' +
-      'as we can do properly, and nobody leaves with a cut that was finished ' +
-      'in a hurry.',
-    paragraph2:
-      'Every visit starts with a conversation, not a template. Whether ' +
-      "it's a precision blow-dry or a full color correction, the " +
-      'same care goes into the smallest details as the biggest changes.',
-    wallImageAlt: 'Signature Salon wall lettering and entrance',
-    floralsWideAlt: 'Fresh floral arrangement at Signature Salon entrance',
-    floralsCloseAlt: 'Fresh floral detail at Signature Salon',
   },
   book: {
     heading: 'Book your appointment',

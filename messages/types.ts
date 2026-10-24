@@ -48,8 +48,6 @@ interface Messages {
     sunday: string;
   };
   header: {
-    brand: string;
-    brandAccent: string;
     nav: {
       services: string;
       whyUs: string;
@@ -123,14 +121,6 @@ interface Messages {
     members: {
       abramovic: TeamMember;
     };
-  };
-  about: {
-    heading: string;
-    paragraph1: string;
-    paragraph2: string;
-    wallImageAlt: string;
-    floralsWideAlt: string;
-    floralsCloseAlt: string;
   };
   book: {
     heading: string;
