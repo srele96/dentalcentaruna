@@ -1,8 +1,8 @@
 const INSTAGRAM_URL = 'https://www.instagram.com/dental_centar_una';
 
-const MOBILE_PHONE = '381603139199';
+const MOBILE_PHONE = '381603139198';
 const MOBILE_PHONE_INTL = `+${MOBILE_PHONE}`;
-export const PHONE_DISPLAY = '060 313 9199';
+export const PHONE_DISPLAY = '060 313 9198';
 
 const GOOGLE_REVIEW_URL =
   'https://search.google.com/local/writereview?placeid=ChIJ0aOd_YllWkcRaj-RZCAgIpA';

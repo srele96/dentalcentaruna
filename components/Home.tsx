@@ -1181,8 +1181,6 @@ function FaqAccordionItem({
               'items-center',
               'justify-center',
               'text-brand',
-              'transition-transform',
-              'duration-300',
               'group-hover:scale-110',
               isOpen ? 'rotate-45' : '',
             ].join(' ')}
