@@ -5,7 +5,7 @@ const messages: Messages = {
   metadata: {
     title: 'Stomatološka ordinacija Novi Beograd | Dental Centar Una',
     description:
-      'Stomatolog u Beogradu od 2016. Oralna hirurgija, vađenje umnjaka, ' +
+      'Stomatolog na Novom Beogradu (Paviljoni) od 2016. Oralna hirurgija, vađenje umnjaka, ' +
       'implantati i estetska stomatologija. Hitne intervencije - pozovite ' +
       MOBILE_PHONE_INTL +
       '.',
@@ -42,11 +42,11 @@ const messages: Messages = {
     menuClose: 'Zatvori meni',
   },
   hero: {
-    eyebrow: 'Beograd · od 2016.',
+    eyebrow: 'Novi Beograd · od 2016.',
     headingPrefix: 'Vaš osmeh',
     headingAccent: 'u sigurnim rukama',
     subheading:
-      'Stomatološka ordinacija u Beogradu - od prvog pregleda do konačnog ' +
+      'Stomatološka ordinacija na Novom Beogradu - od prvog pregleda do konačnog ' +
       'rezultata, uz pažljiv i individualan pristup svakom pacijentu.',
     bookAction: 'Zakažite pregled',
     callAction: 'Pozovite {phone}',
@@ -56,10 +56,11 @@ const messages: Messages = {
       'stomatološkom stolicom, lampom i monitorom',
   },
   intro: {
-    heading: 'Stomatološka ordinacija u Beogradu',
+    heading: 'Stomatološka ordinacija na Novom Beogradu',
     paragraph1:
       'Dental Centar Una je stomatološka ordinacija u ulici Generala Ždanova ' +
-      'u Beogradu, koju je 2016. godine osnovala dr Milica Abramović. Na ' +
+      'u naselju Paviljoni na Novom Beogradu, koju je 2016. godine osnovala dr ' +
+      'Milica Abramović. Na ' +
       'jednom mestu radimo oralnu hirurgiju i vađenje umnjaka, implantate, ' +
       'estetsku stomatologiju i beljenje zuba, krunice i mostove, lečenje ' +
       'karijesa i kanala korena, kao i uklanjanje kamenca i redovne kontrole.',
@@ -300,7 +301,7 @@ const messages: Messages = {
           'i proverite da li imamo slobodan termin odmah. Hitne slučajeve ' +
           'primamo što pre. Pozovite nas na ' +
           MOBILE_PHONE_INTL +
-          'i zakažite svoj termin.',
+          ' i zakažite svoj termin.',
       },
       'booking-advance-notice': {
         question: 'Koliko unapred treba zakazati termin?',

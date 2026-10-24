@@ -5,7 +5,7 @@ const messages: Messages = {
   metadata: {
     title: 'Dentist in Novi Beograd (New Belgrade) | Dental Centar Una',
     description:
-      'Dentist in Belgrade since 2016. Oral surgery, wisdom tooth extraction, ' +
+      'Dentist in New Belgrade (Paviljoni) since 2016. Oral surgery, wisdom tooth extraction, ' +
       'implants and cosmetic dentistry. Emergency appointments - call ' +
       +MOBILE_PHONE_INTL +
       '.',
@@ -41,11 +41,11 @@ const messages: Messages = {
     menuClose: 'Close menu',
   },
   hero: {
-    eyebrow: 'Belgrade · since 2016',
+    eyebrow: 'New Belgrade · since 2016',
     headingPrefix: 'Your smile',
     headingAccent: 'in safe hands',
     subheading:
-      'A dental practice in Belgrade - from the first exam to the final ' +
+      'A dental practice in New Belgrade - from the first exam to the final ' +
       'result, with a careful, individual approach to every patient.',
     bookAction: 'Book an exam',
     callAction: 'Call {phone}',
@@ -55,10 +55,10 @@ const messages: Messages = {
       'and white dental chair, overhead lamp and monitor',
   },
   intro: {
-    heading: 'A dental practice in Belgrade',
+    heading: 'A dental practice in New Belgrade',
     paragraph1:
       'Dental Centar Una is a dental practice on Generala Ždanova Street in ' +
-      'Belgrade, founded in 2016 by Dr Milica Abramović. Under one roof we ' +
+      'the Paviljoni neighbourhood of New Belgrade, founded in 2016 by Dr Milica Abramović. Under one roof we ' +
       'provide oral surgery and wisdom tooth extraction, implants, cosmetic ' +
       'dentistry and teeth whitening, crowns and bridges, fillings and root ' +
       'canal treatment, as well as scaling and regular check-ups.',
