@@ -1,121 +1,209 @@
 import type { Messages } from './types';
+import { MOBILE_PHONE_INTL } from '@/lib/constant';
 
 const messages: Messages = {
   metadata: {
-    title: 'Hair Salon in Batajnica, Belgrade | Signature Salon',
+    title: 'Dentist in Novi Beograd (New Belgrade) | Dental Centar Una',
     description:
-      'Hair salon in Batajnica, Belgrade - haircuts, coloring, ' +
-      "balayage, and men's grooming. Book by appointment, Mon-Sat 11am-8pm.",
+      'Dentist in Belgrade since 2016. Oral surgery, wisdom tooth extraction, ' +
+      'implants and cosmetic dentistry. Emergency appointments - call ' +
+      +MOBILE_PHONE_INTL +
+      '.',
     keywords: [
-      'hair salon Batajnica',
-      'hairdresser Batajnica',
-      'haircut Batajnica',
-      'hair coloring Batajnica',
-      'balayage Belgrade',
-      "men's haircut Batajnica",
+      'dentist New Belgrade',
+      'dentist Novi Beograd',
+      'dental clinic New Belgrade',
+      'oral surgeon New Belgrade',
+      'wisdom tooth extraction Belgrade',
+      'dental implants Belgrade',
+      'emergency dentist New Belgrade',
+      'Dental Centar Una',
     ],
+  },
+  hours: {
+    heading: 'Working hours',
+    weekdays: 'Monday - Friday: {hours}',
+    saturday: 'Saturday: {hours}',
+    sunday: 'Sunday: closed',
   },
   header: {
     brand: 'Signature',
     brandAccent: 'Salon',
     nav: {
       services: 'Services',
-      work: 'Work',
-      stylists: 'Stylists',
-      about: 'About',
-      findUs: 'Find Us',
+      whyUs: 'Why us',
+      team: 'Team',
+      findUs: 'Find us',
+      reviews: 'Reviews',
       faq: 'FAQ',
-      visit: 'Visit',
+      visit: 'Contact',
     },
-    bookAction: 'Book a chair',
+    bookAction: 'Book an exam',
     menuOpen: 'Open menu',
     menuClose: 'Close menu',
   },
   hero: {
-    eyebrow: 'Batajnica, Belgrade - by appointment',
-    headingPrefix: 'A cut that carries',
-    headingYour: 'your ',
-    headingSignature: 'signature',
-    sigCaption:
-      'Every appointment ends the same way - with a cut ' +
-      "that's unmistakably yours.",
-    bookAction: 'Book a chair',
-    seeServices: 'See services',
+    eyebrow: 'Belgrade · since 2016',
+    headingPrefix: 'Your smile',
+    headingAccent: 'in safe hands',
+    subheading:
+      'A dental practice in Belgrade - from the first exam to the final ' +
+      'result, with a careful, individual approach to every patient.',
+    bookAction: 'Book an exam',
+    callAction: 'Call {phone}',
+    note: 'Flexible scheduling · Emergencies seen as soon as possible',
     imageAlt:
-      'Signature hair salon storefront in Batajnica, ' +
-      'with the etched logo on the glass window',
+      'Treatment room at Dental Centar Una in New Belgrade, with a burgundy ' +
+      'and white dental chair, overhead lamp and monitor',
   },
   intro: {
-    heading: 'A hair salon in Batajnica, Belgrade',
+    heading: 'A dental practice in Belgrade',
     paragraph1:
-      'Signature is a hair salon in Batajnica, with direct bus links from ' +
-      'Zemun, Novi Beograd, Zemun Polje, and Ugrinovci, and a short drive ' +
-      'from Novi Banovci. One stylist handles your whole appointment, from ' +
-      'the consultation to the last section - cuts for women and men, ' +
-      'blow-dries, Revlon Professional color, balayage and lightening, and ' +
-      'repair treatments for damaged hair.',
+      'Dental Centar Una is a dental practice on Generala Ždanova Street in ' +
+      'Belgrade, founded in 2016 by Dr Milica Abramović. Under one roof we ' +
+      'provide oral surgery and wisdom tooth extraction, implants, cosmetic ' +
+      'dentistry and teeth whitening, crowns and bridges, fillings and root ' +
+      'canal treatment, as well as scaling and regular check-ups.',
     paragraph2:
-      "If you're looking for a hairdresser in Batajnica without a weeks-long " +
-      'wait, you can walk in and wait your turn, or call and get an ' +
-      'appointment as soon as tomorrow. Open Monday to Saturday, ' +
-      '11:00-20:00, with 4 parking spots for salon guests out front.',
+      'The same team looks after the health, function, and appearance of your ' +
+      'teeth - no being sent from one doctor to another. Appointments are ' +
+      'scheduled flexibly around your commitments, and in an emergency we do ' +
+      'our best to see you as soon as possible.',
+  },
+  trustBar: {
+    items: {
+      experience: {
+        title: '10+ years of experience',
+        detail: 'With you since 2016',
+      },
+      surgery: { title: 'Oral surgery', detail: 'Oral surgery resident' },
+      allInOne: {
+        title: 'All in one place',
+        detail: 'Dentistry, surgery and aesthetics',
+      },
+      emergency: {
+        title: 'Emergency care',
+        detail: "We'll see you as soon as possible",
+      },
+    },
   },
   services: {
-    heading: 'Services',
-    subheading: 'Priced per consultation.',
-    price: 'from {amount}',
+    heading: 'Our services',
+    subheading:
+      'Complete dental care in one place - from regular check-ups to complex ' +
+      'surgical and cosmetic procedures.',
     items: {
-      haircut: {
-        name: 'Haircut & Blow-Dry',
+      oralSurgery: {
+        name: 'Oral Surgery',
         detail:
-          'Consultation, wash, precision cut, and finishing blow-dry - short to long hair.',
+          'Wisdom tooth removal, surgical extractions, apicoectomy, and ' +
+          'preparatory procedures for implants.',
       },
-      styling: {
-        name: 'Styling & Occasion Hair',
+      implants: {
+        name: 'Dental Implants',
         detail:
-          'Iron styling, updos, and braids for events and special occasions.',
+          'A permanent replacement for missing teeth - restoring both function ' +
+          'and a natural-looking smile.',
       },
-      color: {
-        name: 'Color - Revlon Professional',
+      cosmetic: {
+        name: 'Cosmetic Dentistry',
         detail:
-          'Full color with Revlon Color Sublime, toning, or gloss - priced by length.',
+          'Teeth whitening, composite and ceramic veneers, and tooth-colored ' +
+          'fillings.',
       },
-      balayage: {
-        name: 'Balayage & Lightening',
+      prosthetics: {
+        name: 'Prosthodontics',
         detail:
-          'Bleach, balayage, ombre, or color correction with Magnet Blondes.',
+          'Custom-made crowns, bridges, and dentures, with attention to the ' +
+          'details that make a smile look natural.',
       },
-      bondRepair: {
-        name: 'Bond Repair & Care Rituals',
+      restorative: {
+        name: 'Restorative Dentistry & Endodontics',
+        detail: 'Cavity treatment, fillings, and root canal therapy.',
+      },
+      prevention: {
+        name: 'Prevention & Oral Hygiene',
         detail:
-          'Bond-repair, UniqOne, and Equave hydrating treatments for damaged hair.',
+          'Scaling, polishing, air polishing, and advice for everyday care.',
       },
-      mensGrooming: {
-        name: "Men's Grooming",
-        detail: 'Cut, clipper work, beard shape, and wash & style finish.',
+      facialAesthetics: {
+        name: 'Facial Aesthetics',
+        detail:
+          'Treatments focused on the harmony of the smile and facial features, ' +
+          'using modern aesthetic techniques.',
       },
     },
   },
-  work: {
-    heading: 'Our work',
-    subheading: 'A look at the work coming out of our salon.',
+  whyUs: {
+    heading: 'Why patients choose us',
     items: {
-      braidsWithExtensions: 'Braids with extensions',
-      straightCutBlowDry: 'Straight cut/blow-dry',
-      brownHairWaves: 'Brown hair waves',
-      blackHairWaves: 'Black hair waves',
-      chestnutHairWaves: 'Chestnut hair waves',
-      hairColoringWithRevlonDyes: 'Hair coloring with Revlon dyes',
-      shortLayeredWavesBack: 'Short layered waves, back view',
-      wavyHairSideProfile: 'Wavy hair, side profile',
-      formalBun: 'Formal bun',
+      individual: {
+        title: 'An individual approach',
+        text:
+          'Good treatment starts with a good conversation. Before every ' +
+          'treatment plan, we take the time to understand your needs, worries, ' +
+          'and expectations.',
+      },
+      allInOne: {
+        title: 'Dentistry, surgery, and aesthetics combined',
+        text:
+          'Few practices cover all three. That means the same team looks after ' +
+          'the health, function, and appearance of your teeth - no being sent ' +
+          'from one doctor to another.',
+      },
+      education: {
+        title: 'Continuous training',
+        text:
+          'Our team regularly attends courses with leading lecturers from ' +
+          'Serbia and abroad, so we can offer you modern techniques and ' +
+          'materials.',
+      },
+      flexible: {
+        title: 'Flexible appointments and emergency care',
+        text:
+          'We schedule appointments around your commitments. In an emergency, ' +
+          "we'll do our best to see you as soon as possible.",
+      },
     },
   },
-  stylists: {
-    heading: 'Behind the chair',
+  clinic: {
+    heading: 'Our practice',
+    subheading: 'The space where we welcome you, in Paviljoni, New Belgrade.',
     items: {
-      jelena: {
-        role: 'Cut, color & styling - every service under one chair.',
+      treatmentRoom:
+        'Dental Centar Una treatment room with three dental chairs',
+      logoWall: 'Dental Centar Una logo wall',
+      hallway: 'Practice hallway with certificates from professional training',
+      reception: 'Dental Centar Una reception desk',
+    },
+  },
+  team: {
+    heading: 'Meet our team',
+    members: {
+      abramovic: {
+        name: 'Dr Milica Abramović',
+        role: 'Doctor of Dental Medicine, oral surgery resident, founder',
+        photoAlt: 'Dr Milica Abramović, founder of Dental Centar Una',
+        bio: [
+          'She graduated from the School of Dentistry in Pančevo, earning her ' +
+            'degree in 2016. That same year she took her first big professional ' +
+            'step and founded her own dental practice, aiming to give patients ' +
+            'expert, conscientious, and individually tailored care.',
+          'Over the years she has kept investing in her knowledge and ' +
+            'professional development. She has completed numerous courses in ' +
+            'aesthetic medicine, focused on modern techniques and principles, ' +
+            'with renowned educators from Serbia and abroad.',
+          'She found a particular interest in oral surgery, in which she is now ' +
+            'continuing her specialist training. Combining dentistry, oral ' +
+            'surgery, and aesthetic medicine lets her approach every patient ' +
+            'individually, caring for health and function as well as aesthetics ' +
+            'and a natural look.',
+        ],
+        quote:
+          '"For me, dentistry is not just a job but a combination of knowledge, ' +
+          'precision, responsibility, and trust. I believe good treatment starts ' +
+          'with a good conversation, a careful approach, and understanding each ' +
+          'patient\'s needs."',
       },
     },
   },
@@ -135,142 +223,149 @@ const messages: Messages = {
     floralsCloseAlt: 'Fresh floral detail at Signature Salon',
   },
   book: {
-    headingPrefix: 'Reserve your ',
-    headingChair: 'chair',
-    subheading:
-      "Tell us what you're after and when suits you - we'll confirm " +
-      'within the day.',
-    fastestWay: 'Fastest way to book',
-    phoneHours: "Mon-Sat, 11:00-20:00 - call and we'll find you a chair.",
-    callNow: 'Call now',
-    whatsappHeading: 'Book on WhatsApp',
-    whatsappBody:
-      "Send us a message with your preferred service and date - we'll " +
-      'reply to confirm your slot.',
+    heading: 'Book your appointment',
+    body:
+      "Call us during working hours and together we'll find a time that " +
+      "suits you. In an emergency, we'll do our best to see you as soon as " +
+      'possible.',
+    callAction: 'Call {phone}',
+    addressHeading: 'Address',
+    phoneHeading: 'Phone',
+    hoursHeading: 'Working hours',
+    hoursWeekdays: 'Monday - Friday: [TODO]',
+    hoursSaturday: 'Saturday: [TODO]',
+    closedSunday: 'Sunday: closed',
+    seoHeading: 'Dentist in New Belgrade',
+    seoBody:
+      'Dental Centar Una is a dental practice in Paviljoni, New Belgrade. Since ' +
+      '2016 we have provided oral surgery, implants, cosmetic dentistry, ' +
+      'prosthodontics, and regular check-ups, and we see emergencies as soon ' +
+      'as possible.',
+    areasHeading: 'Easy to reach from',
+    areas: ['Paviljoni', 'Fontana', 'Tošin Bunar', 'Retenzija', 'Zemun'],
+  },
+  reviews: {
+    heading: 'Your feedback matters to us',
+    body:
+      'Have you visited us? Share your experience - your review means a lot ' +
+      'to us and helps other patients find us.',
+    cta: 'Leave a Google review',
     whatsappCta: 'Message us on WhatsApp',
     whatsappMessage:
-      'Hi! I would like to book an appointment at Signature Salon.',
-    instagramHeading: 'Follow on Instagram',
-    instagramBody:
-      'See our latest work, behind-the-chair moments, and booking openings.',
-    review: {
-      heading: 'Leave a Review',
-      body: 'If you enjoyed your visit, a public review means a lot to us.',
-      cta: 'Leave a Google review',
-    },
+      'Hi! I would like to book an appointment at Dental Centar Una.',
+    instagramCta: 'Follow us on Instagram',
   },
   footer: {
-    addressHeading: 'Signature Salon',
+    tagline: 'A dental practice in New Belgrade, since 2016.',
+    callAction: 'Call {phone}',
+    addressHeading: 'Address',
+    openInMaps: 'Open in Google Maps',
     hoursHeading: 'Hours',
-    hoursLine: 'Mon-Sat, 11:00-20:00',
+    hoursWeekdays: 'Monday - Friday: [TODO]',
+    hoursSaturday: 'Saturday: [TODO]',
     closedSunday: 'Closed Sunday',
     contactHeading: 'Contact',
-    copyright: '© 2026 Signature Salon. All rights reserved.',
+    whatsappMessage:
+      'Hi! I would like to book an appointment at Dental Centar Una.',
+    copyright: '© 2026 Dental Centar Una. All rights reserved.',
+    backToTop: 'Back to top',
   },
   location: {
     heading: 'Find Us',
     subheading: 'Directions, landmarks, and the nearest bus stop.',
     directions: [
-      'Signature hair salon in Batajnica is located at the intersection of ' +
-        'Majora Zorana Radosavljevića, Maksima Brankovića, and Stevana ' +
-        'Dubajića streets.',
-      "It's on the right-hand side of Majora Zorana Radosavljevića Street " +
-        'when coming from the entrance of Batajnica toward the center.',
-      'Next to Signature salon are the Fotografik print shop and Gradnja ' +
-        'Dekor D.O.O. - so the salon is on the same side as Fotografik and ' +
-        'Gradnja Dekor.',
-      'The entrance is set back slightly, between the Fotografik print shop ' +
-        'and Maksima Brankovića street.',
-      'Once you step through the entrance, the salon is straight ahead - the ' +
-        "salon's own entrance is straight on, with a small passage to the " +
-        'right and the door on the left.',
-      "Looking through the entrance, you'll see a large glass window - that's " +
-        "the Signature salon's window.",
+      'Dental Centar Una is at Generala Ždanova 4/2, in the Paviljoni ' +
+        'neighbourhood of New Belgrade.',
+      'The practice is about 200 metres from the Paviljoni bus terminus, ' +
+        'right next to the post office 11070 Beograd 27 (Generala Ždanova 2).',
+      'Paviljoni is in the north of New Belgrade, on the border with Zemun, ' +
+        'so we are easy to reach from Fontana, Tošin Bunar, and Zemun as well.',
     ],
     nearbyHeading: 'Nearby',
     nearby: [
-      'Anemona Batajnica (flower shop)',
-      'Cafeteria Awassa',
-      '"Pavlica" dental practice',
-      'Mini Style Gallery (gift shop)',
+      'Post office 11070 Beograd 27 (Generala Ždanova 2)',
+      'Euromedik General Hospital (Pariske komune 22)',
+      'MediGroup health centre (Pariske komune 26)',
+      'Institute for Mother and Child (Radoja Dakića 6-8)',
     ],
     busHeading: 'Nearest Bus Stop',
-    busStopName: 'Maksima Brankovića, Batajnica',
+    busStopName: 'Novi Beograd (Paviljoni), terminus',
     busLines: [
+      { number: '16', route: 'Karaburma 2 - Novi Beograd (Paviljoni)' },
       {
-        number: '73',
-        route: 'Novi Beograd (Blok 45) - Batajnica',
+        number: '81',
+        route: 'Novi Beograd (Paviljoni) - Ugrinovački put (Altina 1)',
       },
-      {
-        number: '703',
-        route:
-          'Zemun (Kej oslobođenja) - Batajnica (train station) - Ugrinovci',
-      },
-      {
-        number: '706',
-        route: 'Zeleni venac - Batajnica',
-      },
-      {
-        number: '706E',
-        route: 'Zemun (Kej oslobođenja) - Batajnica Airport',
-      },
-      {
-        number: '706N',
-        route: 'Trg republike - Batajnica',
-      },
+      { number: '81L', route: 'Novi Beograd (Paviljoni) - Altina 1' },
+      { number: '613', route: 'Novi Beograd (Paviljoni) - Naselje Radiofar' },
+      { number: '711', route: 'Novi Beograd (Paviljoni) - Ugrinovci' },
     ],
-    mapTitle: 'Signature Salon location',
+    mapTitle: 'Dental Centar Una location',
     openInMaps: 'Open in Google Maps',
     loadMap: 'Click to load map',
   },
   faqSection: {
     heading: 'Frequently Asked Questions',
-    subheading: 'Answers to what people most often ask us.',
+    subheading: 'Answers to the questions patients ask us most often.',
+    ctaText: "Didn't find your answer?",
+    callAction: 'Call {phone}',
     items: {
       'booking-required': {
         question:
-          'Do I need to book an appointment in advance, or can ' +
-          'I just walk in?',
+          'Do I need to book an appointment in advance, or can I just walk in?',
         answer:
-          "Booking is available, but not required. You're welcome to " +
-          'walk in and wait for your turn.',
+          'Appointments need to be booked in advance, but you can always call ' +
+          'us to check whether we have a slot available right away. ' +
+          'Emergencies are seen as soon as possible. Call us on ' +
+          MOBILE_PHONE_INTL +
+          ' to book your appointment.',
       },
       'booking-advance-notice': {
         question: 'How far in advance should I book?',
         answer:
-          "We're flexible - you don't need to book far in advance. You " +
-          'can even get an appointment for tomorrow.',
+          'Appointments are booked by phone and scheduled flexibly around your ' +
+          'commitments. For check-ups, treatment, and planned procedures, we ' +
+          'recommend calling us in good time so we can find a slot that suits ' +
+          'you.',
       },
       'cancel-reschedule': {
         question:
-          'Can I cancel or reschedule my appointment, and how much notice ' +
-          'do I need to give?',
+          'Can I cancel or reschedule my appointment, and how much notice do I ' +
+          'need to give?',
         answer:
-          'Yes, appointments can be cancelled or rescheduled - just let us ' +
-          'know at least a day in advance.',
+          'Yes, you can cancel or reschedule. If anything changes, please let ' +
+          'us know at least one day in advance.',
       },
       parking: {
         question: 'Do you have parking?',
         answer:
-          'There are 4 dedicated parking spots for salon visitors. ' +
-          "If those are taken, there's plenty of space nearby - " +
-          "while unmarked, parking is generally fine as long as you don't " +
-          "block an exit or park where it's explicitly prohibited.",
+          "The practice doesn't have its own parking, but there is public " +
+          'parking in front of the building and nearby, so you can always find ' +
+          'a spot close to the practice.',
       },
       'payment-methods': {
         question: 'Do you accept card payments, or only cash?',
-        answer: 'At the moment, we only accept cash.',
+        answer: '[TODO: payment methods - cash / cards / instalments]',
       },
       'directions-transport': {
-        question: 'How do I get to you / which transport should I take?',
-        answer: 'Transport details are listed in the "Find Us" section.',
+        question: 'Which public transport can I take to get to you?',
+        answer:
+          'The practice is about 200 metres from the Paviljoni bus terminus, ' +
+          'served by lines 16, 81, 81L, 613, and 711.',
       },
       location: {
-        question: 'Where exactly is the salon, and how do I find it?',
+        question: 'Where exactly is the practice, and how do I find it?',
         answer:
-          'The salon is located at the intersection of Majora Zorana ' +
-          'Radosavljevića, Maksima Brankovića, and Stevana Dubajića ' +
-          'streets. For more details, see the "Find Us" section.',
+          'The practice is at Generala Ždanova 4/2, in the Paviljoni ' +
+          'neighbourhood of New Belgrade, about 200 metres from the bus ' +
+          'terminus. It is right next to the post office 11070 Beograd 27 ' +
+          '(Generala Ždanova 2), with Euromedik General Hospital (Pariske ' +
+          'komune 22) and the MediGroup health centre (Pariske komune 26) in ' +
+          'Block 7a nearby. The Institute for Mother and Child (Radoja Dakića ' +
+          '6-8) is also not far away.\n\n' +
+          'Paviljoni is in the north of New Belgrade, on the border with ' +
+          'Zemun, so we are easy to reach from Fontana, Tošin Bunar, and Zemun ' +
+          'as well.',
       },
     },
   },

@@ -1,25 +1,23 @@
 import {
+  BUSINESS_NAME,
+  ADDRESS,
+  GEO,
   INSTAGRAM_URL,
   MOBILE_PHONE_INTL,
   SECTION_ID,
   GOOGLE_MAPS_URL,
   AREA_SERVED,
+  OPENING_HOURS,
 } from './constant';
 import { type FaqItem, type Locale } from '@/messages';
 
 interface Options {
   url: string;
-  priceRange: string;
   faqItems: FaqItem[];
   locale: Locale;
 }
 
-export function createStructuredData({
-  url,
-  priceRange,
-  faqItems,
-  locale,
-}: Options) {
+export function createStructuredData({ url, faqItems, locale }: Options) {
   const pageUrl = new URL(url);
   const base = pageUrl.origin;
 
@@ -31,40 +29,38 @@ export function createStructuredData({
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'HairSalon',
+        '@type': 'Dentist',
         '@id': businessId,
-        priceRange,
-        name: 'Signature Salon',
+        name: BUSINESS_NAME,
         url: base,
         telephone: MOBILE_PHONE_INTL,
-        image: `${base}/image/interior-florals-close.webp`,
+        image: `${base}/image/ordinacija.webp`,
         address: {
           '@type': 'PostalAddress',
-          streetAddress: 'Majora Zorana Radosavljevića 205',
-          addressLocality: 'Batajnica',
-          addressRegion: 'Beograd',
-          postalCode: '11273',
-          addressCountry: 'RS',
+          streetAddress: ADDRESS.street,
+          addressLocality: ADDRESS.locality,
+          addressRegion: ADDRESS.region,
+          postalCode: ADDRESS.postalCode,
+          addressCountry: ADDRESS.country,
         },
         geo: {
           '@type': 'GeoCoordinates',
-          latitude: 44.8979201,
-          longitude: 20.2906896,
+          latitude: GEO.latitude,
+          longitude: GEO.longitude,
         },
         areaServed: AREA_SERVED.map((name) => ({ '@type': 'Place', name })),
         openingHoursSpecification: [
           {
             '@type': 'OpeningHoursSpecification',
-            dayOfWeek: [
-              'Monday',
-              'Tuesday',
-              'Wednesday',
-              'Thursday',
-              'Friday',
-              'Saturday',
-            ],
-            opens: '11:00',
-            closes: '20:00',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: OPENING_HOURS.weekdays.opens,
+            closes: OPENING_HOURS.weekdays.closes,
+          },
+          {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Saturday'],
+            opens: OPENING_HOURS.saturday.opens,
+            closes: OPENING_HOURS.saturday.closes,
           },
         ],
         sameAs: [INSTAGRAM_URL],
@@ -75,7 +71,7 @@ export function createStructuredData({
         '@id': websiteId,
         url: base,
         inLanguage: locale,
-        name: 'Signature Salon',
+        name: BUSINESS_NAME,
         publisher: { '@id': businessId },
       },
       {

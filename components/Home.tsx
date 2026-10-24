@@ -6,31 +6,37 @@ import Image, { type StaticImageData } from 'next/image';
 import { translate } from '@/messages';
 import type { Messages, Locale, MessagePath, FaqItem, FaqId } from '@/messages';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { ArrowRight, Plus } from 'lucide-react';
+import {
+  ArrowRight,
+  Plus,
+  CalendarCheck,
+  GraduationCap,
+  Sparkles,
+  Clock,
+  type LucideIcon,
+} from 'lucide-react';
 import {
   INSTAGRAM_URL,
   MOBILE_PHONE,
   MOBILE_PHONE_INTL,
+  PHONE_DISPLAY,
   GOOGLE_REVIEW_URL,
+  GOOGLE_MAPS_EMBED_URL,
   SECTION_ID,
+  ADDRESS,
+  GOOGLE_MAPS_URL,
+  BUSINESS_NAME,
+  OPENING_HOURS,
 } from '@/lib/constant';
 import { createStructuredData } from '@/lib/create-structured-data';
 
-import workBlackHairWaves from '@/assets/work-black-hair-waves.webp';
-import workBraidsWithExtensions from '@/assets/work-braids-with-extensions.webp';
-import workBrownHairWaves from '@/assets/work-brown-hair-waves.webp';
-import workChestnutHairWaves from '@/assets/work-chestnut-hair-waves.webp';
-import workStraightCutBlowDry from '@/assets/work-straight-cut-blow-dry.webp';
-import jelena from '@/assets/jelena.webp';
-import interiorSignatureWall from '@/assets/interior-signature-wall.webp';
-import interiorFloralsClose from '@/assets/interior-florals-close.webp';
-import interiorFloralsWide from '@/assets/interior-florals-wide.webp';
-import workHairColoringWithRevlonDyes from '@/assets/work-hair-coloring-with-revlon-dyes.webp';
-import workWavyHairSideProfile from '@/assets/work-wavy-hair-side-profile.webp';
-import workShortLayeredWavesBack from '@/assets/work-short-layered-waves-back.webp';
-import workFormalBun from '@/assets/work-formal-bun.webp';
-import exteriorGlassWall from '@/assets/exterior-glass-wall.webp';
+import clinicTreatmentRoom from '@/assets/clinic-treatment-room.webp';
+import clinicLogoWall from '@/assets/clinic-logo-wall.webp';
+import clinicHallway from '@/assets/clinic-hallway.webp';
+import clinicReception from '@/assets/clinic-reception.webp';
 import UnaDentalCentarLogo from '@/components/UnaDentalCentarLogo';
+import heroClinic from '@/assets/hero-bg.webp';
+import teamPlaceholder from '@/assets/team-placeholder.webp';
 
 interface Props {
   translations: Messages;
@@ -42,6 +48,7 @@ export function Home({ translations: t, locale, url }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { reveal } = MOTION_CONFIG;
+  const hoursLines = getOpeningHoursLines(t);
 
   return (
     // https://motion.dev/docs/react-motion-config
@@ -53,7 +60,6 @@ export function Home({ translations: t, locale, url }: Props) {
             __html: JSON.stringify(
               createStructuredData({
                 url,
-                priceRange: getPriceRange(SERVICES),
                 faqItems: Object.values(t.faqSection.items) as FaqItem[],
                 locale,
               }),
@@ -233,14 +239,13 @@ export function Home({ translations: t, locale, url }: Props) {
             className="relative isolate overflow-hidden bg-ink text-surface"
           >
             <Image
-              src={exteriorGlassWall}
+              src={heroClinic}
               alt={t.hero.imageAlt}
               fill
               priority
               fetchPriority="high"
               sizes="100vw"
-              quality={70}
-              className="-z-10 object-cover object-[65%_center] md:object-center"
+              className="-z-10 object-cover object-center"
             />
 
             {/* readability scrim */}
@@ -262,29 +267,9 @@ export function Home({ translations: t, locale, url }: Props) {
               aria-hidden="true"
               className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-linear-to-t from-ink to-transparent"
             />
-            <div
-              className={[
-                'max-w-6xl',
-                'mx-auto',
-                'px-6',
-                'md:px-10',
-                'pt-40',
-                'pb-28',
-                'md:pt-52',
-                'md:pb-36',
-                'relative',
-              ].join(' ')}
-            >
-              <p
-                className={[
-                  'text-brand-soft/90',
-                  'text-xs',
-                  'md:text-sm',
-                  'tracking-[0.3em]',
-                  'uppercase',
-                  'mb-6',
-                ].join(' ')}
-              >
+
+            <div className="max-w-6xl mx-auto px-6 md:px-10 pt-40 pb-28 md:pt-52 md:pb-36 relative">
+              <p className="text-brand-soft/90 text-xs md:text-sm tracking-[0.3em] uppercase mb-6">
                 {t.hero.eyebrow}
               </p>
 
@@ -292,64 +277,41 @@ export function Home({ translations: t, locale, url }: Props) {
                 className={[
                   'font-display',
                   'font-light',
-                  'text-[13vw]',
-                  'md:text-[6.5vw]',
+                  'text-[11vw]',
+                  'md:text-[5.5vw]',
                   'leading-[0.95]',
                   'max-w-4xl',
                 ].join(' ')}
               >
                 {`${t.hero.headingPrefix} `}
                 <br className="hidden md:block" />
-                {`${t.hero.headingYour} `}
                 <em className="italic text-brand-soft not-italic-fallback">
-                  {t.hero.headingSignature}
+                  {t.hero.headingAccent}
                 </em>
-                .
               </h1>
 
-              <div className="mt-10 flex items-center gap-6">
-                <UnaDentalCentarLogo />
-                <p className="text-surface/60 text-sm max-w-56">
-                  {t.hero.sigCaption}
-                </p>
-              </div>
+              <p className="mt-8 text-surface/70 text-base md:text-lg leading-relaxed max-w-xl">
+                {t.hero.subheading}
+              </p>
 
-              <div className="mt-14 flex flex-wrap gap-4">
+              <div className="mt-12 flex flex-wrap gap-4">
                 <a
                   href={`#${SECTION_ID.book}`}
-                  className={[
-                    'px-6',
-                    'py-3',
-                    'rounded-full',
-                    'border',
-                    'border-transparent',
-                    'bg-brand',
-                    'text-on-brand',
-                    'text-sm',
-                    'font-medium',
-                    'hover:bg-brand-hover',
-                    'transition-colors',
-                  ].join(' ')}
+                  className="px-6 py-3 rounded-full border border-transparent bg-brand text-on-brand text-sm font-medium hover:bg-brand-hover transition-colors"
                 >
                   {t.hero.bookAction}
                 </a>
                 <a
-                  href={`#${SECTION_ID.services}`}
-                  className={[
-                    'px-6',
-                    'py-3',
-                    'rounded-full',
-                    'border',
-                    'border-surface/30',
-                    'text-sm',
-                    'hover:border-brand-soft',
-                    'hover:text-brand-soft',
-                    'transition-colors',
-                  ].join(' ')}
+                  href={`tel:${MOBILE_PHONE_INTL}`}
+                  className="px-6 py-3 rounded-full border border-surface/30 text-sm hover:border-brand-soft hover:text-brand-soft transition-colors"
                 >
-                  {t.hero.seeServices}
+                  {translate(t, 'hero.callAction', { phone: PHONE_DISPLAY })}
                 </a>
               </div>
+
+              <p className="mt-5 text-surface/50 text-xs md:text-sm">
+                {t.hero.note}
+              </p>
             </div>
             <div className="hairline absolute bottom-0 inset-x-0" />
           </section>
@@ -365,6 +327,36 @@ export function Home({ translations: t, locale, url }: Props) {
                 <p>{t.intro.paragraph2}</p>
               </div>
             </div>
+          </section>
+
+          {/* ===== TRUST BAR ===== */}
+          <section className="max-w-6xl mx-auto px-6 md:px-10 pt-16 md:pt-20">
+            <ul className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 border-y border-ink/15 py-10">
+              {TRUST_ITEMS.map(({ key, icon: Icon }) => {
+                const item = t.trustBar.items[key];
+                return (
+                  <motion.li
+                    key={key}
+                    {...reveal}
+                    className="flex flex-col gap-3"
+                  >
+                    <Icon
+                      className="w-6 h-6 text-brand"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <p className="font-display text-lg leading-snug">
+                        {item.title}
+                      </p>
+                      <p className="text-ink-subtle text-sm mt-1">
+                        {item.detail}
+                      </p>
+                    </div>
+                  </motion.li>
+                );
+              })}
+            </ul>
           </section>
 
           {/* ===== SERVICES ===== */}
@@ -389,212 +381,273 @@ export function Home({ translations: t, locale, url }: Props) {
                       'border-t',
                       'border-ink/15',
                       'py-6',
-                      'flex',
-                      'justify-between',
-                      'items-baseline',
                       service.wide ? 'border-b md:col-span-2' : '',
                     ].join(' ')}
                   >
-                    <div>
-                      <h3 className="font-display text-xl">{item.name}</h3>
-                      <p className="text-ink-subtle text-sm mt-1">
-                        {item.detail}
-                      </p>
-                    </div>
-                    <span className="text-brand text-sm whitespace-nowrap ml-6">
-                      {translate(t, 'services.price', {
-                        amount: formatPrice(service.amount, service.currency),
-                      })}
-                    </span>
+                    <h3 className="font-display text-xl">{item.name}</h3>
+                    <p className="text-ink-subtle text-sm mt-1">
+                      {item.detail}
+                    </p>
                   </motion.div>
                 );
               })}
             </div>
           </section>
 
-          {/* ===== WORK / GALLERY ===== */}
+          {/* ===== WHY US ===== */}
           <section
-            id={SECTION_ID.work}
+            id={SECTION_ID.whyUs}
             className="bg-brand text-surface py-24 md:py-32"
           >
             <div className="max-w-6xl mx-auto px-6 md:px-10">
               <motion.h2
                 {...reveal}
-                className="font-display text-4xl md:text-5xl font-light mb-3"
+                className="font-display text-4xl md:text-5xl font-light mb-14"
               >
-                {t.work.heading}
+                {t.whyUs.heading}
               </motion.h2>
-              <motion.p
-                {...reveal}
-                className="text-surface/60 text-sm mb-14 max-w-md"
-              >
-                {t.work.subheading}
-              </motion.p>
+
+              <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
+                {WHY_US.map((key, i) => {
+                  const item = t.whyUs.items[key];
+                  return (
+                    <motion.div
+                      key={key}
+                      {...reveal}
+                      className="border-t border-surface/20 pt-6"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="font-display text-brand-soft text-sm tracking-[0.3em]"
+                      >
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="font-display text-2xl mt-3 mb-3">
+                        {item.title}
+                      </h3>
+                      <p className="text-surface/70 leading-relaxed">
+                        {item.text}
+                      </p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          {/* ===== CLINIC / GALLERY ===== */}
+          <section className="bg-surface-alt py-24 md:py-32">
+            <div className="max-w-6xl mx-auto px-6 md:px-10">
+              <SectionHeading
+                heading={t.clinic.heading}
+                subheading={t.clinic.subheading}
+                reveal={reveal}
+              />
 
               <div
                 className={[
                   'grid',
-                  'grid-cols-1',
-                  'sm:grid-cols-2',
-                  'lg:grid-cols-3',
+                  'grid-cols-2',
+                  'md:grid-cols-3',
+                  'md:grid-rows-2',
+                  'md:h-160',
                   'gap-4',
                   'md:gap-6',
                 ].join(' ')}
               >
-                {WORK.map((item) => (
+                {CLINIC_PHOTOS.map((photo) => (
                   <motion.div
-                    key={item.key}
+                    key={photo.key}
                     {...reveal}
                     className={[
+                      'relative',
                       'rounded-lg',
                       'overflow-hidden',
-                      'flex',
-                      'flex-col',
-                      'bg-on-brand/5',
-                      'ring-1',
-                      'ring-on-brand/10',
+                      'bg-surface',
+                      photo.className,
                     ].join(' ')}
                   >
-                    <div className="relative aspect-3/4">
-                      <Image
-                        src={item.image}
-                        alt={t.work.items[item.key]}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover"
-                      />
-                    </div>
-
-                    <div className="px-4 py-3">
-                      <span
-                        className={[
-                          'font-sans',
-                          'text-sm',
-                          'md:text-base',
-                          'tracking-wide',
-                          'text-surface/80',
-                        ].join(' ')}
-                      >
-                        {t.work.items[item.key]}
-                      </span>
-                    </div>
+                    <Image
+                      src={photo.image}
+                      alt={t.clinic.items[photo.key]}
+                      fill
+                      sizes={photo.sizes}
+                      className="object-cover"
+                    />
                   </motion.div>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* ===== STYLISTS ===== */}
+          {/* ===== TEAM ===== */}
           <section
-            id={SECTION_ID.stylists}
+            id={SECTION_ID.team}
             className="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32"
           >
             <motion.h2
               {...reveal}
-              className="font-display text-4xl md:text-5xl font-light mb-14 text-center"
+              className="font-display text-4xl md:text-5xl font-light mb-14"
             >
-              {translate(t, 'stylists.heading')}
+              {t.team.heading}
             </motion.h2>
-            <div className="max-w-xs mx-auto">
-              {STYLISTS.map((stylist) => (
-                <motion.div
-                  key={stylist.key}
-                  {...reveal}
-                  className="text-center"
-                >
-                  <div
-                    className={[
-                      'aspect-square',
-                      'rounded-full',
-                      'bg-surface-alt',
-                      'mb-5',
-                      'overflow-hidden',
-                      'flex',
-                      'items-center',
-                      'justify-center',
-                    ].join(' ')}
+
+            <div className="space-y-20">
+              {TEAM.map(({ key, image }) => {
+                const member = t.team.members[key];
+                return (
+                  <motion.article
+                    key={key}
+                    {...reveal}
+                    className="grid md:grid-cols-[2fr_3fr] gap-10 md:gap-14 items-start"
                   >
-                    <Image
-                      src={stylist.image}
-                      alt={stylist.name}
-                      width={300}
-                      height={300}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="font-display text-lg">{stylist.name}</h3>
-                  <p className="text-ink-subtle text-sm">
-                    {translate(t, stylist.key)}
-                  </p>
-                </motion.div>
-              ))}
+                    <div className="relative aspect-4/5 rounded-lg overflow-hidden bg-surface-alt">
+                      <Image
+                        src={image}
+                        alt={member.photoAlt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 40vw"
+                        className="object-cover object-top"
+                      />
+                    </div>
+
+                    <div>
+                      <h3 className="font-display text-3xl">{member.name}</h3>
+                      <p className="text-brand text-sm mt-2 mb-8">
+                        {member.role}
+                      </p>
+
+                      <div className="space-y-5 text-ink/70 leading-relaxed">
+                        {member.bio.map((paragraph, i) => (
+                          <p key={i}>{paragraph}</p>
+                        ))}
+                      </div>
+
+                      {member.quote && (
+                        <blockquote
+                          className={[
+                            'mt-10',
+                            'border-l-2',
+                            'border-brand',
+                            'pl-6',
+                            'font-display',
+                            'text-xl',
+                            'italic',
+                            'text-ink/80',
+                            'leading-relaxed',
+                          ].join(' ')}
+                        >
+                          {member.quote}
+                        </blockquote>
+                      )}
+                    </div>
+                  </motion.article>
+                );
+              })}
             </div>
           </section>
 
-          {/* ===== ABOUT / INTERIOR ===== */}
+          {/* ===== BOOK / CONTACT ===== */}
           <section
-            id={SECTION_ID.about}
-            className="bg-brand text-surface py-24 md:py-32"
+            id={SECTION_ID.book}
+            className="bg-ink text-surface py-24 md:py-32"
           >
-            <div className="max-w-6xl mx-auto px-6 md:px-10">
-              <div className="grid md:grid-cols-2 gap-14 md:gap-10 items-center">
-                <motion.div {...reveal}>
-                  <h2 className="font-display text-4xl md:text-5xl font-light mb-8">
-                    {t.about.heading}
-                  </h2>
-                  <div
-                    className={[
-                      'space-y-5',
-                      'text-surface/70',
-                      'text-base',
-                      'md:text-lg',
-                      'leading-relaxed',
-                    ].join(' ')}
-                  >
-                    <p>{t.about.paragraph1}</p>
-                    <p>{t.about.paragraph2}</p>
-                  </div>
-                </motion.div>
-                <motion.div
-                  {...reveal}
-                  className="relative aspect-4/5 rounded-lg overflow-hidden"
+            <div className="max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-12 md:gap-14 items-start">
+              <motion.div {...reveal}>
+                <h2 className="font-display text-4xl md:text-5xl font-light leading-tight mb-6">
+                  {t.book.heading}
+                </h2>
+                <p className="text-surface/70 text-base md:text-lg leading-relaxed mb-10">
+                  {t.book.body}
+                </p>
+
+                <a
+                  href={`tel:${MOBILE_PHONE_INTL}`}
+                  className={[
+                    'inline-flex',
+                    'items-center',
+                    'justify-center',
+                    'gap-2',
+                    'px-8',
+                    'py-3',
+                    'rounded-full',
+                    'bg-brand',
+                    'text-on-brand',
+                    'text-sm',
+                    'font-medium',
+                    'hover:bg-brand-hover',
+                    'transition-colors',
+                  ].join(' ')}
                 >
-                  <Image
-                    src={interiorSignatureWall}
-                    alt={t.about.wallImageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                  />
-                </motion.div>
-              </div>
+                  {translate(t, 'book.callAction', { phone: PHONE_DISPLAY })}
+                </a>
+
+                <dl className="mt-12 border-t border-surface/15 pt-8 grid sm:grid-cols-2 gap-8 text-sm">
+                  <div>
+                    <dt className="font-display text-lg mb-2">
+                      {t.book.addressHeading}
+                    </dt>
+                    <dd className="text-surface/70">
+                      {ADDRESS.street}
+                      <br />
+                      {ADDRESS.city}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-display text-lg mb-2">
+                      {t.book.phoneHeading}
+                    </dt>
+                    <dd>
+                      <a
+                        href={`tel:${MOBILE_PHONE_INTL}`}
+                        className="text-surface/70 hover:text-brand-soft transition-colors"
+                      >
+                        {PHONE_DISPLAY}
+                      </a>
+                    </dd>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <dt className="font-display text-lg mb-2">
+                      {t.hours.heading}
+                    </dt>
+                    <dd className="text-surface/70 space-y-1">
+                      {hoursLines.map((line) => (
+                        <p key={line}>{line}</p>
+                      ))}
+                    </dd>
+                  </div>
+                </dl>
+              </motion.div>
 
               <motion.div
                 {...reveal}
-                className="grid md:grid-cols-2 gap-4 md:gap-6 mt-14 md:mt-20"
+                className="rounded-2xl border border-surface/15 bg-surface/5 p-8 md:p-10"
               >
-                <div className="relative aspect-3/4 rounded-lg overflow-hidden">
-                  <Image
-                    src={interiorFloralsWide}
-                    alt={t.about.floralsWideAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover object-top"
-                  />
-                </div>
-                <div className="relative aspect-3/4 rounded-lg overflow-hidden">
-                  <Image
-                    src={interiorFloralsClose}
-                    alt={t.about.floralsCloseAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover object-top"
-                  />
-                </div>
+                <h3 className="font-display text-2xl md:text-3xl font-light mb-4">
+                  {t.book.seoHeading}
+                </h3>
+                <p className="text-surface/70 leading-relaxed">
+                  {t.book.seoBody}
+                </p>
+
+                <p className="mt-8 mb-3 text-xs tracking-[0.2em] uppercase text-brand-soft">
+                  {t.book.areasHeading}
+                </p>
+                <ul className="flex flex-wrap gap-2">
+                  {t.book.areas.map((area) => (
+                    <li
+                      key={area}
+                      className="rounded-full border border-surface/20 px-3 py-1 text-xs text-surface/80"
+                    >
+                      {area}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             </div>
           </section>
 
+          {/* ===== FIND US ===== */}
           <section
             id={SECTION_ID.findUs}
             className="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32"
@@ -637,13 +690,7 @@ export function Home({ translations: t, locale, url }: Props) {
                   <h3 className="font-display text-lg mb-1">
                     {t.location.busHeading}
                   </h3>
-                  <a
-                    href="https://www.planplus.rs/beograd/stajaliste/maksima-brankovica/3076"
-                    rel="noopener noreferrer"
-                    className="text-brand text-sm hover:underline"
-                  >
-                    {t.location.busStopName}
-                  </a>
+                  <p className="text-brand text-sm">{t.location.busStopName}</p>
                   <ul className="mt-3 text-ink-subtle text-sm space-y-1.5">
                     {t.location.busLines.map((line) => (
                       <li key={line.number} className="flex gap-3">
@@ -671,7 +718,7 @@ export function Home({ translations: t, locale, url }: Props) {
                   ].join(' ')}
                 >
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d666.9036587482959!2d20.290000049084973!3d44.8981339508624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a67a48e3c5523%3A0x1c43e0950fa06162!2sSignature!5e0!3m2!1sen!2srs!4v1786403572686!5m2!1sen!2srs"
+                    src={GOOGLE_MAPS_EMBED_URL}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -682,7 +729,7 @@ export function Home({ translations: t, locale, url }: Props) {
                   />
                 </div>
                 <a
-                  href="https://maps.app.goo.gl/oeiT45tU6cUaNtNVA"
+                  href={GOOGLE_MAPS_URL}
                   rel="noopener noreferrer"
                   className={[
                     'inline-flex',
@@ -700,85 +747,26 @@ export function Home({ translations: t, locale, url }: Props) {
             </div>
           </section>
 
-          {/* ===== FAQ ===== */}
+          {/* ===== REVIEWS ===== */}
           <section
-            id={SECTION_ID.faq}
-            className="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32"
+            id={SECTION_ID.reviews}
+            className="bg-brand text-surface py-24 md:py-32"
           >
-            <SectionHeading
-              heading={t.faqSection.heading}
-              subheading={t.faqSection.subheading}
-              reveal={reveal}
-            />
+            <motion.div
+              {...reveal}
+              className="max-w-2xl mx-auto px-6 md:px-10 text-center"
+            >
+              <h2 className="font-display text-4xl md:text-5xl font-light mb-6">
+                {t.reviews.heading}
+              </h2>
+              <p className="text-surface/70 text-base md:text-lg leading-relaxed mb-10">
+                {t.reviews.body}
+              </p>
 
-            <div className="max-w-3xl">
-              {(Object.keys(t.faqSection.items) as FaqId[]).map((id) => (
-                <FaqAccordionItem
-                  key={id}
-                  item={t.faqSection.items[id]}
-                  reveal={reveal}
-                  id={id}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* ===== BOOK / CTA ===== */}
-          <section
-            id={SECTION_ID.book}
-            className="bg-ink text-surface relative overflow-hidden grain"
-          >
-            <div className="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32 relative">
-              <motion.div {...reveal} className="text-center mb-14">
-                <h2 className="font-display text-4xl md:text-5xl font-light leading-tight mb-6">
-                  {t.book.headingPrefix}
-                  <span className="text-brand-soft">{t.book.headingChair}</span>
-                  .
-                </h2>
-                <p className="text-surface/60 text-sm max-w-sm mx-auto">
-                  {t.book.subheading}
-                </p>
-              </motion.div>
-
-              {/* Primary CTA: phone */}
-              <motion.div
-                {...reveal}
-                className={[
-                  'max-w-xl',
-                  'mx-auto',
-                  'mb-10',
-                  'text-center',
-                  'border',
-                  'border-brand/50',
-                  'rounded-2xl',
-                  'p-10',
-                  'bg-brand/15',
-                ].join(' ')}
-              >
-                <p className="text-brand-soft/90 text-xs tracking-[0.3em] uppercase mb-4">
-                  {t.book.fastestWay}
-                </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
                 <a
-                  href={`tel:${MOBILE_PHONE_INTL}`}
-                  className={[
-                    'font-display',
-                    'text-4xl',
-                    'md:text-5xl',
-                    'font-light',
-                    'text-surface',
-                    'hover:text-surface/70',
-                    'transition-colors',
-                    'block',
-                    'mb-4',
-                  ].join(' ')}
-                >
-                  063 742 7750
-                </a>
-                <p className="text-surface/50 text-sm mb-6">
-                  {t.book.phoneHours}
-                </p>
-                <a
-                  href={`tel:${MOBILE_PHONE_INTL}`}
+                  href={GOOGLE_REVIEW_URL}
+                  rel="noopener noreferrer"
                   className={[
                     'inline-flex',
                     'items-center',
@@ -787,209 +775,253 @@ export function Home({ translations: t, locale, url }: Props) {
                     'px-8',
                     'py-3',
                     'rounded-full',
-                    'bg-brand',
-                    'text-on-brand',
+                    'bg-surface',
+                    'text-ink',
                     'text-sm',
                     'font-medium',
-                    'hover:bg-brand-hover',
+                    'hover:bg-surface/90',
                     'transition-colors',
                   ].join(' ')}
                 >
-                  {t.book.callNow}
+                  {t.reviews.cta}
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </a>
+
+                <a
+                  href={`https://wa.me/${MOBILE_PHONE}?text=${encodeURIComponent(t.reviews.whatsappMessage)}`}
+                  rel="noopener noreferrer"
+                  className={[
+                    'inline-flex',
+                    'items-center',
+                    'justify-center',
+                    'gap-2',
+                    'px-8',
+                    'py-3',
+                    'rounded-full',
+                    'border',
+                    'border-surface/40',
+                    'text-surface',
+                    'text-sm',
+                    'font-medium',
+                    'hover:bg-surface/10',
+                    'transition-colors',
+                  ].join(' ')}
+                >
+                  {t.reviews.whatsappCta}
+                </a>
+
+                <a
+                  href={INSTAGRAM_URL}
+                  rel="noopener noreferrer"
+                  className={[
+                    'inline-flex',
+                    'items-center',
+                    'justify-center',
+                    'gap-2',
+                    'px-8',
+                    'py-3',
+                    'rounded-full',
+                    'border',
+                    'border-surface/40',
+                    'text-surface',
+                    'text-sm',
+                    'font-medium',
+                    'hover:bg-surface/10',
+                    'transition-colors',
+                  ].join(' ')}
+                >
+                  {t.reviews.instagramCta}
+                </a>
+              </div>
+            </motion.div>
+          </section>
+
+          {/* ===== FAQ ===== */}
+          <section
+            id={SECTION_ID.faq}
+            className="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32"
+          >
+            <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-16 items-start">
+              <motion.div {...reveal} className="lg:sticky lg:top-28">
+                <h2 className="font-display text-4xl md:text-5xl font-light mb-4">
+                  {t.faqSection.heading}
+                </h2>
+                <p className="text-ink-subtle text-sm leading-relaxed max-w-xs mb-10">
+                  {t.faqSection.subheading}
+                </p>
+                <p className="text-sm text-ink mb-3">{t.faqSection.ctaText}</p>
+                <a
+                  href={`tel:${MOBILE_PHONE_INTL}`}
+                  className={[
+                    'inline-flex',
+                    'items-center',
+                    'gap-2',
+                    'px-5',
+                    'py-2.5',
+                    'rounded-full',
+                    'bg-ink',
+                    'text-surface',
+                    'text-sm',
+                    'hover:bg-brand',
+                    'transition-colors',
+                  ].join(' ')}
+                >
+                  {translate(t, 'faqSection.callAction', {
+                    phone: PHONE_DISPLAY,
+                  })}
                 </a>
               </motion.div>
 
-              {/* Secondary: WhatsApp + Instagram + Review */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-                <motion.div
-                  {...reveal}
-                  className="bg-surface/5 border border-surface/15 rounded-2xl p-6 md:p-8 flex flex-col"
-                >
-                  <h3 className="font-display text-xl md:text-2xl mb-3">
-                    {t.book.whatsappHeading}
-                  </h3>
-                  <p className="text-surface/60 text-sm mb-6">
-                    {t.book.whatsappBody}
-                  </p>
-                  <a
-                    href={`https://wa.me/${MOBILE_PHONE}?text=${encodeURIComponent(t.book.whatsappMessage)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={[
-                      'mt-auto',
-                      'w-full',
-                      'inline-flex',
-                      'items-center',
-                      'justify-center',
-                      'gap-2',
-                      'px-6',
-                      'py-3',
-                      'rounded-full',
-                      'bg-[#25D366]',
-                      'text-ink',
-                      'text-sm',
-                      'font-medium',
-                      'hover:opacity-90',
-                      'transition-opacity',
-                    ].join(' ')}
-                  >
-                    {t.book.whatsappCta}
-                  </a>
-                </motion.div>
-
-                <motion.div
-                  {...reveal}
-                  className="bg-surface/5 border border-surface/15 rounded-2xl p-6 md:p-8 flex flex-col"
-                >
-                  <h3 className="font-display text-xl md:text-2xl mb-3">
-                    {t.book.instagramHeading}
-                  </h3>
-                  <p className="text-surface/60 text-sm mb-6">
-                    {t.book.instagramBody}
-                  </p>
-                  <a
-                    href={INSTAGRAM_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={[
-                      'mt-auto',
-                      'w-full',
-                      'inline-flex',
-                      'items-center',
-                      'justify-center',
-                      'gap-2',
-                      'px-6',
-                      'py-3',
-                      'rounded-full',
-                      'bg-linear-to-tr',
-                      'from-[#feda75]',
-                      'via-[#d62976]',
-                      'to-[#4f5bd5]',
-                      'text-surface',
-                      'text-sm',
-                      'font-medium',
-                      'hover:opacity-90',
-                      'transition-opacity',
-                    ].join(' ')}
-                  >
-                    @signaturebatajnica
-                  </a>
-                </motion.div>
-
-                <motion.div
-                  {...reveal}
-                  className={[
-                    'bg-surface/5',
-                    'border',
-                    'border-surface/15',
-                    'rounded-2xl',
-                    'p-6',
-                    'md:p-8',
-                    'flex',
-                    'flex-col',
-                    'md:col-span-2',
-                    'lg:col-span-1',
-                  ].join(' ')}
-                >
-                  <h3 className="font-display text-xl md:text-2xl mb-3">
-                    {t.book.review.heading}
-                  </h3>
-                  <p className="text-surface/60 text-sm mb-6">
-                    {t.book.review.body}
-                  </p>
-                  <a
-                    href={GOOGLE_REVIEW_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={[
-                      'mt-auto',
-                      'w-full',
-                      'inline-flex',
-                      'items-center',
-                      'justify-center',
-                      'gap-2',
-                      'px-6',
-                      'py-3',
-                      'rounded-full',
-                      'bg-brand',
-                      'text-on-brand',
-                      'text-sm',
-                      'font-medium',
-                      'hover:bg-brand-hover',
-                      'transition-colors',
-                    ].join(' ')}
-                  >
-                    {t.book.review.cta}
-                  </a>
-                </motion.div>
+              <div>
+                {(Object.keys(t.faqSection.items) as FaqId[]).map((id) => (
+                  <FaqAccordionItem
+                    key={id}
+                    item={t.faqSection.items[id]}
+                    reveal={reveal}
+                    id={id}
+                  />
+                ))}
               </div>
             </div>
           </section>
         </main>
 
         {/* ===== VISIT / FOOTER ===== */}
-        <footer
-          id={SECTION_ID.visit}
-          className="max-w-6xl mx-auto px-6 md:px-10 py-16 grid sm:grid-cols-3 gap-10 text-sm"
-        >
-          <div>
-            <h3 className="font-display text-lg mb-3">
-              {t.footer.addressHeading}
-            </h3>
-            <p className="text-ink-subtle">
-              Majora Zorana Radosavljevića 205
-              <br />
-              Beograd 11273
-            </p>
-          </div>
-          <div>
-            <h3 className="font-display text-lg mb-3">
-              {t.footer.hoursHeading}
-            </h3>
-            <p className="text-ink-subtle">
-              {t.footer.hoursLine}
-              <br />
-              {t.footer.closedSunday}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-display text-lg mb-3">
-              {t.footer.contactHeading}
-            </h3>
-            <p className="text-ink-subtle mb-2">
+        <footer id={SECTION_ID.visit} className="bg-ink text-surface">
+          <div
+            className={[
+              'max-w-6xl',
+              'mx-auto',
+              'px-6',
+              'md:px-10',
+              'py-16',
+              'md:py-20',
+              'grid',
+              'gap-12',
+              'sm:grid-cols-2',
+              'lg:grid-cols-[1.4fr_1fr_1fr_1fr]',
+            ].join(' ')}
+          >
+            <div className="sm:col-span-2 lg:col-span-1">
+              <p className="font-display text-2xl">{BUSINESS_NAME}</p>
+              <p className="mt-3 text-surface/60 text-sm leading-relaxed max-w-xs">
+                {t.footer.tagline}
+              </p>
               <a
                 href={`tel:${MOBILE_PHONE_INTL}`}
-                className="hover:text-brand transition-colors"
+                className={[
+                  'mt-6',
+                  'inline-flex',
+                  'items-center',
+                  'gap-2',
+                  'px-5',
+                  'py-2.5',
+                  'rounded-full',
+                  'bg-brand',
+                  'text-on-brand',
+                  'text-sm',
+                  'font-medium',
+                  'hover:bg-brand-hover',
+                  'transition-colors',
+                ].join(' ')}
               >
-                063 742 7750
+                {translate(t, 'footer.callAction', { phone: PHONE_DISPLAY })}
               </a>
-            </p>
-            <nav
-              className="flex items-center gap-4 text-ink-subtle"
-              aria-label={t.footer.contactHeading}
+            </div>
+
+            <div>
+              <h3 className="text-xs font-medium tracking-[0.2em] uppercase text-surface mb-4">
+                {t.footer.addressHeading}
+              </h3>
+              <p className="text-surface/60 text-sm leading-relaxed">
+                {ADDRESS.street}
+                <br />
+                {ADDRESS.city}
+              </p>
+              <a
+                href={GOOGLE_MAPS_URL}
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 text-sm text-brand-soft hover:underline"
+              >
+                {t.footer.openInMaps}
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
+            </div>
+
+            <div>
+              <h3 className="text-xs font-medium tracking-[0.2em] uppercase text-surface mb-4">
+                {t.hours.heading}
+              </h3>
+              <ul className="text-surface/60 text-sm space-y-1.5">
+                {hoursLines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xs font-medium tracking-[0.2em] uppercase text-surface mb-4">
+                {t.footer.contactHeading}
+              </h3>
+              <ul className="text-surface/60 text-sm space-y-1.5">
+                <li>
+                  <a
+                    href={`tel:${MOBILE_PHONE_INTL}`}
+                    className="hover:text-surface transition-colors"
+                  >
+                    {PHONE_DISPLAY}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`https://wa.me/${MOBILE_PHONE}?text=${encodeURIComponent(t.footer.whatsappMessage)}`}
+                    rel="noopener noreferrer"
+                    className="hover:text-surface transition-colors"
+                  >
+                    WhatsApp
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={INSTAGRAM_URL}
+                    rel="noopener noreferrer"
+                    className="hover:text-surface transition-colors"
+                  >
+                    Instagram
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-surface/10">
+            <div
+              className={[
+                'max-w-6xl',
+                'mx-auto',
+                'px-6',
+                'md:px-10',
+                'py-6',
+                'flex',
+                'flex-col',
+                'sm:flex-row',
+                'gap-2',
+                'items-center',
+                'justify-between',
+                'text-xs',
+                'text-surface/50',
+              ].join(' ')}
             >
+              <p>{t.footer.copyright}</p>
               <a
-                href={`https://wa.me/${MOBILE_PHONE}`}
-                rel="noopener noreferrer"
-                className="hover:text-brand transition-colors"
+                href={`#${SECTION_ID.top}`}
+                className="hover:text-surface transition-colors"
               >
-                WhatsApp
+                {t.footer.backToTop} ↑
               </a>
-              <a
-                href={INSTAGRAM_URL}
-                rel="noopener noreferrer"
-                className="hover:text-brand transition-colors"
-              >
-                Instagram
-              </a>
-            </nav>
+            </div>
           </div>
         </footer>
-        <div className="hairline max-w-6xl mx-auto" />
-        <p className="text-center text-xs text-ink-subtle py-6">
-          {t.footer.copyright}
-        </p>
       </div>
     </MotionConfig>
   );
@@ -997,10 +1029,10 @@ export function Home({ translations: t, locale, url }: Props) {
 
 const NAV_LINKS = [
   { href: `#${SECTION_ID.services}`, key: 'header.nav.services' },
-  { href: `#${SECTION_ID.work}`, key: 'header.nav.work' },
-  { href: `#${SECTION_ID.stylists}`, key: 'header.nav.stylists' },
-  { href: `#${SECTION_ID.about}`, key: 'header.nav.about' },
+  { href: `#${SECTION_ID.whyUs}`, key: 'header.nav.whyUs' },
+  { href: `#${SECTION_ID.team}`, key: 'header.nav.team' },
   { href: `#${SECTION_ID.findUs}`, key: 'header.nav.findUs' },
+  { href: `#${SECTION_ID.reviews}`, key: 'header.nav.reviews' },
   { href: `#${SECTION_ID.faq}`, key: 'header.nav.faq' },
   { href: `#${SECTION_ID.visit}`, key: 'header.nav.visit' },
 ] as const satisfies ReadonlyArray<{
@@ -1008,56 +1040,89 @@ const NAV_LINKS = [
   key: MessagePath;
 }>;
 
-function formatPrice(amount: number, currency: string): string {
-  return `${amount.toLocaleString('sr-RS')} ${currency}`;
-}
-
-function getPriceRange(services: typeof SERVICES): string {
-  const amounts = services.map((s) => s.amount);
-  const currency = services[0].currency;
-  const min = Math.min(...amounts);
-  const max = Math.max(...amounts);
-  return `${min}-${max} ${currency}`;
-}
+const TRUST_ITEMS = [
+  { key: 'experience', icon: CalendarCheck },
+  { key: 'surgery', icon: GraduationCap },
+  { key: 'allInOne', icon: Sparkles },
+  { key: 'emergency', icon: Clock },
+] as const satisfies ReadonlyArray<{
+  key: keyof Messages['trustBar']['items'];
+  icon: LucideIcon;
+}>;
 
 const SERVICES = [
-  { key: 'haircut', amount: 1000, currency: 'RSD', wide: false },
-  { key: 'styling', amount: 1000, currency: 'RSD', wide: false },
-  { key: 'color', amount: 2200, currency: 'RSD', wide: false },
-  { key: 'balayage', amount: 6000, currency: 'RSD', wide: false },
-  { key: 'bondRepair', amount: 2000, currency: 'RSD', wide: false },
-  { key: 'mensGrooming', amount: 900, currency: 'RSD', wide: true },
+  { key: 'oralSurgery', wide: false },
+  { key: 'implants', wide: false },
+  { key: 'cosmetic', wide: false },
+  { key: 'prosthetics', wide: false },
+  { key: 'restorative', wide: false },
+  { key: 'prevention', wide: false },
+  { key: 'facialAesthetics', wide: true },
 ] as const satisfies ReadonlyArray<{
   key: keyof Messages['services']['items'];
-  amount: number;
-  currency: string;
   wide: boolean;
 }>;
 
-const WORK = [
-  { key: 'braidsWithExtensions', image: workBraidsWithExtensions },
-  { key: 'straightCutBlowDry', image: workStraightCutBlowDry },
-  { key: 'brownHairWaves', image: workBrownHairWaves },
-  { key: 'blackHairWaves', image: workBlackHairWaves },
-  { key: 'chestnutHairWaves', image: workChestnutHairWaves },
-  { key: 'hairColoringWithRevlonDyes', image: workHairColoringWithRevlonDyes },
-  { key: 'wavyHairSideProfile', image: workWavyHairSideProfile },
-  { key: 'shortLayeredWavesBack', image: workShortLayeredWavesBack },
-  { key: 'formalBun', image: workFormalBun },
-] satisfies ReadonlyArray<{
-  key: keyof Messages['work']['items'];
-  image: StaticImageData;
-}>;
+function formatHours({ opens, closes }: { opens: string; closes: string }) {
+  return `${opens} - ${closes}`;
+}
 
-const STYLISTS = [
+function getOpeningHoursLines(t: Messages): string[] {
+  return [
+    translate(t, 'hours.weekdays', {
+      hours: formatHours(OPENING_HOURS.weekdays),
+    }),
+    translate(t, 'hours.saturday', {
+      hours: formatHours(OPENING_HOURS.saturday),
+    }),
+    t.hours.sunday,
+  ];
+}
+
+const WHY_US = [
+  'individual',
+  'allInOne',
+  'education',
+  'flexible',
+] as const satisfies ReadonlyArray<keyof Messages['whyUs']['items']>;
+
+const CLINIC_PHOTOS = [
   {
-    key: 'stylists.items.jelena.role',
-    name: 'Jelena',
-    image: jelena,
+    key: 'treatmentRoom',
+    image: clinicTreatmentRoom,
+    className: 'col-span-2 aspect-4/3 md:aspect-auto',
+    sizes: '(max-width: 768px) 100vw, 66vw',
+  },
+  {
+    key: 'logoWall',
+    image: clinicLogoWall,
+    className:
+      'col-span-2 aspect-4/3 md:col-span-1 md:col-start-3 md:row-start-1 md:row-span-2 md:aspect-auto',
+    sizes: '(max-width: 768px) 100vw, 33vw',
+  },
+  {
+    key: 'hallway',
+    image: clinicHallway,
+    className: 'aspect-3/4 md:aspect-auto',
+    sizes: '(max-width: 768px) 50vw, 33vw',
+  },
+  {
+    key: 'reception',
+    image: clinicReception,
+    className: 'aspect-3/4 md:aspect-auto',
+    sizes: '(max-width: 768px) 50vw, 33vw',
   },
 ] as const satisfies ReadonlyArray<{
-  key: MessagePath;
-  name: string;
+  key: keyof Messages['clinic']['items'];
+  image: StaticImageData;
+  className: string;
+  sizes: string;
+}>;
+
+const TEAM = [
+  { key: 'abramovic', image: teamPlaceholder },
+] as const satisfies ReadonlyArray<{
+  key: keyof Messages['team']['members'];
   image: StaticImageData;
 }>;
 
@@ -1135,9 +1200,6 @@ function FaqAccordionItem({
         className={[
           'grid',
           'overflow-hidden',
-          'transition-[grid-template-rows]',
-          'duration-300',
-          'ease-in-out',
           isOpen ? 'grid-rows-[1fr] mt-3' : 'grid-rows-[0fr]',
         ].join(' ')}
       >

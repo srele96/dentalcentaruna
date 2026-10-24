@@ -11,5 +11,5 @@ Then run the optimizer, it ignores the `.gitignore` in the input directory.
 Run the optimizer:
 
 ```txt
-npx txt imt-optimizer/optimizer.mts
+pnpm img-optimizer:run
 ```

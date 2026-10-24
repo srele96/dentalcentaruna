@@ -11,6 +11,8 @@ interface FaqItem {
 interface FaqSection {
   heading: string;
   subheading: string;
+  ctaText: string;
+  callAction: string;
   items: Record<FaqId, FaqItem>;
 }
 
@@ -23,21 +25,37 @@ type FaqId =
   | 'directions-transport'
   | 'location';
 
+type ServiceItem = { name: string; detail: string };
+
+type TeamMember = {
+  name: string;
+  role: string;
+  photoAlt: string;
+  bio: string[];
+  quote?: string;
+};
+
 interface Messages {
   metadata: {
     title: string;
     description: string;
     keywords: string[];
   };
+  hours: {
+    heading: string;
+    weekdays: string;
+    saturday: string;
+    sunday: string;
+  };
   header: {
     brand: string;
     brandAccent: string;
     nav: {
       services: string;
-      work: string;
-      stylists: string;
-      about: string;
+      whyUs: string;
+      team: string;
       findUs: string;
+      reviews: string;
       faq: string;
       visit: string;
     };
@@ -48,11 +66,11 @@ interface Messages {
   hero: {
     eyebrow: string;
     headingPrefix: string;
-    headingYour: string;
-    headingSignature: string;
-    sigCaption: string;
+    headingAccent: string;
+    subheading: string;
     bookAction: string;
-    seeServices: string;
+    callAction: string;
+    note: string;
     imageAlt: string;
   };
   intro: {
@@ -60,38 +78,50 @@ interface Messages {
     paragraph1: string;
     paragraph2: string;
   };
+  trustBar: {
+    items: {
+      experience: { title: string; detail: string };
+      surgery: { title: string; detail: string };
+      allInOne: { title: string; detail: string };
+      emergency: { title: string; detail: string };
+    };
+  };
   services: {
     heading: string;
     subheading: string;
-    price: string;
     items: {
-      haircut: { name: string; detail: string };
-      styling: { name: string; detail: string };
-      color: { name: string; detail: string };
-      balayage: { name: string; detail: string };
-      bondRepair: { name: string; detail: string };
-      mensGrooming: { name: string; detail: string };
+      oralSurgery: ServiceItem;
+      implants: ServiceItem;
+      cosmetic: ServiceItem;
+      prosthetics: ServiceItem;
+      restorative: ServiceItem;
+      prevention: ServiceItem;
+      facialAesthetics: ServiceItem;
     };
   };
-  work: {
+  whyUs: {
+    heading: string;
+    items: {
+      individual: { title: string; text: string };
+      allInOne: { title: string; text: string };
+      education: { title: string; text: string };
+      flexible: { title: string; text: string };
+    };
+  };
+  clinic: {
     heading: string;
     subheading: string;
     items: {
-      braidsWithExtensions: string;
-      straightCutBlowDry: string;
-      brownHairWaves: string;
-      blackHairWaves: string;
-      chestnutHairWaves: string;
-      hairColoringWithRevlonDyes: string;
-      shortLayeredWavesBack: string;
-      wavyHairSideProfile: string;
-      formalBun: string;
+      treatmentRoom: string;
+      logoWall: string;
+      hallway: string;
+      reception: string;
     };
   };
-  stylists: {
+  team: {
     heading: string;
-    items: {
-      jelena: { role: string };
+    members: {
+      abramovic: TeamMember;
     };
   };
   about: {
@@ -103,31 +133,41 @@ interface Messages {
     floralsCloseAlt: string;
   };
   book: {
-    headingPrefix: string;
-    headingChair: string;
-    subheading: string;
-    fastestWay: string;
-    phoneHours: string;
-    callNow: string;
-    whatsappHeading: string;
-    whatsappBody: string;
+    heading: string;
+    body: string;
+    callAction: string;
+    addressHeading: string;
+    phoneHeading: string;
+    hoursHeading: string;
+    hoursWeekdays: string;
+    hoursSaturday: string;
+    closedSunday: string;
+    seoHeading: string;
+    seoBody: string;
+    areasHeading: string;
+    areas: string[];
+  };
+  reviews: {
+    heading: string;
+    body: string;
+    cta: string;
     whatsappCta: string;
     whatsappMessage: string;
-    instagramHeading: string;
-    instagramBody: string;
-    review: {
-      heading: string;
-      body: string;
-      cta: string;
-    };
+    instagramCta: string;
   };
   footer: {
+    tagline: string;
+    callAction: string;
     addressHeading: string;
+    openInMaps: string;
     hoursHeading: string;
-    hoursLine: string;
+    hoursWeekdays: string;
+    hoursSaturday: string;
     closedSunday: string;
     contactHeading: string;
+    whatsappMessage: string;
     copyright: string;
+    backToTop: string;
   };
   location: {
     heading: string;
