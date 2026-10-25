@@ -26,7 +26,6 @@ import {
   ADDRESS,
   GOOGLE_MAPS_URL,
   BUSINESS_NAME,
-  OPENING_HOURS,
 } from '@/lib/constant';
 import { createStructuredData } from '@/lib/create-structured-data';
 import { getOpeningHoursLines } from '@/lib/opening-hours';
